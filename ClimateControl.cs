@@ -580,7 +580,7 @@ namespace Runaurufu.ClimateControl
           {
             rainParticleProperties.SetFieldValue("m_IsWinter", rainIsSnow);
 
-            if(rainIsSnow)
+            if (rainIsSnow)
             {
               rainParticleProperties.m_RainMaterialX.EnableKeyword("SNOWPARTICLE");
               rainParticleProperties.m_RainMaterialX.DisableKeyword("RAINPARTICLE");
@@ -589,7 +589,8 @@ namespace Runaurufu.ClimateControl
               rainParticleProperties.m_RainMaterialZ.EnableKeyword("SNOWPARTICLE");
               rainParticleProperties.m_RainMaterialZ.DisableKeyword("RAINPARTICLE");
 
-              rainParticleProperties.InvokeMethod("CreateNoiseSum");
+              if(rainParticleProperties.m_RainMaterialX.GetTexture("_RainNoise").name == "linearrainnoise")
+                rainParticleProperties.InvokeMethod("CreateNoiseSum");
             }
             else
             {

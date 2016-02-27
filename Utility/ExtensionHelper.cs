@@ -24,7 +24,8 @@ namespace Runaurufu.Utility
       }
       catch(Exception ex)
       {
-        DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Error, "Invoke failed! " + ex.Message);
+        DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Error, string.Format("Invoke failed (method {0} in type {1}) with message: {2}", name, t.Name, ex.Message));
+        DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Error, ex.ToString());
         return null;
       }
     }
@@ -47,7 +48,7 @@ namespace Runaurufu.Utility
       }
       catch (Exception ex)
       {
-        DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Error, "SetFieldValue failed! " + ex.Message);
+        DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Error, string.Format("SetFieldValue failed (field {0} in type {1}) with message: {2} ", name, t.Name, ex.Message));
         return;
       }
     }
@@ -70,7 +71,7 @@ namespace Runaurufu.Utility
       }
       catch (Exception ex)
       {
-        DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Error, "GetFieldValue failed! " + ex.Message);
+        DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Error, string.Format("GetFieldValue failed (field {0} in type {1}) with message {2}", name, t.Name, ex.Message));
         return null;
       }
     }
