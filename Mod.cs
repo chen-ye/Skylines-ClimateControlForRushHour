@@ -35,7 +35,14 @@ namespace Runaurufu.ClimateControl
       //  ModSettings.CurrentSimulationTimeIndexChanged);
       helperBase.AddCheckbox("Chirp forecast", GlobalConfig.GetInstance().ChirpForecast, ModSettings.ChirpForecastOnCheckChanged);
       helperBase.AddCheckbox("SnowDump snow melting when hot", GlobalConfig.GetInstance().AlterSnowDumpSnowMelting, ModSettings.AlterSnowDumpSnowMeltingOnCheckChanged);
-    //  helperBase.AddCheckbox("Weather alter building fires", GlobalConfig.GetInstance().WeatherAlterFires, ModSettings.WeatherAlterFiresOnCheckChanged);
+      helperBase.AddDropdown("Thunders frequency",
+        new string[]
+        { "Almost Never", "Rarely", "Below Average", "On Average", "Above Average", "Often", "Almost Constantly" },
+        ModSettings.ThundersFrequencyIndex,
+        ModSettings.ThundersFrequencyIndexChanged);
+
+
+      //  helperBase.AddCheckbox("Weather alter building fires", GlobalConfig.GetInstance().WeatherAlterFires, ModSettings.WeatherAlterFiresOnCheckChanged);
 
       helper.AddGroup("Climate Presets").AddDropdown("Climate presets",
         ModSettings.AllPresets.Select(p => p.PresetName).ToArray(),
@@ -94,6 +101,65 @@ namespace Runaurufu.ClimateControl
     {
       GlobalConfig.GetInstance().AlterSnowDumpSnowMelting = isChecked;
       GlobalConfig.SaveConfig();
+    }
+
+    public static int ThundersFrequencyIndex
+    {
+      get
+      {
+        switch (GlobalConfig.GetInstance().ThundersFrequency)
+        {
+          case Frequency.AlmostNever:
+            return 0;
+          case Frequency.Rarely:
+            return 1;
+          case Frequency.BelowAverage:
+            return 2;
+          case Frequency.AboveAverage:
+            return 4;
+          case Frequency.Often:
+            return 5;
+          case Frequency.AlmostConstantly:
+            return 6;
+          case Frequency.OnAverage:
+          default:
+            return 3;
+        }
+      }
+    }
+
+    public static void ThundersFrequencyIndexChanged(int newIndex)
+    {
+      if (newIndex < 0)
+        return;
+
+      switch (newIndex)
+      {
+        case 0:
+          GlobalConfig.GetInstance().ThundersFrequency = Frequency.AlmostNever;
+          break;
+        case 1:
+          GlobalConfig.GetInstance().ThundersFrequency = Frequency.Rarely;
+          break;
+        case 2:
+          GlobalConfig.GetInstance().ThundersFrequency = Frequency.BelowAverage;
+          break;
+        case 4:
+          GlobalConfig.GetInstance().ThundersFrequency = Frequency.AboveAverage;
+          break;
+        case 5:
+          GlobalConfig.GetInstance().ThundersFrequency = Frequency.Often;
+          break;
+        case 6:
+          GlobalConfig.GetInstance().ThundersFrequency = Frequency.AlmostConstantly;
+          break;
+        case 3:
+        default:
+          GlobalConfig.GetInstance().ThundersFrequency = Frequency.OnAverage;
+          break;
+      }
+      GlobalConfig.SaveConfig();
+      ClimateControlEngine.Instance.InitializeConfigValues();
     }
 
     //public static void WeatherAlterFiresOnCheckChanged(bool isChecked)

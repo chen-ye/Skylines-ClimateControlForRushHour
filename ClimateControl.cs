@@ -102,6 +102,9 @@ namespace Runaurufu.ClimateControl
       if (this.InitializeManagers() == false)
         return false;
 
+      if (this.InitializeConfigValues() == false)
+        return false;
+
       this.CurrentWeatherProperties = weatherProperties;
       this.ClimateControlProperties = ClimateControlProperties.GetDefaults();
       this.weatherManager.InitializeProperties(weatherProperties);
@@ -118,6 +121,9 @@ namespace Runaurufu.ClimateControl
         return false;
 
       if (this.InitializeManagers() == false)
+        return false;
+
+      if (this.InitializeConfigValues() == false)
         return false;
 
       this.CurrentWeatherProperties = this.weatherManager.m_properties;
@@ -151,6 +157,37 @@ namespace Runaurufu.ClimateControl
       this.simulationManager = sm;
       this.netManager = nm;
       this.buildingManager = bm;
+      return true;
+    }
+
+    internal bool InitializeConfigValues()
+    {
+      switch(GlobalConfig.GetInstance().ThundersFrequency)
+      {
+        case Frequency.AlmostNever:
+          this.LightningMinMaxIntervals = new Vector2(5000f, 50000f);
+          break;
+        case Frequency.Rarely:
+          this.LightningMinMaxIntervals = new Vector2(50f, 1000f);
+          break;
+        case Frequency.BelowAverage:
+          this.LightningMinMaxIntervals = new Vector2(20f, 500f);
+          break;
+        case Frequency.AboveAverage:
+          this.LightningMinMaxIntervals = new Vector2(10f, 150f);
+          break;
+        case Frequency.Often:
+          this.LightningMinMaxIntervals = new Vector2(5f, 70f);
+          break;
+        case Frequency.AlmostConstantly:
+          this.LightningMinMaxIntervals = new Vector2(1f, 5f);
+          break;
+        case Frequency.OnAverage:
+        default:
+          this.LightningMinMaxIntervals = new Vector2(10f, 300f);
+          break;
+      }
+
       return true;
     }
 
@@ -224,6 +261,90 @@ namespace Runaurufu.ClimateControl
     {
       get { return this.weatherManager.m_targetRain; }
       internal set { this.weatherManager.m_targetRain = value; }
+    }
+
+    public float MaxRainIntensity
+    {
+      get
+      {
+        if (DayNightProperties.instance != null)
+        {
+          RainParticleProperties rainParticleProperties = DayNightProperties.instance.GetComponent<RainParticleProperties>();
+          if (rainParticleProperties != null)
+          {
+            return rainParticleProperties.m_MaxRainIntensity;
+          }
+        }
+        return float.NaN;
+      }
+
+      internal set
+      {
+        if (DayNightProperties.instance != null)
+        {
+          RainParticleProperties rainParticleProperties = DayNightProperties.instance.GetComponent<RainParticleProperties>();
+          if (rainParticleProperties != null)
+          {
+            rainParticleProperties.m_MaxRainIntensity = value;
+          }
+        }
+      }
+    }
+
+    public float LightningRainTreshold
+    {
+      get
+      {
+        if (DayNightProperties.instance != null)
+        {
+          RainParticleProperties rainParticleProperties = DayNightProperties.instance.GetComponent<RainParticleProperties>();
+          if (rainParticleProperties != null)
+          {
+            return rainParticleProperties.m_LightningTreshold;
+          }
+        }
+        return float.NaN;
+      }
+
+      internal set
+      {
+        if (DayNightProperties.instance != null)
+        {
+          RainParticleProperties rainParticleProperties = DayNightProperties.instance.GetComponent<RainParticleProperties>();
+          if (rainParticleProperties != null)
+          {
+            rainParticleProperties.m_LightningTreshold = value;
+          }
+        }
+      }
+    }
+
+    public Vector2 LightningMinMaxIntervals
+    {
+      get
+      {
+        if (DayNightProperties.instance != null)
+        {
+          RainParticleProperties rainParticleProperties = DayNightProperties.instance.GetComponent<RainParticleProperties>();
+          if (rainParticleProperties != null)
+          {
+            return rainParticleProperties.m_LightningMinMaxIntervals;
+          }
+        }
+        return Vector2.zero;
+      }
+
+      internal set
+      {
+        if (DayNightProperties.instance != null)
+        {
+          RainParticleProperties rainParticleProperties = DayNightProperties.instance.GetComponent<RainParticleProperties>();
+          if (rainParticleProperties != null)
+          {
+            rainParticleProperties.m_LightningMinMaxIntervals = value;
+          }
+        }
+      }
     }
 
     public float CurrentFog
@@ -450,6 +571,47 @@ namespace Runaurufu.ClimateControl
       {
         this.CurrentWeatherProperties.m_rainIsSnow = rainIsSnow;
         needToReinitializeWeatherProperties = true;
+
+        // Reset rain particles behaviour
+        if (DayNightProperties.instance != null)
+        {
+          RainParticleProperties rainParticleProperties = DayNightProperties.instance.GetComponent<RainParticleProperties>();
+          if (rainParticleProperties != null)
+          {
+            rainParticleProperties.SetFieldValue("m_IsWinter", rainIsSnow);
+
+            if(rainIsSnow)
+            {
+              rainParticleProperties.m_RainMaterialX.EnableKeyword("SNOWPARTICLE");
+              rainParticleProperties.m_RainMaterialX.DisableKeyword("RAINPARTICLE");
+              rainParticleProperties.m_RainMaterialY.EnableKeyword("SNOWPARTICLE");
+              rainParticleProperties.m_RainMaterialY.DisableKeyword("RAINPARTICLE");
+              rainParticleProperties.m_RainMaterialZ.EnableKeyword("SNOWPARTICLE");
+              rainParticleProperties.m_RainMaterialZ.DisableKeyword("RAINPARTICLE");
+
+              rainParticleProperties.InvokeMethod("CreateNoiseSum");
+            }
+            else
+            {
+              rainParticleProperties.m_RainMaterialX.EnableKeyword("RAINPARTICLE");
+              rainParticleProperties.m_RainMaterialX.DisableKeyword("SNOWPARTICLE");
+              rainParticleProperties.m_RainMaterialY.EnableKeyword("RAINPARTICLE");
+              rainParticleProperties.m_RainMaterialY.DisableKeyword("SNOWPARTICLE");
+              rainParticleProperties.m_RainMaterialZ.EnableKeyword("RAINPARTICLE");
+              rainParticleProperties.m_RainMaterialZ.DisableKeyword("SNOWPARTICLE");
+
+
+              Texture2D sumNoise = rainParticleProperties.GetFieldValue("m_SumNoiseTexture") as Texture2D;
+              if (sumNoise != null)
+              {
+                rainParticleProperties.SetFieldValue("m_SumNoiseTexture", null);
+                UnityEngine.Object.DestroyImmediate(sumNoise);
+              }
+            }
+            //rainParticleProperties.InvokeMethod("OnDisable");
+            //rainParticleProperties.InvokeMethod("OnEnable");
+          }
+        }
       }
       
       if (GlobalConfig.GetInstance().AlterSnowDumpSnowMelting)
@@ -670,5 +832,16 @@ namespace Runaurufu.ClimateControl
 
     //public float DayStartHour { get; set; }
     //public float NightStartHour { get; set; }
+  }
+
+  public enum Frequency : int
+  {
+    AlmostNever = 0,
+    Rarely = 1,
+    BelowAverage = 2,
+    OnAverage = 3,
+    AboveAverage = 4,
+    Often = 5,
+    AlmostConstantly = 6,
   }
 }

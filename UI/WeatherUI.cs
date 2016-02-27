@@ -64,13 +64,13 @@ namespace Runaurufu.ClimateControl.UI
       this.temperatureTargetSlider.eventValueChanged += TemperatureTargetSlider_eventValueChanged;
 
       this.rainCurrentLabel = this.AddUIComponent<UILabel>();
-      this.rainCurrentSlider = UIFactory.CreateSlider((UIPanel)this, 0.0f, 20.0f);
-      this.rainCurrentSlider.stepSize = 0.1f;
+      this.rainCurrentSlider = UIFactory.CreateSlider((UIPanel)this, 0.0f, 5.0f);
+      this.rainCurrentSlider.stepSize = 0.05f;
       this.rainCurrentSlider.eventValueChanged += RainCurrentSlider_eventValueChanged;
 
       this.rainTargetLabel = this.AddUIComponent<UILabel>();
-      this.rainTargetSlider = UIFactory.CreateSlider((UIPanel)this, 0.0f, 20.0f);
-      this.rainTargetSlider.stepSize = 0.1f;
+      this.rainTargetSlider = UIFactory.CreateSlider((UIPanel)this, 0.0f, 5.0f);
+      this.rainTargetSlider.stepSize = 0.05f;
       this.rainTargetSlider.eventValueChanged += RainTargetSlider_eventValueChanged;
 
       this.fogCurrentLabel = this.AddUIComponent<UILabel>();

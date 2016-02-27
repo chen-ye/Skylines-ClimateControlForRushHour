@@ -64,6 +64,7 @@ namespace Runaurufu.ClimateControl
       this.SelectedClimatePresetCode = ModSettings.DEFAULT_PRESET_CODE;
       this.ChirpForecast = true;
       this.AlterSnowDumpSnowMelting = true;
+      this.ThundersFrequency = Frequency.OnAverage;
     //  this.WeatherAlterFires = false;
     }
 
@@ -98,6 +99,11 @@ namespace Runaurufu.ClimateControl
     /// Alter snowDump snow melting?
     /// </summary>
     public Boolean AlterSnowDumpSnowMelting { get; set; }
+
+    /// <summary>
+    /// How often thunders shall strike?
+    /// </summary>
+    public Frequency ThundersFrequency { get; set; }
 
     ///// <summary>
     ///// Should weather change how fires go?
