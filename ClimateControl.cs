@@ -531,12 +531,12 @@ namespace Runaurufu.ClimateControl
 
           if (GlobalConfig.GetInstance().ChirpForecast)
           {
-            ChirpBox.SendMessage("Weather Forecast", string.Format("Forecast for next {0:0} days:" + Environment.NewLine + "Day {1:0.0} - {2:0.0}" + Environment.NewLine + "Night {3:0.0} - {4:0.0}",
+            ChirpBox.SendMessage("Weather Forecast", string.Format("Forecast for next {0:0} days:" + Environment.NewLine + "Day {1} - {2}" + Environment.NewLine + "Night {3} - {4}",
               daysPerClimateStage,
-              this.CurrentWeatherProperties.m_minTemperatureDay,
-              this.CurrentWeatherProperties.m_maxTemperatureDay,
-              this.CurrentWeatherProperties.m_minTemperatureNight,
-              this.CurrentWeatherProperties.m_maxTemperatureNight
+              this.GetLocalizedTemperature(this.CurrentWeatherProperties.m_minTemperatureDay),
+              this.GetLocalizedTemperature(this.CurrentWeatherProperties.m_maxTemperatureDay),
+              this.GetLocalizedTemperature(this.CurrentWeatherProperties.m_minTemperatureNight),
+              this.GetLocalizedTemperature(this.CurrentWeatherProperties.m_maxTemperatureNight)
               ));
           }
 
