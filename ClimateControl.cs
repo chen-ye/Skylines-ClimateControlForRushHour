@@ -452,9 +452,10 @@ namespace Runaurufu.ClimateControl
     }
 
     private MonthlyClimateData currentClimateFrameData = null;
-    private float previousTemperature;
+    
     private DateTime lastSimulationTimeUpdate;
     private StatisticData currentClimateFrameStatistics = null;
+    private TempClimateData currentTempClimateData = null;
 
     public void UpdateClimate()
     {
@@ -523,16 +524,32 @@ namespace Runaurufu.ClimateControl
           this.CurrentWeatherProperties.m_maxTemperatureRain = Mathf.Max(this.CurrentWeatherProperties.m_maxTemperatureDay, this.CurrentWeatherProperties.m_maxTemperatureNight);
 
           // monthlyData.PrecipitationAverage
-          this.CurrentWeatherProperties.m_rainProbabilityDay = (int)(monthlyData.PrecipitationDaysRatio * 40);
-          this.CurrentWeatherProperties.m_rainProbabilityNight = (int)(monthlyData.PrecipitationDaysRatio * 60);
+          if (float.IsNaN(monthlyData.PrecipitationDaysRatio))
+          {
+            this.CurrentWeatherProperties.m_rainProbabilityDay = 40;
+            this.CurrentWeatherProperties.m_rainProbabilityNight = 60;
+          }
+          else
+          {
+            this.CurrentWeatherProperties.m_rainProbabilityDay = (int)(monthlyData.PrecipitationDaysRatio * 40);
+            this.CurrentWeatherProperties.m_rainProbabilityNight = (int)(monthlyData.PrecipitationDaysRatio * 60);
+          }
 
           // Fog
 
           this.CurrentWeatherProperties.m_minTemperatureFog = this.CurrentWeatherProperties.m_minTemperatureRain;
           this.CurrentWeatherProperties.m_maxTemperatureFog = this.CurrentWeatherProperties.m_maxTemperatureRain;
 
-          this.CurrentWeatherProperties.m_fogProbabilityDay = (int)(monthlyData.FogDaysRatio * 60);
-          this.CurrentWeatherProperties.m_fogProbabilityNight = (int)(monthlyData.FogDaysRatio * 40);
+          if (float.IsNaN(monthlyData.FogDaysRatio))
+          {
+            this.CurrentWeatherProperties.m_fogProbabilityDay = 60;
+            this.CurrentWeatherProperties.m_fogProbabilityNight = 40;
+          }
+          else
+          {
+            this.CurrentWeatherProperties.m_fogProbabilityDay = (int)(monthlyData.FogDaysRatio * 60);
+            this.CurrentWeatherProperties.m_fogProbabilityNight = (int)(monthlyData.FogDaysRatio * 40);
+          }
 
           // wind speed range 0f - 2f
           // sampled wind speed range 0f - 1f
@@ -558,13 +575,24 @@ namespace Runaurufu.ClimateControl
           this.currentClimateFrameStatistics.MinTemperature = this.currentClimateFrameStatistics.MaxTemperature = this.weatherManager.m_currentTemperature;
 
           needToReinitializeWeatherProperties = true;
+
+          this.currentTempClimateData = new TempClimateData();
+          this.currentTempClimateData.PrecipitationHoursExpected = this.currentClimateFrameData.PrecipitationDaysRatio * daysPerClimateStage * this.ClimateControlProperties.SolarDayLength * 0.2f;
+
+          if (float.IsNaN(this.currentClimateFrameData.PrecipitationAverage))
+            this.currentTempClimateData.PrecipitationAverage = 500f * (float)this.random.NextDouble() * this.currentClimateFrameData.PrecipitationDaysRatio;
+          else
+            this.currentTempClimateData.PrecipitationAverage = this.currentClimateFrameData.PrecipitationAverage * this.random.Next(8, 12) * 0.1f;
+
+          this.currentTempClimateData.FogHoursExpected = this.currentClimateFrameData.FogDaysRatio * daysPerClimateStage * this.ClimateControlProperties.SolarDayLength * 0.2f;
+          
         }
         else
         {
           // we keep previous climate frame data
           float currentClimateFrameProgress = Mathf.Clamp01((float)(simulationTime - this.currentClimateFrameStatistics.FrameDateTimeStart).TotalDays / daysPerClimateStage);
 
-          if (this.currentClimateFrameData.PrecipitationAverage < this.currentClimateFrameStatistics.PrecipitationAmount)
+          if (this.currentTempClimateData.PrecipitationAverage < this.currentClimateFrameStatistics.PrecipitationAmount)
           {
             // more precipitation then expected! Halt rain!
             this.weatherManager.m_targetRain = 0.0f;
@@ -572,15 +600,13 @@ namespace Runaurufu.ClimateControl
           else if(this.weatherManager.m_targetRain < 0.01f && (isNight ? this.CurrentWeatherProperties.m_rainProbabilityNight : this.CurrentWeatherProperties.m_rainProbabilityDay) > this.random.Next(0, 100))
           {
             // less precipitation then expected!
-            float precipitationToFill = (this.currentClimateFrameData.PrecipitationAverage - this.currentClimateFrameStatistics.PrecipitationAmount);
-            float rainnyHoursExpected = this.currentClimateFrameData.PrecipitationDaysRatio * daysPerClimateStage * this.ClimateControlProperties.SolarDayLength * 0.2f;
+            float precipitationToFill = (this.currentTempClimateData.PrecipitationAverage - this.currentClimateFrameStatistics.PrecipitationAmount);
 
             float daysToNextFrame = daysPerClimateStage * (1 - currentClimateFrameProgress);
 
             precipitationToFill = (precipitationToFill / (daysToNextFrame * this.ClimateControlProperties.SolarDayLength));
 
-
-            if (rainnyHoursExpected > this.currentClimateFrameStatistics.PrecipitationDuration)
+            if (this.currentTempClimateData.PrecipitationHoursExpected > this.currentClimateFrameStatistics.PrecipitationDuration)
               precipitationToFill *= (float)this.random.Next(0, 600) * 0.01f;
             else
               precipitationToFill *= (float)this.random.Next(0, 200) * 0.01f;
@@ -591,9 +617,7 @@ namespace Runaurufu.ClimateControl
             }
           }
 
-          float foggyHoursExpected = this.currentClimateFrameData.FogDaysRatio * daysPerClimateStage * this.ClimateControlProperties.SolarDayLength * 0.2f;
-
-          if (this.currentClimateFrameStatistics.FogDuration < foggyHoursExpected)
+          if (this.currentClimateFrameStatistics.FogDuration < this.currentTempClimateData.FogHoursExpected)
           {
             // more foggy time needed!
             if(this.weatherManager.m_targetFog < 0.01f)
@@ -874,6 +898,14 @@ namespace Runaurufu.ClimateControl
 
       return properties;
     }
+  }
+
+  public class TempClimateData
+  {
+    public float FogHoursExpected { get; set; }
+    public float PrecipitationHoursExpected { get; set; }
+
+    public float PrecipitationAverage { get; set; }
   }
 
   public class MonthlyClimateData
