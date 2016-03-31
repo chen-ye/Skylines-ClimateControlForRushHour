@@ -536,7 +536,7 @@ namespace Runaurufu.ClimateControl
           float dayLengthRatio = monthlyData.DayLengthAverage / this.ClimateControlProperties.SolarDayLength;
 
           // Temperatures
-          float average = monthlyData.TemperatureAverage == float.NaN ? monthlyData.TemperatureHighAverage * dayLengthRatio + monthlyData.TemperatureLowAverage * (1 - dayLengthRatio) : monthlyData.TemperatureAverage;
+          float average = float.IsNaN(monthlyData.TemperatureAverage) ? monthlyData.TemperatureHighAverage * dayLengthRatio + monthlyData.TemperatureLowAverage * (1 - dayLengthRatio) : monthlyData.TemperatureAverage;
 
           float averageToHigh = monthlyData.TemperatureHighAverage - average;
           float averageToLow = average - monthlyData.TemperatureLowAverage;
@@ -891,8 +891,8 @@ namespace Runaurufu.ClimateControl
       if (this.CurrentWeatherProperties.m_rainIsSnow)
         disposeWaterSources = true;
 
-      //  if (this.GroundWetness < 0.75f)
-      //    disposeWaterSources = true;
+      if (this.GroundWetness < 0.75f)
+        disposeWaterSources = true;
 
       if (this.CurrentRain < 0.25f)
         disposeWaterSources = true;
@@ -959,7 +959,7 @@ namespace Runaurufu.ClimateControl
             {
               Index = i,
               Target = waterSources.m_buffer[i].m_target,
-              MinTarget = (ushort)Mathf.Clamp(0.50f * waterSources.m_buffer[i].m_target, 100, ushort.MaxValue),
+              MinTarget = (ushort)Mathf.Clamp(0.25f * waterSources.m_buffer[i].m_target, 100, ushort.MaxValue),
               MaxTarget = ushort.MaxValue,
             });
           }
