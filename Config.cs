@@ -64,6 +64,8 @@ namespace Runaurufu.ClimateControl
       this.SelectedClimatePresetCode = ModSettings.DEFAULT_PRESET_CODE;
       this.ChirpForecast = true;
       this.AlterSnowDumpSnowMelting = true;
+      this.RainfallMakesWater = false;
+      this.PrecipitationAlterWaterSources = false;
       this.ThundersFrequency = Frequency.OnAverage;
     //  this.WeatherAlterFires = false;
     }
@@ -99,6 +101,16 @@ namespace Runaurufu.ClimateControl
     /// Alter snowDump snow melting?
     /// </summary>
     public Boolean AlterSnowDumpSnowMelting { get; set; }
+
+    /// <summary>
+    /// Does rainfall makes water sources?
+    /// </summary>
+    public Boolean RainfallMakesWater { get; set; }
+
+    /// <summary>
+    /// Does precipitation alter existing water sources?
+    /// </summary>
+    public Boolean PrecipitationAlterWaterSources { get; set; }
 
     /// <summary>
     /// How often thunders shall strike?

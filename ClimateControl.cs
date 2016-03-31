@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
 using ColossalFramework;
 using ICities;
 using Runaurufu.Utility;
@@ -21,7 +21,7 @@ namespace Runaurufu.ClimateControl
         lastChrip = DateTime.Now.AddSeconds(10);
 
       DateTime now = DateTime.Now;
-    //  if ((now - lastChrip).TotalSeconds > 5)
+      //  if ((now - lastChrip).TotalSeconds > 5)
       {
         cp.AddMessage(new ChirpBox() { senderName = senderName, text = msg });
         lastChrip = now;
@@ -47,7 +47,7 @@ namespace Runaurufu.ClimateControl
     }
   }
 
-  
+
   internal class ClimatePreset
   {
     public String PresetName { get; set; }
@@ -81,6 +81,7 @@ namespace Runaurufu.ClimateControl
     }
 
     private WeatherManager weatherManager;
+    private TerrainManager terrainManager;
     private SimulationManager simulationManager;
     private NetManager netManager;
     private BuildingManager buildingManager;
@@ -109,7 +110,8 @@ namespace Runaurufu.ClimateControl
       this.ClimateControlProperties = ClimateControlProperties.GetDefaults();
       this.weatherManager.InitializeProperties(weatherProperties);
 
-      this.lastSimulationTimeUpdate = DateTime.MinValue;
+      this.ResetInternalValues();
+
       this.IsInitialized = true;
 
       return true;
@@ -129,14 +131,19 @@ namespace Runaurufu.ClimateControl
       this.CurrentWeatherProperties = this.weatherManager.m_properties;
       this.ClimateControlProperties = climateProperties;
 
-      this.lastSimulationTimeUpdate = DateTime.MinValue;
+      this.ResetInternalValues();
+
       this.IsInitialized = true;
-      
+
       return true;
     }
 
     private bool InitializeManagers()
     {
+      TerrainManager tm = Singleton<TerrainManager>.instance;
+      if (tm == null)
+        return false;
+
       WeatherManager wm = Singleton<WeatherManager>.instance;
       if (wm == null)
         return false;
@@ -153,6 +160,7 @@ namespace Runaurufu.ClimateControl
       if (bm == null)
         return false;
 
+      this.terrainManager = tm;
       this.weatherManager = wm;
       this.simulationManager = sm;
       this.netManager = nm;
@@ -162,7 +170,7 @@ namespace Runaurufu.ClimateControl
 
     internal bool InitializeConfigValues()
     {
-      switch(GlobalConfig.GetInstance().ThundersFrequency)
+      switch (GlobalConfig.GetInstance().ThundersFrequency)
       {
         case Frequency.AlmostNever:
           this.LightningMinMaxIntervals = new Vector2(5000f, 50000f);
@@ -196,7 +204,37 @@ namespace Runaurufu.ClimateControl
       //MapThemeMetaData mapThemeMetaData = this.simulationManager.m_metaData.m_MapThemeMetaData;
       this.weatherManager.InitializeProperties(GetDefaultWeatherProperites());
 
+      if (GlobalConfig.GetInstance().RainfallMakesWater == true)
+      {
+        //  this.terrainManager.WaterSimulation.m_resetWater = true;
+      }
+
+      this.ResetInternalValues();
+
       this.IsInitialized = false;
+    }
+
+    private void ResetInternalValues()
+    {
+      this.lastSimulationTimeUpdate = DateTime.MinValue;
+
+      // reset sources target values to default values!
+      if (this.mapSources != null)
+      {
+        FastList<WaterSource> sources = this.terrainManager.WaterSimulation.m_waterSources;
+        foreach (MapWaterSource waterSource in this.mapSources)
+        {
+          sources.m_buffer[waterSource.Index].m_target = waterSource.Target;
+        }
+      }
+      this.mapSources = null;
+      this.waterSourceChangeCompound = 0;
+
+      foreach (ushort item in this.waterSources)
+      {
+        this.terrainManager.WaterSimulation.ReleaseWaterSource(item);
+      }
+      this.waterSources.Clear();
     }
 
     public static WeatherProperties GetDefaultWeatherProperites()
@@ -424,7 +462,7 @@ namespace Runaurufu.ClimateControl
 
     private DateTime GetDateTime()
     {
-      
+
       int realHour = (int)this.ThreadingManager.simulationDayTimeHour;
       int realMinute = (int)((this.ThreadingManager.simulationDayTimeHour - realHour) * 60);
       return new DateTime(this.ThreadingManager.simulationTime.Year, this.ThreadingManager.simulationTime.Month, this.ThreadingManager.simulationTime.Day, realHour, realMinute, 0);
@@ -452,7 +490,7 @@ namespace Runaurufu.ClimateControl
     }
 
     private MonthlyClimateData currentClimateFrameData = null;
-    
+
     private DateTime lastSimulationTimeUpdate;
     private StatisticData currentClimateFrameStatistics = null;
     private TempClimateData currentTempClimateData = null;
@@ -477,7 +515,7 @@ namespace Runaurufu.ClimateControl
       // DayNightProperties - related to lightning
 
       // ensure that we have proper reference!
-      this.CurrentWeatherProperties = this.weatherManager.m_properties;      
+      this.CurrentWeatherProperties = this.weatherManager.m_properties;
 
       float currentTemperature = this.weatherManager.m_currentTemperature;
       float newTemperature = currentTemperature;
@@ -585,7 +623,7 @@ namespace Runaurufu.ClimateControl
             this.currentTempClimateData.PrecipitationAverage = this.currentClimateFrameData.PrecipitationAverage * this.random.Next(8, 12) * 0.1f;
 
           this.currentTempClimateData.FogHoursExpected = this.currentClimateFrameData.FogDaysRatio * daysPerClimateStage * this.ClimateControlProperties.SolarDayLength * 0.2f;
-          
+
         }
         else
         {
@@ -597,7 +635,7 @@ namespace Runaurufu.ClimateControl
             // more precipitation then expected! Halt rain!
             this.weatherManager.m_targetRain = 0.0f;
           }
-          else if(this.weatherManager.m_targetRain < 0.01f && (isNight ? this.CurrentWeatherProperties.m_rainProbabilityNight : this.CurrentWeatherProperties.m_rainProbabilityDay) > this.random.Next(0, 100))
+          else if (this.weatherManager.m_targetRain < 0.01f && (isNight ? this.CurrentWeatherProperties.m_rainProbabilityNight : this.CurrentWeatherProperties.m_rainProbabilityDay) > this.random.Next(0, 100))
           {
             // less precipitation then expected!
             float precipitationToFill = (this.currentTempClimateData.PrecipitationAverage - this.currentClimateFrameStatistics.PrecipitationAmount);
@@ -620,9 +658,9 @@ namespace Runaurufu.ClimateControl
           if (this.currentClimateFrameStatistics.FogDuration < this.currentTempClimateData.FogHoursExpected)
           {
             // more foggy time needed!
-            if(this.weatherManager.m_targetFog < 0.01f)
+            if (this.weatherManager.m_targetFog < 0.01f)
             {
-              if((isNight ? this.CurrentWeatherProperties.m_fogProbabilityNight : this.CurrentWeatherProperties.m_fogProbabilityDay) > this.random.Next(0, 100))
+              if ((isNight ? this.CurrentWeatherProperties.m_fogProbabilityNight : this.CurrentWeatherProperties.m_fogProbabilityDay) > this.random.Next(0, 100))
               {
                 this.weatherManager.m_targetFog = this.random.Next(25, 100) * 0.01f;
               }
@@ -639,6 +677,7 @@ namespace Runaurufu.ClimateControl
       // rain/snow sets - keep it at the end!
       bool rainIsSnow = this.weatherManager.m_currentTemperature < this.ClimateControlProperties.SnowFallTemperature;
       if (rainIsSnow != this.CurrentWeatherProperties.m_rainIsSnow)
+
       {
         this.CurrentWeatherProperties.m_rainIsSnow = rainIsSnow;
         needToReinitializeWeatherProperties = true;
@@ -660,8 +699,12 @@ namespace Runaurufu.ClimateControl
               rainParticleProperties.m_RainMaterialZ.EnableKeyword("SNOWPARTICLE");
               rainParticleProperties.m_RainMaterialZ.DisableKeyword("RAINPARTICLE");
 
-              if(rainParticleProperties.m_RainMaterialX.GetTexture("_RainNoise").name == "linearrainnoise")
+              //  if(rainParticleProperties.m_RainMaterialX.GetTexture("_RainNoise").name == "linearrainnoise")
+              try
+              {
                 rainParticleProperties.InvokeMethod("CreateNoiseSum");
+              }
+              catch { }
             }
             else
             {
@@ -685,16 +728,11 @@ namespace Runaurufu.ClimateControl
           }
         }
       }
-      
-      if (GlobalConfig.GetInstance().AlterSnowDumpSnowMelting)
-      {
-        this.HandleSnowDumps(simulationTimeUpdateDelta);
-      }
 
       // does snow melt?
       if (this.weatherManager.m_currentTemperature > this.ClimateControlProperties.SnowMeltTemperature)
       {
-        if(this.netManager.m_treatWetAsSnow == true)
+        if (this.netManager.m_treatWetAsSnow == true)
         {
           // this instantly melt "road" snow away!
           this.netManager.m_treatWetAsSnow = false;
@@ -702,10 +740,25 @@ namespace Runaurufu.ClimateControl
       }
       else
       {
-        if(this.netManager.m_treatWetAsSnow == false && rainIsSnow)
+        if (this.netManager.m_treatWetAsSnow == false && rainIsSnow)
         {
           this.netManager.m_treatWetAsSnow = true;
         }
+      }
+
+      if (GlobalConfig.GetInstance().AlterSnowDumpSnowMelting)
+      {
+        this.HandleSnowDumps(simulationTimeUpdateDelta);
+      }
+
+      if (GlobalConfig.GetInstance().PrecipitationAlterWaterSources)
+      {
+        this.HandlePrecipitationAlterWaterSources(simulationTimeUpdateDelta);
+      }
+
+      if (GlobalConfig.GetInstance().RainfallMakesWater)
+      {
+        this.HandleRainfallMakesWater(simulationTimeUpdateDelta);
       }
 
       if (needToReinitializeWeatherProperties)
@@ -830,6 +883,142 @@ namespace Runaurufu.ClimateControl
         }
       }
     }
+
+    private void HandleRainfallMakesWater(TimeSpan timeDelta)
+    {
+      bool disposeWaterSources = false;
+
+      if (this.CurrentWeatherProperties.m_rainIsSnow)
+        disposeWaterSources = true;
+
+      //  if (this.GroundWetness < 0.75f)
+      //    disposeWaterSources = true;
+
+      if (this.CurrentRain < 0.25f)
+        disposeWaterSources = true;
+
+      if (disposeWaterSources)
+      {
+        foreach (ushort sourceId in this.waterSources)
+        {
+          this.terrainManager.WaterSimulation.ReleaseWaterSource(sourceId);
+        }
+      }
+      else
+      {
+        TerrainPatch randomPatch1 = this.terrainManager.m_patches[this.random.Next(0, this.terrainManager.m_patches.Length - 1)];
+        TerrainPatch randomPatch2 = this.terrainManager.m_patches[this.random.Next(0, this.terrainManager.m_patches.Length - 1)];
+        TerrainPatch randomPatch3 = this.terrainManager.m_patches[this.random.Next(0, this.terrainManager.m_patches.Length - 1)];
+        TerrainPatch randomPatch4 = this.terrainManager.m_patches[this.random.Next(0, this.terrainManager.m_patches.Length - 1)];
+
+        Vector3 position = (randomPatch1.m_terrainPosition + randomPatch2.m_terrainPosition + randomPatch3.m_terrainPosition + randomPatch4.m_terrainPosition) * 0.25f;
+
+        position.y = this.terrainManager.SampleBlockHeight(position.x, position.z);
+
+        uint rate = (uint)(Mathf.Clamp((this.GroundWetness - 0.75f + this.CurrentRain - 0.25f) * 65535f, 0, 65535) * 0.001f);
+        ushort target = (ushort)(rate * 63.9990234f);
+        target = (ushort)(position.y + 1);
+        target = (ushort)Mathf.Clamp(target, 0, 65535);
+
+        WaterSource s = new WaterSource();
+        s.m_inputPosition = position;
+        s.m_outputPosition = position;
+        s.m_inputRate = 0;
+        s.m_outputRate = rate;
+        s.m_target = target;
+        s.m_type = 1;
+        ushort wsid;
+        if (this.terrainManager.WaterSimulation.CreateWaterSource(out wsid, s))
+        {
+          this.waterSources.Add(wsid);
+        }
+
+        if (this.waterSources.Count > maxWaterSources)
+        {
+          this.terrainManager.WaterSimulation.ReleaseWaterSource(this.waterSources[0]);
+          this.waterSources.RemoveAt(0);
+        }
+      }
+    }
+
+    private const int maxWaterSources = 30;
+    private List<ushort> waterSources = new List<ushort>();
+
+    private void HandlePrecipitationAlterWaterSources(TimeSpan timeDelta)
+    {
+      FastList<WaterSource> waterSources = Singleton<TerrainManager>.instance.WaterSimulation.m_waterSources;
+      if (mapSources == null)
+      {
+        List<MapWaterSource> mapSourcesList = new List<MapWaterSource>();
+
+        for (int i = 0; i < waterSources.m_size; i++)
+        {
+          if (waterSources.m_buffer[i].m_target > 0)
+          {
+            mapSourcesList.Add(new MapWaterSource()
+            {
+              Index = i,
+              Target = waterSources.m_buffer[i].m_target,
+              MinTarget = (ushort)Mathf.Clamp(0.50f * waterSources.m_buffer[i].m_target, 100, ushort.MaxValue),
+              MaxTarget = ushort.MaxValue,
+            });
+          }
+        }
+
+        mapSources = mapSourcesList.ToArray();
+      }
+
+      if (this.GroundWetness > 0.50f)
+      {
+        waterSourceChangeCompound += 1;
+      }
+      else
+      {
+        waterSourceChangeCompound -= 1;
+
+        if (this.GroundWetness == 0.0f && this.CurrentRain == 0.0f && this.currentClimateFrameStatistics.PrecipitationAmount < 30f)
+        {
+          waterSourceChangeCompound -= 1;
+        }
+      }
+
+      if (this.CurrentRain > 0.10f)
+      {
+        waterSourceChangeCompound += 1;
+
+        if (this.CurrentRain > 0.35f)
+        {
+          waterSourceChangeCompound += 2;
+
+          if (this.CurrentRain > 0.75f)
+          {
+            waterSourceChangeCompound += 3;
+          }
+        }
+      }
+
+      if (waterSourceChangeCompound > 25 || waterSourceChangeCompound < -25)
+      {
+        float targetMod = (waterSourceChangeCompound > 0 ? 1.005f : 0.995f);
+        for (int i = 0; i < mapSources.Length; i++)
+        {
+          float newTarget = waterSources.m_buffer[mapSources[i].Index].m_target * targetMod;
+          waterSources.m_buffer[mapSources[i].Index].m_target = (ushort)Mathf.Clamp(newTarget, mapSources[i].MinTarget, mapSources[i].MaxTarget);
+        }
+        waterSourceChangeCompound = 0;
+      }
+    }
+
+    private MapWaterSource[] mapSources = null;
+    private short waterSourceChangeCompound = 0;
+
+    private struct MapWaterSource
+    {
+      public int Index;
+      public ushort Target;
+      public ushort MinTarget;
+      public ushort MaxTarget;
+    }
   }
 
   /// <summary>
@@ -849,7 +1038,7 @@ namespace Runaurufu.ClimateControl
 
   public class StatisticData
   {
-    public DateTime FrameDateTimeStart { get; set; } 
+    public DateTime FrameDateTimeStart { get; set; }
     public float MinTemperature { get; set; }
     public float MaxTemperature { get; set; }
     public float PrecipitationAmount { get; set; }

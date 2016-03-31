@@ -34,6 +34,8 @@ namespace Runaurufu.ClimateControl
       //  ModSettings.CurrentSimulationTimeIndex,
       //  ModSettings.CurrentSimulationTimeIndexChanged);
       helperBase.AddCheckbox("Chirp forecast", GlobalConfig.GetInstance().ChirpForecast, ModSettings.ChirpForecastOnCheckChanged);
+      helperBase.AddCheckbox("Rainfall creates water", GlobalConfig.GetInstance().RainfallMakesWater, ModSettings.RainfallMakesWaterOnCheckChanged);
+      helperBase.AddCheckbox("Precipitation alter water sources", GlobalConfig.GetInstance().PrecipitationAlterWaterSources, ModSettings.PrecipitationAlterWaterSourcesOnCheckChanged);
       helperBase.AddCheckbox("SnowDump snow melting when hot", GlobalConfig.GetInstance().AlterSnowDumpSnowMelting, ModSettings.AlterSnowDumpSnowMeltingOnCheckChanged);
       helperBase.AddDropdown("Thunders frequency",
         new string[]
@@ -94,6 +96,18 @@ namespace Runaurufu.ClimateControl
     public static void ChirpForecastOnCheckChanged(bool isChecked)
     {
       GlobalConfig.GetInstance().ChirpForecast = isChecked;
+      GlobalConfig.SaveConfig();
+    }
+
+    public static void RainfallMakesWaterOnCheckChanged(bool isChecked)
+    {
+      GlobalConfig.GetInstance().RainfallMakesWater = isChecked;
+      GlobalConfig.SaveConfig();
+    }
+
+    public static void PrecipitationAlterWaterSourcesOnCheckChanged(bool isChecked)
+    {
+      GlobalConfig.GetInstance().PrecipitationAlterWaterSources = isChecked;
       GlobalConfig.SaveConfig();
     }
 
