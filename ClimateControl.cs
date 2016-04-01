@@ -225,6 +225,8 @@ namespace Runaurufu.ClimateControl
         foreach (MapWaterSource waterSource in this.mapSources)
         {
           sources.m_buffer[waterSource.Index].m_target = waterSource.Target;
+          sources.m_buffer[waterSource.Index].m_inputRate = waterSource.InputRate;
+          sources.m_buffer[waterSource.Index].m_outputRate = waterSource.OutputRate;
         }
       }
       this.mapSources = null;
@@ -699,12 +701,15 @@ namespace Runaurufu.ClimateControl
               rainParticleProperties.m_RainMaterialZ.EnableKeyword("SNOWPARTICLE");
               rainParticleProperties.m_RainMaterialZ.DisableKeyword("RAINPARTICLE");
 
-              //  if(rainParticleProperties.m_RainMaterialX.GetTexture("_RainNoise").name == "linearrainnoise")
-              try
+              if (rainParticleProperties.m_RainMaterialX.GetTexture("_RainNoise").name == "linearrainnoise")
               {
-                rainParticleProperties.InvokeMethod("CreateNoiseSum");
+                try
+                {
+                  // this still produce exception log :/
+                  rainParticleProperties.InvokeMethod("CreateNoiseSum");
+                }
+                catch { }
               }
-              catch { }
             }
             else
             {
@@ -961,25 +966,32 @@ namespace Runaurufu.ClimateControl
               Target = waterSources.m_buffer[i].m_target,
               MinTarget = (ushort)Mathf.Clamp(0.25f * waterSources.m_buffer[i].m_target, 100, ushort.MaxValue),
               MaxTarget = ushort.MaxValue,
+              InputRate = waterSources.m_buffer[i].m_inputRate,
+              OutputRate = waterSources.m_buffer[i].m_outputRate,
+              MinOutputRate = waterSources.m_buffer[i].m_outputRate = (uint)Mathf.Clamp(0.75f * waterSources.m_buffer[i].m_outputRate, 100, ushort.MaxValue),
+              MaxOutputRate = waterSources.m_buffer[i].m_outputRate = (uint)Mathf.Clamp(3.00f * waterSources.m_buffer[i].m_outputRate, 100, ushort.MaxValue),
             });
+
+            // input must be reduced to reduce rivers "sucking" water upstream. 
+            waterSources.m_buffer[i].m_inputRate = (uint)(waterSources.m_buffer[i].m_inputRate * 0.25f);
           }
         }
 
         mapSources = mapSourcesList.ToArray();
       }
 
-      if (this.GroundWetness > 0.50f)
+      if (this.GroundWetness == 0.0f && this.CurrentRain == 0.0f && this.currentClimateFrameStatistics.PrecipitationAmount < 30f)
+      {
+        waterSourceChangeCompound -= 3;
+      }
+
+      if (this.GroundWetness > 0.10f)
       {
         waterSourceChangeCompound += 1;
       }
       else
       {
         waterSourceChangeCompound -= 1;
-
-        if (this.GroundWetness == 0.0f && this.CurrentRain == 0.0f && this.currentClimateFrameStatistics.PrecipitationAmount < 30f)
-        {
-          waterSourceChangeCompound -= 1;
-        }
       }
 
       if (this.CurrentRain > 0.10f)
@@ -997,13 +1009,16 @@ namespace Runaurufu.ClimateControl
         }
       }
 
-      if (waterSourceChangeCompound > 25 || waterSourceChangeCompound < -25)
+      if (waterSourceChangeCompound > 35 || waterSourceChangeCompound < -35)
       {
         float targetMod = (waterSourceChangeCompound > 0 ? 1.005f : 0.995f);
         for (int i = 0; i < mapSources.Length; i++)
         {
           float newTarget = waterSources.m_buffer[mapSources[i].Index].m_target * targetMod;
           waterSources.m_buffer[mapSources[i].Index].m_target = (ushort)Mathf.Clamp(newTarget, mapSources[i].MinTarget, mapSources[i].MaxTarget);
+
+          float newOutputRate = waterSources.m_buffer[mapSources[i].Index].m_outputRate * targetMod;
+          waterSources.m_buffer[mapSources[i].Index].m_outputRate = (uint)Mathf.Clamp(newOutputRate, mapSources[i].MinOutputRate, mapSources[i].MaxOutputRate);
         }
         waterSourceChangeCompound = 0;
       }
@@ -1018,6 +1033,10 @@ namespace Runaurufu.ClimateControl
       public ushort Target;
       public ushort MinTarget;
       public ushort MaxTarget;
+      public uint InputRate;
+      public uint OutputRate;
+      public uint MinOutputRate;
+      public uint MaxOutputRate;
     }
   }
 
