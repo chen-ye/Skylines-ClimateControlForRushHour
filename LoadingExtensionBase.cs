@@ -51,7 +51,7 @@ namespace Runaurufu.ClimateControl
     }
 
     public override void OnLevelLoaded(LoadMode mode)
-    {
+    {      
       base.OnLevelLoaded(mode);
 
       if (mode != LoadMode.LoadGame && mode != LoadMode.NewGame)
@@ -84,6 +84,13 @@ namespace Runaurufu.ClimateControl
 
       this.AddGUIToggle();
       this.CreateControlPanels();
+    }
+
+    public override void OnLevelUnloading()
+    {
+      base.OnLevelUnloading();
+
+      ClimateControlEngine.Instance.Uninitialize();
     }
   }
 }
