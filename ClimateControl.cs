@@ -450,6 +450,15 @@ namespace Runaurufu.ClimateControl
       internal set { this.weatherManager.m_windDirection = value; }
     }
 
+    /// <summary>
+    /// 0-500 range
+    /// </summary>
+    public float SeaLevel
+    {
+      get { return this.terrainManager.WaterSimulation.m_currentSeaLevel; }
+      internal set { this.terrainManager.WaterSimulation.m_nextSeaLevel = value; }
+    }
+
     private SavedInt temperatureUnit = new SavedInt(Settings.temperatureUnit, Settings.gameSettingsFile, 0, true);
 
     public string GetLocalizedTemperature(float value, int decimals = 1)
@@ -964,16 +973,16 @@ namespace Runaurufu.ClimateControl
             {
               Index = i,
               Target = waterSources.m_buffer[i].m_target,
-              MinTarget = (ushort)Mathf.Clamp(0.25f * waterSources.m_buffer[i].m_target, 100, ushort.MaxValue),
-              MaxTarget = ushort.MaxValue,
+              MinTarget = (ushort)Mathf.Clamp(0.5f * waterSources.m_buffer[i].m_target, 63.99f * waterSources.m_buffer[i].m_outputPosition.y + 10, ushort.MaxValue),
+              MaxTarget = (ushort)Mathf.Min(waterSources.m_buffer[i].m_target + (waterSources.m_buffer[i].m_target - 63.99f * waterSources.m_buffer[i].m_outputPosition.y) * 1.75f, ushort.MaxValue),
               InputRate = waterSources.m_buffer[i].m_inputRate,
               OutputRate = waterSources.m_buffer[i].m_outputRate,
-              MinOutputRate = waterSources.m_buffer[i].m_outputRate = (uint)Mathf.Clamp(0.75f * waterSources.m_buffer[i].m_outputRate, 100, ushort.MaxValue),
-              MaxOutputRate = waterSources.m_buffer[i].m_outputRate = (uint)Mathf.Clamp(3.00f * waterSources.m_buffer[i].m_outputRate, 100, ushort.MaxValue),
+              MinOutputRate = waterSources.m_buffer[i].m_outputRate = (uint)Mathf.Clamp(0.5f * waterSources.m_buffer[i].m_outputRate, 100, ushort.MaxValue),
+              MaxOutputRate = waterSources.m_buffer[i].m_outputRate = (uint)Mathf.Clamp(10.00f * waterSources.m_buffer[i].m_outputRate, 100, ushort.MaxValue),
             });
 
             // input must be reduced to reduce rivers "sucking" water upstream. 
-            waterSources.m_buffer[i].m_inputRate = (uint)(waterSources.m_buffer[i].m_inputRate * 0.25f);
+            waterSources.m_buffer[i].m_inputRate = (uint)(waterSources.m_buffer[i].m_inputRate * 0.01f);
           }
         }
 
@@ -982,23 +991,26 @@ namespace Runaurufu.ClimateControl
 
       if (this.GroundWetness == 0.0f && this.CurrentRain == 0.0f && this.currentClimateFrameStatistics.PrecipitationAmount < 30f)
       {
-        waterSourceChangeCompound -= 3;
+        waterSourceChangeCompound -= 4;
       }
 
-      if (this.GroundWetness > 0.10f)
+      if (this.GroundWetness > 0.30f)
       {
         waterSourceChangeCompound += 1;
       }
-      else
+      else if(this.GroundWetness < 0.15f)
       {
         waterSourceChangeCompound -= 1;
+
+        if (this.GroundWetness < 0.05f)
+          waterSourceChangeCompound -= 2;
       }
 
-      if (this.CurrentRain > 0.10f)
+      if (this.CurrentRain > 0.05f)
       {
         waterSourceChangeCompound += 1;
 
-        if (this.CurrentRain > 0.35f)
+        if (this.CurrentRain > 0.25f)
         {
           waterSourceChangeCompound += 2;
 
@@ -1009,9 +1021,9 @@ namespace Runaurufu.ClimateControl
         }
       }
 
-      if (waterSourceChangeCompound > 35 || waterSourceChangeCompound < -35)
+      if (waterSourceChangeCompound > 50 || waterSourceChangeCompound < -50)
       {
-        float targetMod = (waterSourceChangeCompound > 0 ? 1.005f : 0.995f);
+        float targetMod = (waterSourceChangeCompound > 0 ? 1.003f : 0.995f);
         for (int i = 0; i < mapSources.Length; i++)
         {
           float newTarget = waterSources.m_buffer[mapSources[i].Index].m_target * targetMod;
