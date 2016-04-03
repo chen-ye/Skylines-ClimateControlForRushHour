@@ -80,6 +80,8 @@ namespace Runaurufu.ClimateControl
       this.InitializeManagers();
     }
 
+    public HistoryData HistoricalData { get; set; }
+
     private WeatherManager weatherManager;
     private TerrainManager terrainManager;
     private SimulationManager simulationManager;
@@ -211,6 +213,7 @@ namespace Runaurufu.ClimateControl
 
       this.ResetInternalValues();
 
+      this.HistoricalData = null;
       this.IsInitialized = false;
     }
 
@@ -503,8 +506,14 @@ namespace Runaurufu.ClimateControl
     private MonthlyClimateData currentClimateFrameData = null;
 
     private DateTime lastSimulationTimeUpdate;
-    private StatisticData currentClimateFrameStatistics = null;
+
+    private WeeklyStatisticData previousYearsStatisticData = null;
+    private WeeklyStatisticData currentWeekStatisticData = null;
+
     private TempClimateData currentTempClimateData = null;
+
+    private const float OneOverSeven = 1f/7f;
+    private const double MIN_TIME_DELTA = 15;
 
     public void UpdateClimate()
     {
@@ -517,11 +526,31 @@ namespace Runaurufu.ClimateControl
       DateTime simulationTime = this.ThreadingManager.simulationTime;
 
       TimeSpan simulationTimeUpdateDelta = simulationTime - this.lastSimulationTimeUpdate;
-      if (simulationTimeUpdateDelta.TotalMinutes < 15)
+      if (simulationTimeUpdateDelta.TotalMinutes < MIN_TIME_DELTA)
         return;
 
       bool needToReinitializeWeatherProperties = false;
 
+      if (this.HistoricalData == null)
+        this.HistoricalData = new HistoryData();
+
+      ushort weekIndex = (ushort)Mathf.FloorToInt((climateTime.DayOfYear - 1) * OneOverSeven);
+      float weekProgress = (climateTime.DayOfYear - 1) * OneOverSeven - weekIndex;
+      if (this.currentWeekStatisticData == null || this.currentWeekStatisticData.WeekIndex != weekIndex)
+      {
+        YearlyStatisticData yearlyData = this.HistoricalData.GetYearData(climateTime, true);
+        WeeklyStatisticData weeklyData = yearlyData.GetWeekData(climateTime, false);
+        if (weeklyData == null)
+        {
+          weeklyData = yearlyData.GetWeekData(climateTime, true);
+          weeklyData.TemperatureMin = weeklyData.TemperatureMax = weeklyData.TemperatureAverage = this.weatherManager.m_currentTemperature;
+        }
+
+        this.currentWeekStatisticData = weeklyData;
+        this.previousYearsStatisticData = this.HistoricalData.GetCombinedWeeklyData(weekIndex, (ushort)climateTime.Year);
+
+        DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Message, "history update! " + climateTime.Year + " / " + yearlyData.Year + " / " + weeklyData.WeekIndex);
+      }
 
       // DayNightProperties - related to lightning
 
@@ -538,6 +567,8 @@ namespace Runaurufu.ClimateControl
 
         // just to be sure...
         dataIndex = Math.Min(dataIndex, this.ClimateControlProperties.ClimateData.Length - 1);
+
+        float currentClimateFrameProgress = Mathf.Clamp01((climateTime.DayOfYear - dataIndex * daysPerClimateStage) / daysPerClimateStage);
 
         MonthlyClimateData monthlyData = this.ClimateControlProperties.ClimateData[dataIndex];
 
@@ -619,10 +650,6 @@ namespace Runaurufu.ClimateControl
           }
 
           this.currentClimateFrameData = monthlyData;
-          this.currentClimateFrameStatistics = new StatisticData();
-          this.currentClimateFrameStatistics.FrameDateTimeStart = simulationTime;
-          this.currentClimateFrameStatistics.MinTemperature = this.currentClimateFrameStatistics.MaxTemperature = this.weatherManager.m_currentTemperature;
-
           needToReinitializeWeatherProperties = true;
 
           this.currentTempClimateData = new TempClimateData();
@@ -638,10 +665,7 @@ namespace Runaurufu.ClimateControl
         }
         else
         {
-          // we keep previous climate frame data
-          float currentClimateFrameProgress = Mathf.Clamp01((float)(simulationTime - this.currentClimateFrameStatistics.FrameDateTimeStart).TotalDays / daysPerClimateStage);
-
-          if (this.currentTempClimateData.PrecipitationAverage < this.currentClimateFrameStatistics.PrecipitationAmount)
+          if (this.currentTempClimateData.PrecipitationAverage < this.currentWeekStatisticData.PrecipitationAmount)
           {
             // more precipitation then expected! Halt rain!
             this.weatherManager.m_targetRain = 0.0f;
@@ -649,13 +673,13 @@ namespace Runaurufu.ClimateControl
           else if (this.weatherManager.m_targetRain < 0.01f && (isNight ? this.CurrentWeatherProperties.m_rainProbabilityNight : this.CurrentWeatherProperties.m_rainProbabilityDay) > this.random.Next(0, 100))
           {
             // less precipitation then expected!
-            float precipitationToFill = (this.currentTempClimateData.PrecipitationAverage - this.currentClimateFrameStatistics.PrecipitationAmount);
+            float precipitationToFill = (this.currentTempClimateData.PrecipitationAverage - this.currentWeekStatisticData.PrecipitationAmount);
 
             float daysToNextFrame = daysPerClimateStage * (1 - currentClimateFrameProgress);
 
             precipitationToFill = (precipitationToFill / (daysToNextFrame * this.ClimateControlProperties.SolarDayLength));
 
-            if (this.currentTempClimateData.PrecipitationHoursExpected > this.currentClimateFrameStatistics.PrecipitationDuration)
+            if (this.currentTempClimateData.PrecipitationHoursExpected > this.currentWeekStatisticData.PrecipitationDuration)
               precipitationToFill *= (float)this.random.Next(0, 600) * 0.01f;
             else
               precipitationToFill *= (float)this.random.Next(0, 200) * 0.01f;
@@ -666,7 +690,7 @@ namespace Runaurufu.ClimateControl
             }
           }
 
-          if (this.currentClimateFrameStatistics.FogDuration < this.currentTempClimateData.FogHoursExpected)
+          if (this.currentWeekStatisticData.FogDuration < this.currentTempClimateData.FogHoursExpected)
           {
             // more foggy time needed!
             if (this.weatherManager.m_targetFog < 0.01f)
@@ -780,22 +804,21 @@ namespace Runaurufu.ClimateControl
         this.weatherManager.InitializeProperties(this.CurrentWeatherProperties);
       }
 
-      // Handle statistics
-      if (this.currentClimateFrameStatistics != null)
+      // Handle historical data
+      this.currentWeekStatisticData.TemperatureMin = Mathf.Min(this.currentWeekStatisticData.TemperatureMin, this.weatherManager.m_currentTemperature);
+      this.currentWeekStatisticData.TemperatureMax = Mathf.Max(this.currentWeekStatisticData.TemperatureMax, this.weatherManager.m_currentTemperature);
+      this.currentWeekStatisticData.TemperatureAverage = (float)((this.currentWeekStatisticData.TemperatureAverage * (weekProgress * 10080 - MIN_TIME_DELTA)) + this.weatherManager.m_currentTemperature * MIN_TIME_DELTA) / 10080f;
+        //10080 = that many minutes you get in week
+
+      if (this.weatherManager.m_currentRain > 0)
       {
-        if (this.weatherManager.m_currentRain > 0)
-        {
-          this.currentClimateFrameStatistics.PrecipitationDuration += (float)simulationTimeUpdateDelta.TotalHours;
-          this.currentClimateFrameStatistics.PrecipitationAmount += (float)(this.weatherManager.m_currentRain * simulationTimeUpdateDelta.TotalHours);
-        }
+        this.currentWeekStatisticData.PrecipitationDuration += (float)simulationTimeUpdateDelta.TotalHours;
+        this.currentWeekStatisticData.PrecipitationAmount += (float)(this.weatherManager.m_currentRain * simulationTimeUpdateDelta.TotalHours * 4f);
+      }
 
-        if (this.weatherManager.m_currentFog > 0)
-        {
-          this.currentClimateFrameStatistics.FogDuration += (float)simulationTimeUpdateDelta.TotalHours;
-        }
-
-        this.currentClimateFrameStatistics.MinTemperature = Mathf.Min(this.currentClimateFrameStatistics.MinTemperature, this.weatherManager.m_currentTemperature);
-        this.currentClimateFrameStatistics.MaxTemperature = Mathf.Max(this.currentClimateFrameStatistics.MaxTemperature, this.weatherManager.m_currentTemperature);
+      if (this.weatherManager.m_currentFog > 0)
+      {
+        this.currentWeekStatisticData.FogDuration += (float)simulationTimeUpdateDelta.TotalHours;
       }
 
       this.lastSimulationTimeUpdate = simulationTime;
@@ -989,7 +1012,7 @@ namespace Runaurufu.ClimateControl
         mapSources = mapSourcesList.ToArray();
       }
 
-      if (this.GroundWetness == 0.0f && this.CurrentRain == 0.0f && this.currentClimateFrameStatistics.PrecipitationAmount < 30f)
+      if (this.GroundWetness == 0.0f && this.CurrentRain == 0.0f && this.currentWeekStatisticData.PrecipitationAmount < 30f)
       {
         waterSourceChangeCompound -= 4;
       }
@@ -1067,13 +1090,150 @@ namespace Runaurufu.ClimateControl
     Snow = 1,
   }
 
-  public class StatisticData
+  [Serializable]
+  public class HistoryData
   {
-    public DateTime FrameDateTimeStart { get; set; }
-    public float MinTemperature { get; set; }
-    public float MaxTemperature { get; set; }
+    public HistoryData()
+    {
+      this.YearlyData = new List<YearlyStatisticData>();
+    }
+
+    public List<YearlyStatisticData> YearlyData { get; set; }
+
+    public YearlyStatisticData GetYearData(DateTime dateTime, bool makeIfNotExist)
+    {
+      return this.GetYearData((ushort)dateTime.Year, makeIfNotExist);
+    }
+
+    public YearlyStatisticData GetYearData(ushort year, bool makeIfNotExist)
+    {
+      if (this.YearlyData == null)
+        this.YearlyData = new List<YearlyStatisticData>();
+
+      for (int i = 0; i < this.YearlyData.Count; i++)
+      {
+        if (this.YearlyData[i] == null)
+        {
+          this.YearlyData.RemoveAt(i);
+          i--;
+          continue;
+        }
+
+        if (this.YearlyData[i].Year == year)
+          return this.YearlyData[i];
+      }
+
+      if(makeIfNotExist)
+      {
+        YearlyStatisticData data = new YearlyStatisticData(year);
+        this.YearlyData.Add(data);
+        return data;
+      }
+      return null;
+    }
+
+    public WeeklyStatisticData GetCombinedWeeklyData(ushort weekIndex, ushort ommitYear)
+    {
+      if (this.YearlyData == null)
+        this.YearlyData = new List<YearlyStatisticData>();
+
+      List<WeeklyStatisticData> weeklyData = new List<WeeklyStatisticData>();
+      foreach (YearlyStatisticData yearItem in this.YearlyData)
+      {
+        if (yearItem.Year == ommitYear)
+          continue;
+
+        WeeklyStatisticData weekData = yearItem.GetWeekData(weekIndex, false);
+        if(weekData != null)
+          weeklyData.Add(weekData);
+      }
+
+      if (weeklyData.Count == 0)
+        return null;
+
+      WeeklyStatisticData combinedData = new WeeklyStatisticData() { WeekIndex = weekIndex };
+      combinedData.TemperatureMin = float.MaxValue;
+      combinedData.TemperatureMax = float.MinValue;
+
+      double tempAverage = 0;
+      double precipitationAmount = 0;
+      double precipitationDuration = 0;
+      double fogDuration = 0;
+      foreach (WeeklyStatisticData weekItem in weeklyData)
+      {
+        combinedData.TemperatureMin = Math.Min(combinedData.TemperatureMin, weekItem.TemperatureMin);
+        combinedData.TemperatureMax = Math.Max(combinedData.TemperatureMax, weekItem.TemperatureMax);
+        tempAverage += weekItem.TemperatureAverage;
+
+        precipitationAmount += weekItem.PrecipitationAmount;
+        precipitationDuration += weekItem.PrecipitationDuration;
+
+        fogDuration += weekItem.FogDuration;
+      }
+
+      combinedData.TemperatureAverage = (float)(tempAverage / weeklyData.Count);
+      combinedData.PrecipitationAmount = (float)(precipitationAmount / weeklyData.Count);
+      combinedData.PrecipitationDuration = (float)(precipitationDuration / weeklyData.Count);
+      combinedData.FogDuration = (float)(fogDuration / weeklyData.Count);
+
+      return combinedData;
+    }
+  }
+
+  [Serializable]
+  public class YearlyStatisticData
+  {
+    public ushort Year { get; set; }
+
+    public WeeklyStatisticData[] WeeklyData { get; set; }
+
+    public YearlyStatisticData()
+    {
+    }
+
+    public YearlyStatisticData(ushort year)
+    {
+      this.Year = year;
+      this.WeeklyData = new WeeklyStatisticData[53];
+    }
+
+    public WeeklyStatisticData GetWeekData(DateTime dateTime, bool makeIfNotExist)
+    {
+      int weekIndex = Mathf.FloorToInt(dateTime.DayOfYear / 7f);
+      return this.GetWeekData((ushort)weekIndex, makeIfNotExist);
+    }
+
+    public WeeklyStatisticData GetWeekData(ushort weekIndex, bool makeIfNotExist)
+    {
+      if (this.WeeklyData == null)
+        this.WeeklyData = new WeeklyStatisticData[53];
+
+      if (WeeklyData.Length <= weekIndex || weekIndex < 0)
+      {
+        if (makeIfNotExist)
+          throw new ArgumentOutOfRangeException("weekIndex");
+        return null;
+      }
+
+      if (this.WeeklyData[weekIndex] == null && makeIfNotExist)
+        this.WeeklyData[weekIndex] = new WeeklyStatisticData() { WeekIndex = weekIndex };
+
+      return this.WeeklyData[weekIndex];
+    }
+  }
+
+  [Serializable]
+  public class WeeklyStatisticData
+  {
+    public ushort WeekIndex { get; set; }
+
+    public float TemperatureMin { get; set; }
+    public float TemperatureMax { get; set; }
+    public float TemperatureAverage { get; set; }
+
     public float PrecipitationAmount { get; set; }
     public float PrecipitationDuration { get; set; }
+
     public float FogDuration { get; set; }
   }
 
