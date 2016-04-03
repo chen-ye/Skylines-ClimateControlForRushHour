@@ -309,6 +309,7 @@ namespace Runaurufu.ClimateControl
         }
       }},
       #endregion
+
       #region Planet Mars
       // https://en.wikipedia.org/wiki/Climate_of_Mars
       // http://quest.nasa.gov/aero/planetary/mars.html
@@ -453,1568 +454,7 @@ namespace Runaurufu.ClimateControl
         }
       }},
       #endregion
-      #region England, London
-      // http://www.weatherbase.com/weather/weatherall.php3?s=67730&cityname=London%2C+England%2C+United+Kingdom&units=
-      new ClimatePreset() { PresetName = "England, London", PresetCode = "PRESET_ENGLAND_LONDON", ClimateProperties = new ClimateControlProperties()
-      {
-        SnowFallTemperature = 2, SnowMeltTemperature = 10, SolarDayLength = 24.00f,
-        ClimateData = new MonthlyClimateData[]
-        {
-          new MonthlyClimateData() // January
-          {
-            TemperatureAverage = 4.3f,
-            TemperatureHighAverage = 7.4f, TemperatureLowAverage = 1.2f,
-            TemperatureHighest = 12, TemperatureLowest = -12,
-            PrecipitationAverage = 70,
-            PrecipitationDaysRatio = 0.76f,
-            AverageWindSpeed = 12.4f,
-            FogDaysRatio = 14f/30f,
-            DayLengthAverage = 9.2f,
-          },
-          new MonthlyClimateData() // February
-          {
-            TemperatureAverage = 4.5f,
-            TemperatureHighAverage = 7.9f, TemperatureLowAverage = 1,
-            TemperatureHighest = 17, TemperatureLowest = -13,
-            PrecipitationAverage = 50,
-            PrecipitationDaysRatio = 0.63f,
-            AverageWindSpeed = 13,
-            FogDaysRatio = 13f/30f,
-            DayLengthAverage = 10.6f,
-          },
-          new MonthlyClimateData() // March
-          {
-            TemperatureAverage = 6.9f,
-            TemperatureHighAverage = 10.9f, TemperatureLowAverage = 2.8f,
-            TemperatureHighest = 20, TemperatureLowest = -7,
-            PrecipitationAverage = 60,
-            PrecipitationDaysRatio = 0.7f,
-            AverageWindSpeed = 14.4f,
-            FogDaysRatio = 16f/30f,
-            DayLengthAverage = 12.5f,
-          },
-          new MonthlyClimateData() // April
-          {
-            TemperatureAverage = 8.7f,
-            TemperatureHighAverage = 13.7f, TemperatureLowAverage = 3.7f,
-            TemperatureHighest = 22, TemperatureLowest = -5,
-            PrecipitationAverage = 50,
-            PrecipitationDaysRatio = 0.66f,
-            AverageWindSpeed = 10.4f,
-            FogDaysRatio = 14f/30f,
-            DayLengthAverage = 14.5f,
-          },
-          new MonthlyClimateData() // May
-          {
-            TemperatureAverage = 12.1f,
-            TemperatureHighAverage = 17.4f, TemperatureLowAverage = 6.8f,
-            TemperatureHighest = 28, TemperatureLowest = -3,
-            PrecipitationAverage = 50,
-            PrecipitationDaysRatio = 0.6f,
-            AverageWindSpeed = 10.6f,
-            FogDaysRatio = 18f/30f,
-            DayLengthAverage = 16.3f,
-          },
-          new MonthlyClimateData() // June
-          {
-            TemperatureAverage = 15.1f,
-            TemperatureHighAverage = 20.5f, TemperatureLowAverage = 9.6f,
-            TemperatureHighest = 32, TemperatureLowest = 1,
-            PrecipitationAverage = 50,
-            PrecipitationDaysRatio = 0.6f,
-            AverageWindSpeed = 9.3f,
-            FogDaysRatio = 19f/30f,
-            DayLengthAverage = 17.3f,
-          },
-          new MonthlyClimateData() // July
-          {
-            TemperatureAverage = 17.3f,
-            TemperatureHighAverage = 22.9f, TemperatureLowAverage = 11.7f,
-            TemperatureHighest = 33, TemperatureLowest = 3,
-            PrecipitationAverage = 40,
-            PrecipitationDaysRatio = 0.56f,
-            AverageWindSpeed = 8.7f,
-            FogDaysRatio = 17f/30f,
-            DayLengthAverage = 16.7f,
-          },
-          new MonthlyClimateData() // August
-          {
-            TemperatureAverage = 17,
-            TemperatureHighAverage = 22.6f, TemperatureLowAverage = 11.4f,
-            TemperatureHighest = 35, TemperatureLowest = 2,
-            PrecipitationAverage = 50,
-            PrecipitationDaysRatio = 0.56f,
-            AverageWindSpeed = 11.1f,
-            FogDaysRatio = 22f/30f,
-            DayLengthAverage = 15.1f,
-          },
-          new MonthlyClimateData() // September
-          {
-            TemperatureAverage = 14.3f,
-            TemperatureHighAverage = 19.2f, TemperatureLowAverage = 9.3f,
-            TemperatureHighest = 27, TemperatureLowest = 1,
-            PrecipitationAverage = 60,
-            PrecipitationDaysRatio = 0.6f,
-            AverageWindSpeed = 8.7f,
-            FogDaysRatio = 20f/30f,
-            DayLengthAverage = 13.2f,
-          },
-          new MonthlyClimateData() // October
-          {
-            TemperatureAverage = 10.9f,
-            TemperatureHighAverage = 15.2f, TemperatureLowAverage = 6.6f,
-            TemperatureHighest = 25, TemperatureLowest = -4,
-            PrecipitationAverage = 70,
-            PrecipitationDaysRatio = 0.70f,
-            AverageWindSpeed = 9.8f,
-            FogDaysRatio = 21f/30f,
-            DayLengthAverage = 11.2f,
-          },
-          new MonthlyClimateData() // November
-          {
-            TemperatureAverage = 7.2f,
-            TemperatureHighAverage = 10.7f, TemperatureLowAverage = 3.6f,
-            TemperatureHighest = 17, TemperatureLowest = -7,
-            PrecipitationAverage = 70,
-            PrecipitationDaysRatio = 0.73f,
-            AverageWindSpeed = 9.1f,
-            FogDaysRatio = 17f/30f,
-            DayLengthAverage = 9.5f,
-          },
-          new MonthlyClimateData() // December
-          {
-            TemperatureAverage = 4.7f,
-            TemperatureHighAverage = 7.8f, TemperatureLowAverage = 1.6f,
-            TemperatureHighest = 15, TemperatureLowest = -11,
-            PrecipitationAverage = 70,
-            PrecipitationDaysRatio = 0.73f,
-            AverageWindSpeed = 10.9f,
-            FogDaysRatio = 16f/30f,
-            DayLengthAverage = 8.6f,
-          },
-        }
-      }},
-      #endregion
-      #region Spain, Seville
-      // http://www.weatherbase.com/weather/weatherall.php3?s=19380&cityname=Seville%2C+Andalusia%2C+Spain&units=
-      new ClimatePreset() { PresetName = "Spain, Seville", PresetCode = "PRESET_SPAIN_SEVILLE", ClimateProperties = new ClimateControlProperties()
-      {
-        SnowFallTemperature = 2, SnowMeltTemperature = 10, SolarDayLength = 24.00f,
-        ClimateData = new MonthlyClimateData[]
-        {
-          new MonthlyClimateData() // January
-          {
-            TemperatureAverage = 10.6f,
-            TemperatureHighAverage = 15.9f, TemperatureLowAverage = 5.2f,
-            TemperatureHighest = 23, TemperatureLowest = -3,
-            PrecipitationAverage = 65,
-            PrecipitationDaysRatio = 6f/30f,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 4f/30f,
-            DayLengthAverage = 10.4f,
-          },
-          new MonthlyClimateData() // February
-          {
-            TemperatureAverage = 12.2f,
-            TemperatureHighAverage = 17.9f, TemperatureLowAverage = 6.7f,
-            TemperatureHighest = 26, TemperatureLowest = -2,
-            PrecipitationAverage = 54,
-            PrecipitationDaysRatio = 6f/30f,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 3f/30f,
-            DayLengthAverage = 11.3f,
-          },
-          new MonthlyClimateData() // March
-          {
-            TemperatureAverage = 14.7f,
-            TemperatureHighAverage = 21.2f, TemperatureLowAverage = 8.2f,
-            TemperatureHighest = 31, TemperatureLowest = 0,
-            PrecipitationAverage = 38,
-            PrecipitationDaysRatio = 5f/30f,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 3f/30f,
-            DayLengthAverage = 12.4f,
-          },
-          new MonthlyClimateData() // April
-          {
-            TemperatureAverage = 16.4f,
-            TemperatureHighAverage = 22.7f, TemperatureLowAverage = 10.1f,
-            TemperatureHighest = 33, TemperatureLowest = 1,
-            PrecipitationAverage = 57,
-            PrecipitationDaysRatio = 7f/30f,
-            AverageWindSpeed = 16,
-            FogDaysRatio = 2f/30f,
-            DayLengthAverage = 13.7f,
-          },
-          new MonthlyClimateData() // May
-          {
-            TemperatureAverage = 19.7f,
-            TemperatureHighAverage = 26.4f, TemperatureLowAverage = 13.1f,
-            TemperatureHighest = 38, TemperatureLowest = 6,
-            PrecipitationAverage = 34,
-            PrecipitationDaysRatio = 4f/30f,
-            AverageWindSpeed = 16,
-            FogDaysRatio = 1f/30f,
-            DayLengthAverage = 14.7f,
-          },
-          new MonthlyClimateData() // June
-          {
-            TemperatureAverage = 23.9f,
-            TemperatureHighAverage = 31, TemperatureLowAverage = 16.7f,
-            TemperatureHighest = 43, TemperatureLowest = 7,
-            PrecipitationAverage = 13,
-            PrecipitationDaysRatio = 2f/30f,
-            AverageWindSpeed = 16,
-            FogDaysRatio = 1f/30f,
-            DayLengthAverage = 15.2f,
-          },
-          new MonthlyClimateData() // July
-          {
-            TemperatureAverage = 27.4f,
-            TemperatureHighAverage = 35.3f, TemperatureLowAverage = 19.4f,
-            TemperatureHighest = 43, TemperatureLowest = 13,
-            PrecipitationAverage = 2,
-            PrecipitationDaysRatio = 0,
-            AverageWindSpeed = 16,
-            FogDaysRatio = 0,
-            DayLengthAverage = 14.9f,
-          },
-          new MonthlyClimateData() // August
-          {
-            TemperatureAverage = 27.2f,
-            TemperatureHighAverage = 35, TemperatureLowAverage = 19.5f,
-            TemperatureHighest = 45, TemperatureLowest = 12,
-            PrecipitationAverage = 6,
-            PrecipitationDaysRatio = 0,
-            AverageWindSpeed = 16,
-            FogDaysRatio = 0,
-            DayLengthAverage = 14,
-          },
-          new MonthlyClimateData() // September
-          {
-            TemperatureAverage = 24.5f,
-            TemperatureHighAverage = 31.6f, TemperatureLowAverage = 17.5f,
-            TemperatureHighest = 43, TemperatureLowest = 8,
-            PrecipitationAverage = 23,
-            PrecipitationDaysRatio = 2f/30f,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 1f/30f,
-            DayLengthAverage = 12.8f,
-          },
-          new MonthlyClimateData() // October
-          {
-            TemperatureAverage = 19.6f,
-            TemperatureHighAverage = 25.6f, TemperatureLowAverage = 13.5f,
-            TemperatureHighest = 36, TemperatureLowest = 3,
-            PrecipitationAverage = 62,
-            PrecipitationDaysRatio = 6f/30f,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 2f/30f,
-            DayLengthAverage = 11.6f,
-          },
-          new MonthlyClimateData() // November
-          {
-            TemperatureAverage = 14.8f,
-            TemperatureHighAverage = 20.1f, TemperatureLowAverage = 9.3f,
-            TemperatureHighest = 31, TemperatureLowest = -1,
-            PrecipitationAverage = 84,
-            PrecipitationDaysRatio = 6f/30f,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 2f/30f,
-            DayLengthAverage = 10.6f,
-          },
-          new MonthlyClimateData() // December
-          {
-            TemperatureAverage = 11.8f,
-            TemperatureHighAverage = 16.6f, TemperatureLowAverage = 6.9f,
-            TemperatureHighest = 23, TemperatureLowest = -5,
-            PrecipitationAverage = 95,
-            PrecipitationDaysRatio = 8f/30f,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 3f/30f,
-            DayLengthAverage = 10.1f,
-          },
-        }
-      }},
-      #endregion
-      #region Sweden, Stockholm
-      // http://www.weatherbase.com/weather/weatherall.php3?s=6420&cityname=Stockholm%2C+Stockholm%2C+Sweden&units=
-      new ClimatePreset() { PresetName = "Sweden, Stockholm", PresetCode = "PRESET_SWEDEN_STOCKHOLM", ClimateProperties = new ClimateControlProperties()
-      {
-        SnowFallTemperature = 2, SnowMeltTemperature = 10, SolarDayLength = 24.00f,
-        ClimateData = new MonthlyClimateData[]
-        {
-          new MonthlyClimateData() // January
-          {
-            TemperatureAverage = -2,
-            TemperatureHighAverage = 0, TemperatureLowAverage = -5,
-            TemperatureHighest = 10, TemperatureLowest = -27,
-            PrecipitationAverage = 39,
-            PrecipitationDaysRatio = 25f/30f,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 16f/30f,
-            DayLengthAverage = 7.8f,
-          },
-          new MonthlyClimateData() // February
-          {
-            TemperatureAverage = -3,
-            TemperatureHighAverage = 0, TemperatureLowAverage = -6,
-            TemperatureHighest = 12, TemperatureLowest = -27,
-            PrecipitationAverage = 27,
-            PrecipitationDaysRatio = 20f/30f,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 15f/30f,
-            DayLengthAverage = 10,
-          },
-          new MonthlyClimateData() // March
-          {
-            TemperatureAverage = 0,
-            TemperatureHighAverage = 2, TemperatureLowAverage = -3,
-            TemperatureHighest = 16, TemperatureLowest = -20,
-            PrecipitationAverage = 26,
-            PrecipitationDaysRatio = 21f/30f,
-            AverageWindSpeed = 16,
-            FogDaysRatio = 18f/30f,
-            DayLengthAverage = 12.6f,
-          },
-          new MonthlyClimateData() // April
-          {
-            TemperatureAverage = 3,
-            TemperatureHighAverage = 8, TemperatureLowAverage = 0,
-            TemperatureHighest = 26, TemperatureLowest = -10,
-            PrecipitationAverage = 30,
-            PrecipitationDaysRatio = 20f/30f,
-            AverageWindSpeed = 16,
-            FogDaysRatio = 13f/30f,
-            DayLengthAverage = 15.4f,
-          },
-          new MonthlyClimateData() // May
-          {
-            TemperatureAverage = 10,
-            TemperatureHighAverage = 15, TemperatureLowAverage = 5,
-            TemperatureHighest = 27, TemperatureLowest = -5,
-            PrecipitationAverage = 30,
-            PrecipitationDaysRatio = 17f/30f,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 10f/30f,
-            DayLengthAverage = 18.2f,
-          },
-          new MonthlyClimateData() // June
-          {
-            TemperatureAverage = 14,
-            TemperatureHighAverage = 19, TemperatureLowAverage = 9,
-            TemperatureHighest = 30, TemperatureLowest = 1,
-            PrecipitationAverage = 45,
-            PrecipitationDaysRatio = 18f/30f,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 13f/30f,
-            DayLengthAverage = 20.1f,
-          },
-          new MonthlyClimateData() // July
-          {
-            TemperatureAverage = 17,
-            TemperatureHighAverage = 21, TemperatureLowAverage = 12,
-            TemperatureHighest = 32, TemperatureLowest = 5,
-            PrecipitationAverage = 72,
-            PrecipitationDaysRatio = 20f/30f,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 14f/30f,
-            DayLengthAverage = 19,
-          },
-          new MonthlyClimateData() // August
-          {
-            TemperatureAverage = 16,
-            TemperatureHighAverage = 20, TemperatureLowAverage = 11,
-            TemperatureHighest = 35, TemperatureLowest = -1,
-            PrecipitationAverage = 66,
-            PrecipitationDaysRatio = 19f/30f,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 17f/30f,
-            DayLengthAverage = 16.3f,
-          },
-          new MonthlyClimateData() // September
-          {
-            TemperatureAverage = 11,
-            TemperatureHighAverage = 14, TemperatureLowAverage = 7,
-            TemperatureHighest = 26, TemperatureLowest = -5,
-            PrecipitationAverage = 55,
-            PrecipitationDaysRatio = 20f/30f,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 15f/30f,
-            DayLengthAverage = 13.5f,
-          },
-          new MonthlyClimateData() // October
-          {
-            TemperatureAverage = 6,
-            TemperatureHighAverage = 8, TemperatureLowAverage = 3,
-            TemperatureHighest = 20, TemperatureLowest = -11,
-            PrecipitationAverage = 50,
-            PrecipitationDaysRatio = 20f/30f,
-            AverageWindSpeed = 9,
-            FogDaysRatio = 17f/30f,
-            DayLengthAverage = 10.8f,
-          },
-          new MonthlyClimateData() // November
-          {
-            TemperatureAverage = 1,
-            TemperatureHighAverage = 3, TemperatureLowAverage = 0,
-            TemperatureHighest = 12, TemperatureLowest = -15,
-            PrecipitationAverage = 53,
-            PrecipitationDaysRatio = 23f/30f,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 14f/30f,
-            DayLengthAverage = 8.4f,
-          },
-          new MonthlyClimateData() // December
-          {
-            TemperatureAverage = -2,
-            TemperatureHighAverage = 0, TemperatureLowAverage = -5,
-            TemperatureHighest = 10, TemperatureLowest = -26,
-            PrecipitationAverage = 46,
-            PrecipitationDaysRatio = 25f/30f,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 15f/30f,
-            DayLengthAverage = 7.1f,
-          },
-        }
-      }},
-      #endregion
-      #region Finland, Helsinki
-      // http://www.weatherbase.com/weather/weatherall.php3?s=47920&cityname=Helsinki%2C+Uusimaa%2C+Finland&units=
-      new ClimatePreset() { PresetName = "Finland, Helsinki", PresetCode = "PRESET_FINLAND_HELSINKI", ClimateProperties = new ClimateControlProperties()
-      {
-        SnowFallTemperature = 2, SnowMeltTemperature = 10, SolarDayLength = 24.00f,
-        ClimateData = new MonthlyClimateData[]
-        {
-          new MonthlyClimateData() // January
-          {
-            TemperatureAverage = -5,
-            TemperatureHighAverage = -3, TemperatureLowAverage = -8,
-            TemperatureHighest = 7, TemperatureLowest = -36,
-            PrecipitationAverage = 40,
-            PrecipitationDaysRatio = 16f/30f,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 15f/30f,
-            DayLengthAverage = 7.7f,
-          },
-          new MonthlyClimateData() // February
-          {
-            TemperatureAverage = -6,
-            TemperatureHighAverage = -2, TemperatureLowAverage = -9,
-            TemperatureHighest = 10, TemperatureLowest = -30,
-            PrecipitationAverage = 30,
-            PrecipitationDaysRatio = 11f/30f,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 16f/30f,
-            DayLengthAverage = 9.9f,
-          },
-          new MonthlyClimateData() // March
-          {
-            TemperatureAverage = -2,
-            TemperatureHighAverage = 1, TemperatureLowAverage = -5,
-            TemperatureHighest = 12, TemperatureLowest = -26,
-            PrecipitationAverage = 30,
-            PrecipitationDaysRatio = 12f/30f,
-            AverageWindSpeed = 19,
-            FogDaysRatio = 18f/30f,
-            DayLengthAverage = 12.6f,
-          },
-          new MonthlyClimateData() // April
-          {
-            TemperatureAverage = 3,
-            TemperatureHighAverage = 7, TemperatureLowAverage = 0,
-            TemperatureHighest = 21, TemperatureLowest = -11,
-            PrecipitationAverage = 30,
-            PrecipitationDaysRatio = 13f/30f,
-            AverageWindSpeed = 16,
-            FogDaysRatio = 14f/30f,
-            DayLengthAverage = 15.5f,
-          },
-          new MonthlyClimateData() // May
-          {
-            TemperatureAverage = 10,
-            TemperatureHighAverage = 15, TemperatureLowAverage = 5,
-            TemperatureHighest = 27, TemperatureLowest = -3,
-            PrecipitationAverage = 40,
-            PrecipitationDaysRatio = 14f/30f,
-            AverageWindSpeed = 16,
-            FogDaysRatio = 13f/30f,
-            DayLengthAverage = 18.5f,
-          },
-          new MonthlyClimateData() // June
-          {
-            TemperatureAverage = 13,
-            TemperatureHighAverage = 18, TemperatureLowAverage = 9,
-            TemperatureHighest = 30, TemperatureLowest = -1,
-            PrecipitationAverage = 40,
-            PrecipitationDaysRatio = 17f/30f,
-            AverageWindSpeed = 16,
-            FogDaysRatio = 14f/30f,
-            DayLengthAverage = 20.7f,
-          },
-          new MonthlyClimateData() // July
-          {
-            TemperatureAverage = 16,
-            TemperatureHighAverage = 21, TemperatureLowAverage = 11,
-            TemperatureHighest = 31, TemperatureLowest = 4,
-            PrecipitationAverage = 60,
-            PrecipitationDaysRatio = 15f/30f,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 18f/30f,
-            DayLengthAverage = 19.3f,
-          },
-          new MonthlyClimateData() // August
-          {
-            TemperatureAverage = 15,
-            TemperatureHighAverage = 18, TemperatureLowAverage = 10,
-            TemperatureHighest = 31, TemperatureLowest = 4,
-            PrecipitationAverage = 70,
-            PrecipitationDaysRatio = 17f/30f,
-            AverageWindSpeed = 16,
-            FogDaysRatio = 19f/30f,
-            DayLengthAverage = 16.4f,
-          },
-          new MonthlyClimateData() // September
-          {
-            TemperatureAverage = 10,
-            TemperatureHighAverage = 13, TemperatureLowAverage = 6,
-            TemperatureHighest = 25, TemperatureLowest = -7,
-            PrecipitationAverage = 60,
-            PrecipitationDaysRatio = 15f/30f,
-            AverageWindSpeed = 9,
-            FogDaysRatio = 17f/30f,
-            DayLengthAverage = 13.5f,
-          },
-          new MonthlyClimateData() // October
-          {
-            TemperatureAverage = 5,
-            TemperatureHighAverage = 7, TemperatureLowAverage = 2,
-            TemperatureHighest = 17, TemperatureLowest = -12,
-            PrecipitationAverage = 60,
-            PrecipitationDaysRatio = 20f/30f,
-            AverageWindSpeed = 9,
-            FogDaysRatio = 16f/30f,
-            DayLengthAverage = 10.8f,
-          },
-          new MonthlyClimateData() // November
-          {
-            TemperatureAverage = 0,
-            TemperatureHighAverage = 2, TemperatureLowAverage = -2,
-            TemperatureHighest = 10, TemperatureLowest = -20,
-            PrecipitationAverage = 60,
-            PrecipitationDaysRatio = 17f/30f,
-            AverageWindSpeed = 19,
-            FogDaysRatio = 15f/30f,
-            DayLengthAverage = 8.3f,
-          },
-          new MonthlyClimateData() // December
-          {
-            TemperatureAverage = -3,
-            TemperatureHighAverage = -1, TemperatureLowAverage = -6,
-            TemperatureHighest = 8, TemperatureLowest = -32,
-            PrecipitationAverage = 50,
-            PrecipitationDaysRatio = 16f/30f,
-            AverageWindSpeed = 20,
-            FogDaysRatio = 13f/30f,
-            DayLengthAverage = 6.9f,
-          },
-        }
-      }},
-      #endregion
-      #region Poland, Kraków
-      // http://www.weatherbase.com/weather/weatherall.php3?s=66521&cityname=Krakow%2C+Lesser+Poland+Voivodeship%2C+Poland&units=
-      new ClimatePreset() { PresetName = "Poland, Kraków", PresetCode = "PRESET_POLAND_KRAKÓW", ClimateProperties = new ClimateControlProperties()
-      {
-        SnowFallTemperature = 2, SnowMeltTemperature = 10, SolarDayLength = 24.00f,
-        ClimateData = new MonthlyClimateData[]
-        {
-          new MonthlyClimateData() // January
-          {
-            TemperatureAverage = -2,
-            TemperatureHighAverage = 0, TemperatureLowAverage = -5,
-            TemperatureHighest = 15, TemperatureLowest = -30,
-            PrecipitationAverage = 30,
-            PrecipitationDaysRatio = 18f/30f,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 24f/30f,
-            DayLengthAverage = 9.3f,
-          },
-          new MonthlyClimateData() // February
-          {
-            TemperatureAverage = -1,
-            TemperatureHighAverage = 1, TemperatureLowAverage = -4,
-            TemperatureHighest = 18, TemperatureLowest = -27,
-            PrecipitationAverage = 30,
-            PrecipitationDaysRatio = 17f/30f,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 22f/30f,
-            DayLengthAverage = 10.7f,
-          },
-          new MonthlyClimateData() // March
-          {
-            TemperatureAverage = 3,
-            TemperatureHighAverage = 7, TemperatureLowAverage = 0,
-            TemperatureHighest = 22, TemperatureLowest = -17,
-            PrecipitationAverage = 30,
-            PrecipitationDaysRatio = 15f/30f,
-            AverageWindSpeed = 16,
-            FogDaysRatio = 23f/30f,
-            DayLengthAverage = 12.5f,
-          },
-          new MonthlyClimateData() // April
-          {
-            TemperatureAverage = 7,
-            TemperatureHighAverage = 12, TemperatureLowAverage = 3,
-            TemperatureHighest = 28, TemperatureLowest = -7,
-            PrecipitationAverage = 40,
-            PrecipitationDaysRatio = 15f/30f,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 19f/30f,
-            DayLengthAverage = 14.4f,
-          },
-          new MonthlyClimateData() // May
-          {
-            TemperatureAverage = 12,
-            TemperatureHighAverage = 17, TemperatureLowAverage = 7,
-            TemperatureHighest = 30, TemperatureLowest = -2,
-            PrecipitationAverage = 60,
-            PrecipitationDaysRatio = 15f/30f,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 19f/30f,
-            DayLengthAverage = 16.1f,
-          },
-          new MonthlyClimateData() // June
-          {
-            TemperatureAverage = 16,
-            TemperatureHighAverage = 20, TemperatureLowAverage = 11,
-            TemperatureHighest = 31, TemperatureLowest = 1,
-            PrecipitationAverage = 80,
-            PrecipitationDaysRatio = 16f/30f,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 20f/30f,
-            DayLengthAverage = 17,
-          },
-          new MonthlyClimateData() // July
-          {
-            TemperatureAverage = 17,
-            TemperatureHighAverage = 21, TemperatureLowAverage = 12,
-            TemperatureHighest = 33, TemperatureLowest = 6,
-            PrecipitationAverage = 60,
-            PrecipitationDaysRatio = 14f/30f,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 22f/30f,
-            DayLengthAverage = 16.6f,
-          },
-          new MonthlyClimateData() // August
-          {
-            TemperatureAverage = 17,
-            TemperatureHighAverage = 21, TemperatureLowAverage = 12,
-            TemperatureHighest = 32, TemperatureLowest = 5,
-            PrecipitationAverage = 70,
-            PrecipitationDaysRatio = 13f/30f,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 24f/30f,
-            DayLengthAverage = 15,
-          },
-          new MonthlyClimateData() // September
-          {
-            TemperatureAverage = 13,
-            TemperatureHighAverage = 17, TemperatureLowAverage = 8,
-            TemperatureHighest = 28, TemperatureLowest = -2,
-            PrecipitationAverage = 50,
-            PrecipitationDaysRatio = 13f/30f,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 25f/30f,
-            DayLengthAverage = 13.1f,
-          },
-          new MonthlyClimateData() // October
-          {
-            TemperatureAverage = 8,
-            TemperatureHighAverage = 12, TemperatureLowAverage = 4,
-            TemperatureHighest = 26, TemperatureLowest = -7,
-            PrecipitationAverage = 40,
-            PrecipitationDaysRatio = 13f/30f,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 24f/30f,
-            DayLengthAverage = 11.2f,
-          },
-          new MonthlyClimateData() // November
-          {
-            TemperatureAverage = 2,
-            TemperatureHighAverage = 5, TemperatureLowAverage = 0,
-            TemperatureHighest = 18, TemperatureLowest = -17,
-            PrecipitationAverage = 40,
-            PrecipitationDaysRatio = 17f/30f,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 23f/30f,
-            DayLengthAverage = 9.6f,
-          },
-          new MonthlyClimateData() // December
-          {
-            TemperatureAverage = 0,
-            TemperatureHighAverage = 2, TemperatureLowAverage = -3,
-            TemperatureHighest = 17, TemperatureLowest = -22,
-            PrecipitationAverage = 40,
-            PrecipitationDaysRatio = 20f/30f,
-            AverageWindSpeed = 16,
-            FogDaysRatio = 23f/30f,
-            DayLengthAverage = 8.8f,
-          },
-        }
-      }},
-      #endregion
-      #region Egypt, Cairo
-      // http://www.weatherbase.com/weather/weatherall.php3?s=66326&cityname=Cairo%2C+Muhafazat+al+Qahirah%2C+Egypt&units=
-      new ClimatePreset() { PresetName = "Egypt, Cairo", PresetCode = "PRESET_EGYPT_CAIRO", ClimateProperties = new ClimateControlProperties()
-      {
-        SnowFallTemperature = 2, SnowMeltTemperature = 10, SolarDayLength = 24.00f,
-        ClimateData = new MonthlyClimateData[]
-        {
-          new MonthlyClimateData() // January
-          {
-            TemperatureAverage = 13,
-            TemperatureHighAverage = 18, TemperatureLowAverage = 9,
-            TemperatureHighest = 30, TemperatureLowest = 0,
-            PrecipitationAverage = 0,
-            PrecipitationDaysRatio = 5f/30f,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 11f/30f,
-            DayLengthAverage = 10.9f,
-          },
-          new MonthlyClimateData() // February
-          {
-            TemperatureAverage = 15,
-            TemperatureHighAverage = 20, TemperatureLowAverage = 10,
-            TemperatureHighest = 33, TemperatureLowest = 0,
-            PrecipitationAverage = 0,
-            PrecipitationDaysRatio = 3f/30f,
-            AverageWindSpeed = 16,
-            FogDaysRatio = 7f/30f,
-            DayLengthAverage = 11.6f,
-          },
-          new MonthlyClimateData() // March
-          {
-            TemperatureAverage = 17,
-            TemperatureHighAverage = 22, TemperatureLowAverage = 12,
-            TemperatureHighest = 37, TemperatureLowest = 2,
-            PrecipitationAverage = 0,
-            PrecipitationDaysRatio = 2f/30f,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 9f/30f,
-            DayLengthAverage = 12.4f,
-          },
-          new MonthlyClimateData() // April
-          {
-            TemperatureAverage = 21,
-            TemperatureHighAverage = 27, TemperatureLowAverage = 15,
-            TemperatureHighest = 42, TemperatureLowest = 7,
-            PrecipitationAverage = 0,
-            PrecipitationDaysRatio = 1f/30f,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 7f/30f,
-            DayLengthAverage = 13.3f,
-          },
-          new MonthlyClimateData() // May
-          {
-            TemperatureAverage = 25,
-            TemperatureHighAverage = 31, TemperatureLowAverage = 17,
-            TemperatureHighest = 43, TemperatureLowest = 12,
-            PrecipitationAverage = 0,
-            PrecipitationDaysRatio = 1f/30f,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 8f/30f,
-            DayLengthAverage = 14.1f,
-          },
-          new MonthlyClimateData() // June
-          {
-            TemperatureAverage = 27,
-            TemperatureHighAverage = 33, TemperatureLowAverage = 21,
-            TemperatureHighest = 45, TemperatureLowest = 15,
-            PrecipitationAverage = 0,
-            PrecipitationDaysRatio = 0,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 11f/30f,
-            DayLengthAverage = 14.5f,
-          },
-          new MonthlyClimateData() // July
-          {
-            TemperatureAverage = 28,
-            TemperatureHighAverage = 33, TemperatureLowAverage = 22,
-            TemperatureHighest = 42, TemperatureLowest = 17,
-            PrecipitationAverage = 0,
-            PrecipitationDaysRatio = 0,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 20f/30f,
-            DayLengthAverage = 14.3f,
-          },
-          new MonthlyClimateData() // August
-          {
-            TemperatureAverage = 27,
-            TemperatureHighAverage = 33, TemperatureLowAverage = 22,
-            TemperatureHighest = 41, TemperatureLowest = 18,
-            PrecipitationAverage = 0,
-            PrecipitationDaysRatio = 0,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 23f/30f,
-            DayLengthAverage = 13.6f,
-          },
-          new MonthlyClimateData() // September
-          {
-            TemperatureAverage = 26,
-            TemperatureHighAverage = 32, TemperatureLowAverage = 20,
-            TemperatureHighest = 43, TemperatureLowest = 16,
-            PrecipitationAverage = 0,
-            PrecipitationDaysRatio = 0,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 17f/30f,
-            DayLengthAverage = 12.7f,
-          },
-          new MonthlyClimateData() // October
-          {
-            TemperatureAverage = 23,
-            TemperatureHighAverage = 29, TemperatureLowAverage = 18,
-            TemperatureHighest = 38, TemperatureLowest = 0,
-            PrecipitationAverage = 0,
-            PrecipitationDaysRatio = 1f/30f,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 15f/30f,
-            DayLengthAverage = 11.8f,
-          },
-          new MonthlyClimateData() // November
-          {
-            TemperatureAverage = 19,
-            TemperatureHighAverage = 23, TemperatureLowAverage = 14,
-            TemperatureHighest = 35, TemperatureLowest = 2,
-            PrecipitationAverage = 0,
-            PrecipitationDaysRatio = 1f/30f,
-            AverageWindSpeed = 9,
-            FogDaysRatio = 11f/30f,
-            DayLengthAverage = 11.1f,
-          },
-          new MonthlyClimateData() // December
-          {
-            TemperatureAverage = 15,
-            TemperatureHighAverage = 19, TemperatureLowAverage = 10,
-            TemperatureHighest = 28, TemperatureLowest = 0,
-            PrecipitationAverage = 0,
-            PrecipitationDaysRatio = 3f/30f,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 12f/30f,
-            DayLengthAverage = 10.7f,
-          },
-        }
-      }},
-      #endregion
-      #region Germany, Frankfurt
-      // http://www.weatherbase.com/weather/weatherall.php3?s=73601&cityname=Frankfurt%2C+Hesse%2C+Germany&units=
-      new ClimatePreset() { PresetName = "Germany, Frankfurt", PresetCode = "PRESET_GERMANY_FRANKFURT", ClimateProperties = new ClimateControlProperties()
-      {
-        SnowFallTemperature = 2, SnowMeltTemperature = 10, SolarDayLength = 24f,
-        ClimateData = new MonthlyClimateData[]
-        {
-          new MonthlyClimateData() // January
-          {
-            TemperatureAverage = 1,
-            TemperatureHighAverage = 3, TemperatureLowAverage = -1,
-            TemperatureHighest = 13, TemperatureLowest = -20,
-            PrecipitationAverage = 40,
-            PrecipitationDaysRatio = 5f/DaysInMonthJanuary,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 19f/DaysInMonthJanuary,
-            DayLengthAverage = 9.3f,
-          },
-          new MonthlyClimateData() // February
-          {
-            TemperatureAverage = 2,
-            TemperatureHighAverage = 5, TemperatureLowAverage = -1,
-            TemperatureHighest = 17, TemperatureLowest = -18,
-            PrecipitationAverage = 40,
-            PrecipitationDaysRatio = 4f/DaysInMonthFebruary,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 18f/DaysInMonthFebruary,
-            DayLengthAverage = 10.7f,
-          },
-          new MonthlyClimateData() // March
-          {
-            TemperatureAverage = 6,
-            TemperatureHighAverage = 10, TemperatureLowAverage = 2,
-            TemperatureHighest = 23, TemperatureLowest = -12,
-            PrecipitationAverage = 50,
-            PrecipitationDaysRatio = 2f/DaysInMonthMarch,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 16f/DaysInMonthMarch,
-            DayLengthAverage = 12.5f,
-          },
-          new MonthlyClimateData() // April
-          {
-            TemperatureAverage = 8,
-            TemperatureHighAverage = 13, TemperatureLowAverage = 3,
-            TemperatureHighest = 25, TemperatureLowest = -6,
-            PrecipitationAverage = 50,
-            PrecipitationDaysRatio = 5f/DaysInMonthApril,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 12f/DaysInMonthApril,
-            DayLengthAverage = 14.4f,
-          },
-          new MonthlyClimateData() // May
-          {
-            TemperatureAverage = 13,
-            TemperatureHighAverage = 18, TemperatureLowAverage = 8,
-            TemperatureHighest = 31, TemperatureLowest = -2,
-            PrecipitationAverage = 60,
-            PrecipitationDaysRatio = 5f/DaysInMonthMay,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 14f/DaysInMonthMay,
-            DayLengthAverage = 16.1f,
-          },
-          new MonthlyClimateData() // June
-          {
-            TemperatureAverage = 16,
-            TemperatureHighAverage = 21, TemperatureLowAverage = 11,
-            TemperatureHighest = 33, TemperatureLowest = 1,
-            PrecipitationAverage = 70,
-            PrecipitationDaysRatio = 5f/DaysInMonthJune,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 13f/DaysInMonthJune,
-            DayLengthAverage = 17f,
-          },
-          new MonthlyClimateData() // July
-          {
-            TemperatureAverage = 18,
-            TemperatureHighAverage = 23, TemperatureLowAverage = 13,
-            TemperatureHighest = 36, TemperatureLowest = 3,
-            PrecipitationAverage = 60,
-            PrecipitationDaysRatio = 9f/DaysInMonthJuly,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 12f/DaysInMonthJuly,
-            DayLengthAverage = 16.5f,
-          },
-          new MonthlyClimateData() // August
-          {
-            TemperatureAverage = 18,
-            TemperatureHighAverage = 23, TemperatureLowAverage = 13,
-            TemperatureHighest = 36, TemperatureLowest = 3,
-            PrecipitationAverage = 70,
-            PrecipitationDaysRatio = 5f/DaysInMonthAugust,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 15f/DaysInMonthAugust,
-            DayLengthAverage = 15f,
-          },
-          new MonthlyClimateData() // September
-          {
-            TemperatureAverage = 15,
-            TemperatureHighAverage = 20, TemperatureLowAverage = 110,
-            TemperatureHighest = 32, TemperatureLowest = 0,
-            PrecipitationAverage = 50,
-            PrecipitationDaysRatio = 5f/DaysInMonthSeptember,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 18f/DaysInMonthSeptember,
-            DayLengthAverage = 13.1f,
-          },
-          new MonthlyClimateData() // October
-          {
-            TemperatureAverage = 10,
-            TemperatureHighAverage = 13, TemperatureLowAverage = 6,
-            TemperatureHighest = 27, TemperatureLowest = -3,
-            PrecipitationAverage = 50,
-            PrecipitationDaysRatio = 4f/DaysInMonthOctober,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 21f/DaysInMonthOctober,
-            DayLengthAverage = 11.2f,
-          },
-          new MonthlyClimateData() // November
-          {
-            TemperatureAverage = 5,
-            TemperatureHighAverage = 7, TemperatureLowAverage = 2,
-            TemperatureHighest = 17, TemperatureLowest = -8,
-            PrecipitationAverage = 50,
-            PrecipitationDaysRatio = 3f/DaysInMonthNovember,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 19f/DaysInMonthNovember,
-            DayLengthAverage = 9.6f,
-          },
-          new MonthlyClimateData() // December
-          {
-            TemperatureAverage = 2,
-            TemperatureHighAverage = 4, TemperatureLowAverage = 0,
-            TemperatureHighest = 16, TemperatureLowest = -16,
-            PrecipitationAverage = 50,
-            PrecipitationDaysRatio = 6f/DaysInMonthDecember,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 20f/DaysInMonthDecember,
-            DayLengthAverage = 8.8f,
-          },
-        }
-      }},
-      #endregion
-      #region Germany, Hamburg
-      // http://www.weatherbase.com/weather/weatherall.php3?s=74101&cityname=Hamburg%2C+Hamburg%2C+Germany&units=
-      new ClimatePreset() { PresetName = "Germany, Hamburg", PresetCode = "PRESET_GERMANY_HAMBURG", ClimateProperties = new ClimateControlProperties()
-      {
-        SnowFallTemperature = 2, SnowMeltTemperature = 10, SolarDayLength = 24f,
-        ClimateData = new MonthlyClimateData[]
-        {
-          new MonthlyClimateData() // January
-          {
-            TemperatureAverage = 1,
-            TemperatureHighAverage = 3, TemperatureLowAverage = -1,
-            TemperatureHighest = 12, TemperatureLowest = -18,
-            PrecipitationAverage = 60,
-            PrecipitationDaysRatio = 12f/DaysInMonthJanuary,
-            AverageWindSpeed = 19,
-            FogDaysRatio = 22f/DaysInMonthJanuary,
-            DayLengthAverage = 8.8f,
-          },
-          new MonthlyClimateData() // February
-          {
-            TemperatureAverage = 1,
-            TemperatureHighAverage = 3, TemperatureLowAverage = -1,
-            TemperatureHighest = 16, TemperatureLowest = -18,
-            PrecipitationAverage = 40,
-            PrecipitationDaysRatio = 9f/DaysInMonthFebruary,
-            AverageWindSpeed = 16,
-            FogDaysRatio = 19f/DaysInMonthFebruary,
-            DayLengthAverage = 10.5f,
-          },
-          new MonthlyClimateData() // March
-          {
-            TemperatureAverage = 4,
-            TemperatureHighAverage = 7, TemperatureLowAverage = 1,
-            TemperatureHighest = 22, TemperatureLowest = -12,
-            PrecipitationAverage = 50,
-            PrecipitationDaysRatio = 11f/DaysInMonthMarch,
-            AverageWindSpeed = 17,
-            FogDaysRatio = 20f/DaysInMonthMarch,
-            DayLengthAverage = 12.5f,
-          },
-          new MonthlyClimateData() // April
-          {
-            TemperatureAverage = 7,
-            TemperatureHighAverage = 11, TemperatureLowAverage = 2,
-            TemperatureHighest = 25, TemperatureLowest = -6,
-            PrecipitationAverage = 40,
-            PrecipitationDaysRatio = 10f/DaysInMonthApril,
-            AverageWindSpeed = 16,
-            FogDaysRatio = 18f/DaysInMonthApril,
-            DayLengthAverage = 14.7f,
-          },
-          new MonthlyClimateData() // May
-          {
-            TemperatureAverage = 12,
-            TemperatureHighAverage = 16, TemperatureLowAverage = 7,
-            TemperatureHighest = 28, TemperatureLowest = -1,
-            PrecipitationAverage = 50,
-            PrecipitationDaysRatio = 10f/DaysInMonthMay,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 19f/DaysInMonthMay,
-            DayLengthAverage = 16.7f,
-          },
-          new MonthlyClimateData() // June
-          {
-            TemperatureAverage = 15,
-            TemperatureHighAverage = 19, TemperatureLowAverage = 10,
-            TemperatureHighest = 32, TemperatureLowest = 2,
-            PrecipitationAverage = 70,
-            PrecipitationDaysRatio = 11f/DaysInMonthJune,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 18f/DaysInMonthJune,
-            DayLengthAverage = 17.9f,
-          },
-          new MonthlyClimateData() // July
-          {
-            TemperatureAverage = 17,
-            TemperatureHighAverage = 21, TemperatureLowAverage = 12,
-            TemperatureHighest = 34, TemperatureLowest = 6,
-            PrecipitationAverage = 80,
-            PrecipitationDaysRatio = 12f/DaysInMonthJuly,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 19f/DaysInMonthJuly,
-            DayLengthAverage = 17.2f,
-          },
-          new MonthlyClimateData() // August
-          {
-            TemperatureAverage = 17,
-            TemperatureHighAverage = 21, TemperatureLowAverage = 12,
-            TemperatureHighest = 37, TemperatureLowest = 2,
-            PrecipitationAverage = 70,
-            PrecipitationDaysRatio = 11f/DaysInMonthAugust,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 21f/DaysInMonthAugust,
-            DayLengthAverage = 15.4f,
-          },
-          new MonthlyClimateData() // September
-          {
-            TemperatureAverage = 13,
-            TemperatureHighAverage = 17, TemperatureLowAverage = 9,
-            TemperatureHighest = 29, TemperatureLowest = 0,
-            PrecipitationAverage = 60,
-            PrecipitationDaysRatio = 11f/DaysInMonthSeptember,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 21f/DaysInMonthSeptember,
-            DayLengthAverage = 13.2f,
-          },
-          new MonthlyClimateData() // October
-          {
-            TemperatureAverage = 9,
-            TemperatureHighAverage = 12, TemperatureLowAverage = 6,
-            TemperatureHighest = 23, TemperatureLowest = -3,
-            PrecipitationAverage = 60,
-            PrecipitationDaysRatio = 10f/DaysInMonthOctober,
-            AverageWindSpeed = 17,
-            FogDaysRatio = 23f/DaysInMonthOctober,
-            DayLengthAverage = 11.1f,
-          },
-          new MonthlyClimateData() // November
-          {
-            TemperatureAverage = 5,
-            TemperatureHighAverage = 7, TemperatureLowAverage = 2,
-            TemperatureHighest = 15, TemperatureLowest = -11,
-            PrecipitationAverage = 60,
-            PrecipitationDaysRatio = 12f/DaysInMonthNovember,
-            AverageWindSpeed = 19,
-            FogDaysRatio = 20f/DaysInMonthNovember,
-            DayLengthAverage = 9.2f,
-          },
-          new MonthlyClimateData() // December
-          {
-            TemperatureAverage = 2,
-            TemperatureHighAverage = 4, TemperatureLowAverage = 0,
-            TemperatureHighest = 16, TemperatureLowest = 0,
-            PrecipitationAverage = 70,
-            PrecipitationDaysRatio = 12f/DaysInMonthDecember,
-            AverageWindSpeed = 17,
-            FogDaysRatio = 21f/DaysInMonthDecember,
-            DayLengthAverage = 8.3f,
-          },
-        }
-      }},
-      #endregion
-      #region North Korea, Pyongyang
-      // http://www.weatherbase.com/weather/weatherall.php3?s=85074&cityname=Pyongyang%2C+Pyongyang%2C+North+Korea&units=
-      new ClimatePreset() { PresetName = "North Korea, Pyongyang", PresetCode = "PRESET_NORTH_KOREA_PYONGYANG", ClimateProperties = new ClimateControlProperties()
-      {
-        SnowFallTemperature = 2, SnowMeltTemperature = 10, SolarDayLength = 24.00f,
-        ClimateData = new MonthlyClimateData[]
-        {
-          new MonthlyClimateData() // January
-          {
-            TemperatureAverage = -6,
-            TemperatureHighAverage = -1, TemperatureLowAverage = -10,
-            TemperatureHighest = 11, TemperatureLowest = -25,
-            PrecipitationAverage = 10,
-            PrecipitationDaysRatio = 3f/30f,
-            AverageWindSpeed = 9,
-            FogDaysRatio = 25f/30f,
-            DayLengthAverage = 10.3f,
-          },
-          new MonthlyClimateData() // February
-          {
-            TemperatureAverage = -2,
-            TemperatureHighAverage = 1, TemperatureLowAverage = -7,
-            TemperatureHighest = 15, TemperatureLowest = -22,
-            PrecipitationAverage = 10,
-            PrecipitationDaysRatio = 3f/30f,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 21f/30f,
-            DayLengthAverage = 11.2f,
-          },
-          new MonthlyClimateData() // March
-          {
-            TemperatureAverage = 3,
-            TemperatureHighAverage = 8, TemperatureLowAverage = -1,
-            TemperatureHighest = 18, TemperatureLowest = -13,
-            PrecipitationAverage = 20,
-            PrecipitationDaysRatio = 5f/30f,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 24f/30f,
-            DayLengthAverage = 12.4f,
-          },
-          new MonthlyClimateData() // April
-          {
-            TemperatureAverage = 10,
-            TemperatureHighAverage = 16, TemperatureLowAverage = 5,
-            TemperatureHighest = 27, TemperatureLowest = -4,
-            PrecipitationAverage = 40,
-            PrecipitationDaysRatio = 8f/30f,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 21f/30f,
-            DayLengthAverage = 13.7f,
-          },
-          new MonthlyClimateData() // May
-          {
-            TemperatureAverage = 16,
-            TemperatureHighAverage = 21, TemperatureLowAverage = 11,
-            TemperatureHighest = 32, TemperatureLowest = 3,
-            PrecipitationAverage = 60,
-            PrecipitationDaysRatio = 10f/30f,
-            AverageWindSpeed = 9,
-            FogDaysRatio = 21f/30f,
-            DayLengthAverage = 14.8f,
-          },
-          new MonthlyClimateData() // June
-          {
-            TemperatureAverage = 21,
-            TemperatureHighAverage = 25, TemperatureLowAverage = 16,
-            TemperatureHighest = 33, TemperatureLowest = 7,
-            PrecipitationAverage = 70,
-            PrecipitationDaysRatio = 11f/30f,
-            AverageWindSpeed = 8,
-            FogDaysRatio = 22f/30f,
-            DayLengthAverage = 15.4f,
-          },
-          new MonthlyClimateData() // July
-          {
-            TemperatureAverage = 24,
-            TemperatureHighAverage = 27, TemperatureLowAverage = 20,
-            TemperatureHighest = 35, TemperatureLowest = 12,
-            PrecipitationAverage = 250,
-            PrecipitationDaysRatio = 16f/30f,
-            AverageWindSpeed = 6,
-            FogDaysRatio = 21f/30f,
-            DayLengthAverage = 15.1f,
-          },
-          new MonthlyClimateData() // August
-          {
-            TemperatureAverage = 24,
-            TemperatureHighAverage = 28, TemperatureLowAverage = 20,
-            TemperatureHighest = 35, TemperatureLowest = 12,
-            PrecipitationAverage = 230,
-            PrecipitationDaysRatio = 12f/30f,
-            AverageWindSpeed = 6,
-            FogDaysRatio = 21f/30f,
-            DayLengthAverage = 14.1f,
-          },
-          new MonthlyClimateData() // September
-          {
-            TemperatureAverage = 19,
-            TemperatureHighAverage = 23, TemperatureLowAverage = 14,
-            TemperatureHighest = 30, TemperatureLowest = 4,
-            PrecipitationAverage = 110,
-            PrecipitationDaysRatio = 8f/30f,
-            AverageWindSpeed = 8,
-            FogDaysRatio = 21f/30f,
-            DayLengthAverage = 12.9f,
-          },
-          new MonthlyClimateData() // October
-          {
-            TemperatureAverage = 12,
-            TemperatureHighAverage = 17, TemperatureLowAverage = 7,
-            TemperatureHighest = 27, TemperatureLowest = -3,
-            PrecipitationAverage = 40,
-            PrecipitationDaysRatio = 7f/30f,
-            AverageWindSpeed = 9,
-            FogDaysRatio = 23f/30f,
-            DayLengthAverage = 11.6f,
-          },
-          new MonthlyClimateData() // November
-          {
-            TemperatureAverage = 4,
-            TemperatureHighAverage = 8, TemperatureLowAverage = 0,
-            TemperatureHighest = 22, TemperatureLowest = -13,
-            PrecipitationAverage = 40,
-            PrecipitationDaysRatio = 8f/30f,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 22f/30f,
-            DayLengthAverage = 10.5f,
-          },
-          new MonthlyClimateData() // December
-          {
-            TemperatureAverage = -2,
-            TemperatureHighAverage = 1, TemperatureLowAverage = -6,
-            TemperatureHighest = 12, TemperatureLowest = -21,
-            PrecipitationAverage = 20,
-            PrecipitationDaysRatio = 4f/30f,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 25f/30f,
-            DayLengthAverage = 10,
-          },
-        }
-      }},
-      #endregion
-      #region Russia, Moscow
-      // http://www.weatherbase.com/weather/weatherall.php3?s=551572&cityname=Moscow%2C+Moscow%2C+Russia&units=
-      new ClimatePreset() { PresetName = "Russia, Moscow", PresetCode = "PRESET_RUSSIA_MOSCOW", ClimateProperties = new ClimateControlProperties()
-      {
-        SnowFallTemperature = 2, SnowMeltTemperature = 10, SolarDayLength = 24.00f,
-        ClimateData = new MonthlyClimateData[]
-        {
-          new MonthlyClimateData() // January
-          {
-            TemperatureAverage = -8,
-            TemperatureHighAverage = -6, TemperatureLowAverage = -11,
-            TemperatureHighest = 7, TemperatureLowest = -36,
-            PrecipitationAverage = 30,
-            PrecipitationDaysRatio = 6f/30f,
-            AverageWindSpeed = 17,
-            FogDaysRatio = 20f/30f,
-            DayLengthAverage = 8.5f,
-          },
-          new MonthlyClimateData() // February
-          {
-            TemperatureAverage = -7,
-            TemperatureHighAverage = -4, TemperatureLowAverage = -11,
-            TemperatureHighest = 10, TemperatureLowest = -33,
-            PrecipitationAverage = 20,
-            PrecipitationDaysRatio = 5f/30f,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 19f/30f,
-            DayLengthAverage = 10.3f,
-          },
-          new MonthlyClimateData() // March
-          {
-            TemperatureAverage = -2,
-            TemperatureHighAverage = 1, TemperatureLowAverage = -5,
-            TemperatureHighest = 16, TemperatureLowest = -27,
-            PrecipitationAverage = 30,
-            PrecipitationDaysRatio = 7f/30f,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 23f/30f,
-            DayLengthAverage = 12.5f,
-          },
-          new MonthlyClimateData() // April
-          {
-            TemperatureAverage = 5,
-            TemperatureHighAverage = 9, TemperatureLowAverage = 1,
-            TemperatureHighest = 23, TemperatureLowest = -8,
-            PrecipitationAverage = 30,
-            PrecipitationDaysRatio = 10f/30f,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 20f/30f,
-            DayLengthAverage = 14.9f,
-          },
-          new MonthlyClimateData() // May
-          {
-            TemperatureAverage = 12,
-            TemperatureHighAverage = 17, TemperatureLowAverage = 6,
-            TemperatureHighest = 28, TemperatureLowest = -6,
-            PrecipitationAverage = 50,
-            PrecipitationDaysRatio = 12f/30f,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 20f/30f,
-            DayLengthAverage = 17.2f,
-          },
-          new MonthlyClimateData() // June
-          {
-            TemperatureAverage = 15,
-            TemperatureHighAverage = 20, TemperatureLowAverage = 10,
-            TemperatureHighest = 32, TemperatureLowest = 0,
-            PrecipitationAverage = 60,
-            PrecipitationDaysRatio = 12f/30f,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 21f/30f,
-            DayLengthAverage = 18.5f,
-          },
-          new MonthlyClimateData() // July
-          {
-            TemperatureAverage = 17,
-            TemperatureHighAverage = 21, TemperatureLowAverage = 12,
-            TemperatureHighest = 35, TemperatureLowest = 5,
-            PrecipitationAverage = 80,
-            PrecipitationDaysRatio = 11f/30f,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 21f/30f,
-            DayLengthAverage = 17.8f,
-          },
-          new MonthlyClimateData() // August
-          {
-            TemperatureAverage = 15,
-            TemperatureHighAverage = 20, TemperatureLowAverage = 11,
-            TemperatureHighest = 32, TemperatureLowest = 0,
-            PrecipitationAverage = 70,
-            PrecipitationDaysRatio = 11f/30f,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 24f/30f,
-            DayLengthAverage = 15.7f,
-          },
-          new MonthlyClimateData() // September
-          {
-            TemperatureAverage = 10,
-            TemperatureHighAverage = 13, TemperatureLowAverage = 6,
-            TemperatureHighest = 28, TemperatureLowest = -6,
-            PrecipitationAverage = 50,
-            PrecipitationDaysRatio = 11f/30f,
-            AverageWindSpeed = 16,
-            FogDaysRatio = 22f/30f,
-            DayLengthAverage = 13.3f,
-          },
-          new MonthlyClimateData() // October
-          {
-            TemperatureAverage = 3,
-            TemperatureHighAverage = 7, TemperatureLowAverage = 0,
-            TemperatureHighest = 22, TemperatureLowest = -13,
-            PrecipitationAverage = 50,
-            PrecipitationDaysRatio = 15f/30f,
-            AverageWindSpeed = 16,
-            FogDaysRatio = 21f/30f,
-            DayLengthAverage = 11,
-          },
-          new MonthlyClimateData() // November
-          {
-            TemperatureAverage = -2,
-            TemperatureHighAverage = 0, TemperatureLowAverage = -4,
-            TemperatureHighest = 10, TemperatureLowest = -25,
-            PrecipitationAverage = 40,
-            PrecipitationDaysRatio = 9f/30f,
-            AverageWindSpeed = 16,
-            FogDaysRatio = 20f/30f,
-            DayLengthAverage = 8.9f,
-          },
-          new MonthlyClimateData() // December
-          {
-            TemperatureAverage = -6,
-            TemperatureHighAverage = -3, TemperatureLowAverage = -8,
-            TemperatureHighest = 10, TemperatureLowest = -42,
-            PrecipitationAverage = 40,
-            PrecipitationDaysRatio = 6f/30f,
-            AverageWindSpeed = 17,
-            FogDaysRatio = 19f/30f,
-            DayLengthAverage = 7.9f,
-          },
-        }
-      }},
-      #endregion
-      #region China, Beijing
-      // http://www.weatherbase.com/weather/weatherall.php3?s=11545&cityname=Beijing%2C+Beijing%2C+China&units=
-      new ClimatePreset() { PresetName = "China, Beijing", PresetCode = "PRESET_CHINA_BEIJING", ClimateProperties = new ClimateControlProperties()
-      {
-        SnowFallTemperature = 2, SnowMeltTemperature = 10, SolarDayLength = 24.00f,
-        ClimateData = new MonthlyClimateData[]
-        {
-          new MonthlyClimateData() // January
-          {
-            TemperatureAverage = -3,
-            TemperatureHighAverage = 1, TemperatureLowAverage = -8,
-            TemperatureHighest = 12, TemperatureLowest = -17,
-            PrecipitationAverage = 0,
-            PrecipitationDaysRatio = 2f/30f,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 12f/30f,
-            DayLengthAverage = 10.2f,
-          },
-          new MonthlyClimateData() // February
-          {
-            TemperatureAverage = 0,
-            TemperatureHighAverage = 3, TemperatureLowAverage = -5,
-            TemperatureHighest = 17, TemperatureLowest = -15,
-            PrecipitationAverage = 0,
-            PrecipitationDaysRatio = 3f/30f,
-            AverageWindSpeed = 19,
-            FogDaysRatio = 10f/30f,
-            DayLengthAverage = 11.2f,
-          },
-          new MonthlyClimateData() // March
-          {
-            TemperatureAverage = 6,
-            TemperatureHighAverage = 11, TemperatureLowAverage = 0,
-            TemperatureHighest = 27, TemperatureLowest = -8,
-            PrecipitationAverage = 0,
-            PrecipitationDaysRatio = 4f/30f,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 12f/30f,
-            DayLengthAverage = 12.4f,
-          },
-          new MonthlyClimateData() // April
-          {
-            TemperatureAverage = 13,
-            TemperatureHighAverage = 19, TemperatureLowAverage = 8,
-            TemperatureHighest = 32, TemperatureLowest = -1,
-            PrecipitationAverage = 10,
-            PrecipitationDaysRatio = 5f/30f,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 11f/30f,
-            DayLengthAverage = 13.8f,
-          },
-          new MonthlyClimateData() // May
-          {
-            TemperatureAverage = 20,
-            TemperatureHighAverage = 25, TemperatureLowAverage = 13,
-            TemperatureHighest = 37, TemperatureLowest = 3,
-            PrecipitationAverage = 30,
-            PrecipitationDaysRatio = 6f/30f,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 14f/30f,
-            DayLengthAverage = 14.9f,
-          },
-          new MonthlyClimateData() // June
-          {
-            TemperatureAverage = 24,
-            TemperatureHighAverage = 29, TemperatureLowAverage = 18,
-            TemperatureHighest = 40, TemperatureLowest = 8,
-            PrecipitationAverage = 70,
-            PrecipitationDaysRatio = 9f/30f,
-            AverageWindSpeed = 12,
-            FogDaysRatio = 17f/30f,
-            DayLengthAverage = 15.5f,
-          },
-          new MonthlyClimateData() // July
-          {
-            TemperatureAverage = 26,
-            TemperatureHighAverage = 30, TemperatureLowAverage = 22,
-            TemperatureHighest = 40, TemperatureLowest = 17,
-            PrecipitationAverage = 220,
-            PrecipitationDaysRatio = 14f/30f,
-            AverageWindSpeed = 8,
-            FogDaysRatio = 26f/30f,
-            DayLengthAverage = 15.2f,
-          },
-          new MonthlyClimateData() // August
-          {
-            TemperatureAverage = 25,
-            TemperatureHighAverage = 29, TemperatureLowAverage = 20,
-            TemperatureHighest = 41, TemperatureLowest = 12,
-            PrecipitationAverage = 170,
-            PrecipitationDaysRatio = 12f/30f,
-            AverageWindSpeed = 8,
-            FogDaysRatio = 25f/30f,
-            DayLengthAverage = 14.2f,
-          },
-          new MonthlyClimateData() // September
-          {
-            TemperatureAverage = 20,
-            TemperatureHighAverage = 25, TemperatureLowAverage = 15,
-            TemperatureHighest = 33, TemperatureLowest = 2,
-            PrecipitationAverage = 50,
-            PrecipitationDaysRatio = 7f/30f,
-            AverageWindSpeed = 8,
-            FogDaysRatio = 22f/30f,
-            DayLengthAverage = 12.9f,
-          },
-          new MonthlyClimateData() // October
-          {
-            TemperatureAverage = 13,
-            TemperatureHighAverage = 18, TemperatureLowAverage = 8,
-            TemperatureHighest = 28, TemperatureLowest = -2,
-            PrecipitationAverage = 10,
-            PrecipitationDaysRatio = 6f/30f,
-            AverageWindSpeed = 9,
-            FogDaysRatio = 21f/30f,
-            DayLengthAverage = 11.6f,
-          },
-          new MonthlyClimateData() // November
-          {
-            TemperatureAverage = 5,
-            TemperatureHighAverage = 9, TemperatureLowAverage = 0,
-            TemperatureHighest = 23, TemperatureLowest = -12,
-            PrecipitationAverage = 10,
-            PrecipitationDaysRatio = 5f/30f,
-            AverageWindSpeed = 19,
-            FogDaysRatio = 19f/30f,
-            DayLengthAverage = 10.5f,
-          },
-          new MonthlyClimateData() // December
-          {
-            TemperatureAverage = -1,
-            TemperatureHighAverage = 2, TemperatureLowAverage = -5,
-            TemperatureHighest = 18, TemperatureLowest = -14,
-            PrecipitationAverage = 0,
-            PrecipitationDaysRatio = 2f/30f,
-            AverageWindSpeed = 14,
-            FogDaysRatio = 16f/30f,
-            DayLengthAverage = 9.9f,
-          },
-        }
-      }},
-      #endregion
+
       #region Brazil, São Paulo
       // http://www.weatherbase.com/weather/weatherall.php3?s=8738&cityname=S%E3o+Paulo%2C+Sao+Paulo%2C+Brazil&units=
       new ClimatePreset() { PresetName = "Brazil, São Paulo", PresetCode = "PRESET_BRAZIL_SÃO_PAULO", ClimateProperties = new ClimateControlProperties()
@@ -2583,6 +1023,1876 @@ namespace Runaurufu.ClimateControl
         }
       }},
       #endregion
+      #region China, Beijing
+      // http://www.weatherbase.com/weather/weatherall.php3?s=11545&cityname=Beijing%2C+Beijing%2C+China&units=
+      new ClimatePreset() { PresetName = "China, Beijing", PresetCode = "PRESET_CHINA_BEIJING", ClimateProperties = new ClimateControlProperties()
+      {
+        SnowFallTemperature = 2, SnowMeltTemperature = 10, SolarDayLength = 24.00f,
+        ClimateData = new MonthlyClimateData[]
+        {
+          new MonthlyClimateData() // January
+          {
+            TemperatureAverage = -3,
+            TemperatureHighAverage = 1, TemperatureLowAverage = -8,
+            TemperatureHighest = 12, TemperatureLowest = -17,
+            PrecipitationAverage = 0,
+            PrecipitationDaysRatio = 2f/30f,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 12f/30f,
+            DayLengthAverage = 10.2f,
+          },
+          new MonthlyClimateData() // February
+          {
+            TemperatureAverage = 0,
+            TemperatureHighAverage = 3, TemperatureLowAverage = -5,
+            TemperatureHighest = 17, TemperatureLowest = -15,
+            PrecipitationAverage = 0,
+            PrecipitationDaysRatio = 3f/30f,
+            AverageWindSpeed = 19,
+            FogDaysRatio = 10f/30f,
+            DayLengthAverage = 11.2f,
+          },
+          new MonthlyClimateData() // March
+          {
+            TemperatureAverage = 6,
+            TemperatureHighAverage = 11, TemperatureLowAverage = 0,
+            TemperatureHighest = 27, TemperatureLowest = -8,
+            PrecipitationAverage = 0,
+            PrecipitationDaysRatio = 4f/30f,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 12f/30f,
+            DayLengthAverage = 12.4f,
+          },
+          new MonthlyClimateData() // April
+          {
+            TemperatureAverage = 13,
+            TemperatureHighAverage = 19, TemperatureLowAverage = 8,
+            TemperatureHighest = 32, TemperatureLowest = -1,
+            PrecipitationAverage = 10,
+            PrecipitationDaysRatio = 5f/30f,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 11f/30f,
+            DayLengthAverage = 13.8f,
+          },
+          new MonthlyClimateData() // May
+          {
+            TemperatureAverage = 20,
+            TemperatureHighAverage = 25, TemperatureLowAverage = 13,
+            TemperatureHighest = 37, TemperatureLowest = 3,
+            PrecipitationAverage = 30,
+            PrecipitationDaysRatio = 6f/30f,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 14f/30f,
+            DayLengthAverage = 14.9f,
+          },
+          new MonthlyClimateData() // June
+          {
+            TemperatureAverage = 24,
+            TemperatureHighAverage = 29, TemperatureLowAverage = 18,
+            TemperatureHighest = 40, TemperatureLowest = 8,
+            PrecipitationAverage = 70,
+            PrecipitationDaysRatio = 9f/30f,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 17f/30f,
+            DayLengthAverage = 15.5f,
+          },
+          new MonthlyClimateData() // July
+          {
+            TemperatureAverage = 26,
+            TemperatureHighAverage = 30, TemperatureLowAverage = 22,
+            TemperatureHighest = 40, TemperatureLowest = 17,
+            PrecipitationAverage = 220,
+            PrecipitationDaysRatio = 14f/30f,
+            AverageWindSpeed = 8,
+            FogDaysRatio = 26f/30f,
+            DayLengthAverage = 15.2f,
+          },
+          new MonthlyClimateData() // August
+          {
+            TemperatureAverage = 25,
+            TemperatureHighAverage = 29, TemperatureLowAverage = 20,
+            TemperatureHighest = 41, TemperatureLowest = 12,
+            PrecipitationAverage = 170,
+            PrecipitationDaysRatio = 12f/30f,
+            AverageWindSpeed = 8,
+            FogDaysRatio = 25f/30f,
+            DayLengthAverage = 14.2f,
+          },
+          new MonthlyClimateData() // September
+          {
+            TemperatureAverage = 20,
+            TemperatureHighAverage = 25, TemperatureLowAverage = 15,
+            TemperatureHighest = 33, TemperatureLowest = 2,
+            PrecipitationAverage = 50,
+            PrecipitationDaysRatio = 7f/30f,
+            AverageWindSpeed = 8,
+            FogDaysRatio = 22f/30f,
+            DayLengthAverage = 12.9f,
+          },
+          new MonthlyClimateData() // October
+          {
+            TemperatureAverage = 13,
+            TemperatureHighAverage = 18, TemperatureLowAverage = 8,
+            TemperatureHighest = 28, TemperatureLowest = -2,
+            PrecipitationAverage = 10,
+            PrecipitationDaysRatio = 6f/30f,
+            AverageWindSpeed = 9,
+            FogDaysRatio = 21f/30f,
+            DayLengthAverage = 11.6f,
+          },
+          new MonthlyClimateData() // November
+          {
+            TemperatureAverage = 5,
+            TemperatureHighAverage = 9, TemperatureLowAverage = 0,
+            TemperatureHighest = 23, TemperatureLowest = -12,
+            PrecipitationAverage = 10,
+            PrecipitationDaysRatio = 5f/30f,
+            AverageWindSpeed = 19,
+            FogDaysRatio = 19f/30f,
+            DayLengthAverage = 10.5f,
+          },
+          new MonthlyClimateData() // December
+          {
+            TemperatureAverage = -1,
+            TemperatureHighAverage = 2, TemperatureLowAverage = -5,
+            TemperatureHighest = 18, TemperatureLowest = -14,
+            PrecipitationAverage = 0,
+            PrecipitationDaysRatio = 2f/30f,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 16f/30f,
+            DayLengthAverage = 9.9f,
+          },
+        }
+      }},
+      #endregion
+      #region Egypt, Cairo
+      // http://www.weatherbase.com/weather/weatherall.php3?s=66326&cityname=Cairo%2C+Muhafazat+al+Qahirah%2C+Egypt&units=
+      new ClimatePreset() { PresetName = "Egypt, Cairo", PresetCode = "PRESET_EGYPT_CAIRO", ClimateProperties = new ClimateControlProperties()
+      {
+        SnowFallTemperature = 2, SnowMeltTemperature = 10, SolarDayLength = 24.00f,
+        ClimateData = new MonthlyClimateData[]
+        {
+          new MonthlyClimateData() // January
+          {
+            TemperatureAverage = 13,
+            TemperatureHighAverage = 18, TemperatureLowAverage = 9,
+            TemperatureHighest = 30, TemperatureLowest = 0,
+            PrecipitationAverage = 0,
+            PrecipitationDaysRatio = 5f/30f,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 11f/30f,
+            DayLengthAverage = 10.9f,
+          },
+          new MonthlyClimateData() // February
+          {
+            TemperatureAverage = 15,
+            TemperatureHighAverage = 20, TemperatureLowAverage = 10,
+            TemperatureHighest = 33, TemperatureLowest = 0,
+            PrecipitationAverage = 0,
+            PrecipitationDaysRatio = 3f/30f,
+            AverageWindSpeed = 16,
+            FogDaysRatio = 7f/30f,
+            DayLengthAverage = 11.6f,
+          },
+          new MonthlyClimateData() // March
+          {
+            TemperatureAverage = 17,
+            TemperatureHighAverage = 22, TemperatureLowAverage = 12,
+            TemperatureHighest = 37, TemperatureLowest = 2,
+            PrecipitationAverage = 0,
+            PrecipitationDaysRatio = 2f/30f,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 9f/30f,
+            DayLengthAverage = 12.4f,
+          },
+          new MonthlyClimateData() // April
+          {
+            TemperatureAverage = 21,
+            TemperatureHighAverage = 27, TemperatureLowAverage = 15,
+            TemperatureHighest = 42, TemperatureLowest = 7,
+            PrecipitationAverage = 0,
+            PrecipitationDaysRatio = 1f/30f,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 7f/30f,
+            DayLengthAverage = 13.3f,
+          },
+          new MonthlyClimateData() // May
+          {
+            TemperatureAverage = 25,
+            TemperatureHighAverage = 31, TemperatureLowAverage = 17,
+            TemperatureHighest = 43, TemperatureLowest = 12,
+            PrecipitationAverage = 0,
+            PrecipitationDaysRatio = 1f/30f,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 8f/30f,
+            DayLengthAverage = 14.1f,
+          },
+          new MonthlyClimateData() // June
+          {
+            TemperatureAverage = 27,
+            TemperatureHighAverage = 33, TemperatureLowAverage = 21,
+            TemperatureHighest = 45, TemperatureLowest = 15,
+            PrecipitationAverage = 0,
+            PrecipitationDaysRatio = 0,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 11f/30f,
+            DayLengthAverage = 14.5f,
+          },
+          new MonthlyClimateData() // July
+          {
+            TemperatureAverage = 28,
+            TemperatureHighAverage = 33, TemperatureLowAverage = 22,
+            TemperatureHighest = 42, TemperatureLowest = 17,
+            PrecipitationAverage = 0,
+            PrecipitationDaysRatio = 0,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 20f/30f,
+            DayLengthAverage = 14.3f,
+          },
+          new MonthlyClimateData() // August
+          {
+            TemperatureAverage = 27,
+            TemperatureHighAverage = 33, TemperatureLowAverage = 22,
+            TemperatureHighest = 41, TemperatureLowest = 18,
+            PrecipitationAverage = 0,
+            PrecipitationDaysRatio = 0,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 23f/30f,
+            DayLengthAverage = 13.6f,
+          },
+          new MonthlyClimateData() // September
+          {
+            TemperatureAverage = 26,
+            TemperatureHighAverage = 32, TemperatureLowAverage = 20,
+            TemperatureHighest = 43, TemperatureLowest = 16,
+            PrecipitationAverage = 0,
+            PrecipitationDaysRatio = 0,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 17f/30f,
+            DayLengthAverage = 12.7f,
+          },
+          new MonthlyClimateData() // October
+          {
+            TemperatureAverage = 23,
+            TemperatureHighAverage = 29, TemperatureLowAverage = 18,
+            TemperatureHighest = 38, TemperatureLowest = 0,
+            PrecipitationAverage = 0,
+            PrecipitationDaysRatio = 1f/30f,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 15f/30f,
+            DayLengthAverage = 11.8f,
+          },
+          new MonthlyClimateData() // November
+          {
+            TemperatureAverage = 19,
+            TemperatureHighAverage = 23, TemperatureLowAverage = 14,
+            TemperatureHighest = 35, TemperatureLowest = 2,
+            PrecipitationAverage = 0,
+            PrecipitationDaysRatio = 1f/30f,
+            AverageWindSpeed = 9,
+            FogDaysRatio = 11f/30f,
+            DayLengthAverage = 11.1f,
+          },
+          new MonthlyClimateData() // December
+          {
+            TemperatureAverage = 15,
+            TemperatureHighAverage = 19, TemperatureLowAverage = 10,
+            TemperatureHighest = 28, TemperatureLowest = 0,
+            PrecipitationAverage = 0,
+            PrecipitationDaysRatio = 3f/30f,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 12f/30f,
+            DayLengthAverage = 10.7f,
+          },
+        }
+      }},
+      #endregion
+      #region England, London
+      // http://www.weatherbase.com/weather/weatherall.php3?s=67730&cityname=London%2C+England%2C+United+Kingdom&units=
+      new ClimatePreset() { PresetName = "England, London", PresetCode = "PRESET_ENGLAND_LONDON", ClimateProperties = new ClimateControlProperties()
+      {
+        SnowFallTemperature = 2, SnowMeltTemperature = 10, SolarDayLength = 24.00f,
+        ClimateData = new MonthlyClimateData[]
+        {
+          new MonthlyClimateData() // January
+          {
+            TemperatureAverage = 4.3f,
+            TemperatureHighAverage = 7.4f, TemperatureLowAverage = 1.2f,
+            TemperatureHighest = 12, TemperatureLowest = -12,
+            PrecipitationAverage = 70,
+            PrecipitationDaysRatio = 0.76f,
+            AverageWindSpeed = 12.4f,
+            FogDaysRatio = 14f/30f,
+            DayLengthAverage = 9.2f,
+          },
+          new MonthlyClimateData() // February
+          {
+            TemperatureAverage = 4.5f,
+            TemperatureHighAverage = 7.9f, TemperatureLowAverage = 1,
+            TemperatureHighest = 17, TemperatureLowest = -13,
+            PrecipitationAverage = 50,
+            PrecipitationDaysRatio = 0.63f,
+            AverageWindSpeed = 13,
+            FogDaysRatio = 13f/30f,
+            DayLengthAverage = 10.6f,
+          },
+          new MonthlyClimateData() // March
+          {
+            TemperatureAverage = 6.9f,
+            TemperatureHighAverage = 10.9f, TemperatureLowAverage = 2.8f,
+            TemperatureHighest = 20, TemperatureLowest = -7,
+            PrecipitationAverage = 60,
+            PrecipitationDaysRatio = 0.7f,
+            AverageWindSpeed = 14.4f,
+            FogDaysRatio = 16f/30f,
+            DayLengthAverage = 12.5f,
+          },
+          new MonthlyClimateData() // April
+          {
+            TemperatureAverage = 8.7f,
+            TemperatureHighAverage = 13.7f, TemperatureLowAverage = 3.7f,
+            TemperatureHighest = 22, TemperatureLowest = -5,
+            PrecipitationAverage = 50,
+            PrecipitationDaysRatio = 0.66f,
+            AverageWindSpeed = 10.4f,
+            FogDaysRatio = 14f/30f,
+            DayLengthAverage = 14.5f,
+          },
+          new MonthlyClimateData() // May
+          {
+            TemperatureAverage = 12.1f,
+            TemperatureHighAverage = 17.4f, TemperatureLowAverage = 6.8f,
+            TemperatureHighest = 28, TemperatureLowest = -3,
+            PrecipitationAverage = 50,
+            PrecipitationDaysRatio = 0.6f,
+            AverageWindSpeed = 10.6f,
+            FogDaysRatio = 18f/30f,
+            DayLengthAverage = 16.3f,
+          },
+          new MonthlyClimateData() // June
+          {
+            TemperatureAverage = 15.1f,
+            TemperatureHighAverage = 20.5f, TemperatureLowAverage = 9.6f,
+            TemperatureHighest = 32, TemperatureLowest = 1,
+            PrecipitationAverage = 50,
+            PrecipitationDaysRatio = 0.6f,
+            AverageWindSpeed = 9.3f,
+            FogDaysRatio = 19f/30f,
+            DayLengthAverage = 17.3f,
+          },
+          new MonthlyClimateData() // July
+          {
+            TemperatureAverage = 17.3f,
+            TemperatureHighAverage = 22.9f, TemperatureLowAverage = 11.7f,
+            TemperatureHighest = 33, TemperatureLowest = 3,
+            PrecipitationAverage = 40,
+            PrecipitationDaysRatio = 0.56f,
+            AverageWindSpeed = 8.7f,
+            FogDaysRatio = 17f/30f,
+            DayLengthAverage = 16.7f,
+          },
+          new MonthlyClimateData() // August
+          {
+            TemperatureAverage = 17,
+            TemperatureHighAverage = 22.6f, TemperatureLowAverage = 11.4f,
+            TemperatureHighest = 35, TemperatureLowest = 2,
+            PrecipitationAverage = 50,
+            PrecipitationDaysRatio = 0.56f,
+            AverageWindSpeed = 11.1f,
+            FogDaysRatio = 22f/30f,
+            DayLengthAverage = 15.1f,
+          },
+          new MonthlyClimateData() // September
+          {
+            TemperatureAverage = 14.3f,
+            TemperatureHighAverage = 19.2f, TemperatureLowAverage = 9.3f,
+            TemperatureHighest = 27, TemperatureLowest = 1,
+            PrecipitationAverage = 60,
+            PrecipitationDaysRatio = 0.6f,
+            AverageWindSpeed = 8.7f,
+            FogDaysRatio = 20f/30f,
+            DayLengthAverage = 13.2f,
+          },
+          new MonthlyClimateData() // October
+          {
+            TemperatureAverage = 10.9f,
+            TemperatureHighAverage = 15.2f, TemperatureLowAverage = 6.6f,
+            TemperatureHighest = 25, TemperatureLowest = -4,
+            PrecipitationAverage = 70,
+            PrecipitationDaysRatio = 0.70f,
+            AverageWindSpeed = 9.8f,
+            FogDaysRatio = 21f/30f,
+            DayLengthAverage = 11.2f,
+          },
+          new MonthlyClimateData() // November
+          {
+            TemperatureAverage = 7.2f,
+            TemperatureHighAverage = 10.7f, TemperatureLowAverage = 3.6f,
+            TemperatureHighest = 17, TemperatureLowest = -7,
+            PrecipitationAverage = 70,
+            PrecipitationDaysRatio = 0.73f,
+            AverageWindSpeed = 9.1f,
+            FogDaysRatio = 17f/30f,
+            DayLengthAverage = 9.5f,
+          },
+          new MonthlyClimateData() // December
+          {
+            TemperatureAverage = 4.7f,
+            TemperatureHighAverage = 7.8f, TemperatureLowAverage = 1.6f,
+            TemperatureHighest = 15, TemperatureLowest = -11,
+            PrecipitationAverage = 70,
+            PrecipitationDaysRatio = 0.73f,
+            AverageWindSpeed = 10.9f,
+            FogDaysRatio = 16f/30f,
+            DayLengthAverage = 8.6f,
+          },
+        }
+      }},
+      #endregion
+      #region Finland, Helsinki
+      // http://www.weatherbase.com/weather/weatherall.php3?s=47920&cityname=Helsinki%2C+Uusimaa%2C+Finland&units=
+      new ClimatePreset() { PresetName = "Finland, Helsinki", PresetCode = "PRESET_FINLAND_HELSINKI", ClimateProperties = new ClimateControlProperties()
+      {
+        SnowFallTemperature = 2, SnowMeltTemperature = 10, SolarDayLength = 24.00f,
+        ClimateData = new MonthlyClimateData[]
+        {
+          new MonthlyClimateData() // January
+          {
+            TemperatureAverage = -5,
+            TemperatureHighAverage = -3, TemperatureLowAverage = -8,
+            TemperatureHighest = 7, TemperatureLowest = -36,
+            PrecipitationAverage = 40,
+            PrecipitationDaysRatio = 16f/30f,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 15f/30f,
+            DayLengthAverage = 7.7f,
+          },
+          new MonthlyClimateData() // February
+          {
+            TemperatureAverage = -6,
+            TemperatureHighAverage = -2, TemperatureLowAverage = -9,
+            TemperatureHighest = 10, TemperatureLowest = -30,
+            PrecipitationAverage = 30,
+            PrecipitationDaysRatio = 11f/30f,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 16f/30f,
+            DayLengthAverage = 9.9f,
+          },
+          new MonthlyClimateData() // March
+          {
+            TemperatureAverage = -2,
+            TemperatureHighAverage = 1, TemperatureLowAverage = -5,
+            TemperatureHighest = 12, TemperatureLowest = -26,
+            PrecipitationAverage = 30,
+            PrecipitationDaysRatio = 12f/30f,
+            AverageWindSpeed = 19,
+            FogDaysRatio = 18f/30f,
+            DayLengthAverage = 12.6f,
+          },
+          new MonthlyClimateData() // April
+          {
+            TemperatureAverage = 3,
+            TemperatureHighAverage = 7, TemperatureLowAverage = 0,
+            TemperatureHighest = 21, TemperatureLowest = -11,
+            PrecipitationAverage = 30,
+            PrecipitationDaysRatio = 13f/30f,
+            AverageWindSpeed = 16,
+            FogDaysRatio = 14f/30f,
+            DayLengthAverage = 15.5f,
+          },
+          new MonthlyClimateData() // May
+          {
+            TemperatureAverage = 10,
+            TemperatureHighAverage = 15, TemperatureLowAverage = 5,
+            TemperatureHighest = 27, TemperatureLowest = -3,
+            PrecipitationAverage = 40,
+            PrecipitationDaysRatio = 14f/30f,
+            AverageWindSpeed = 16,
+            FogDaysRatio = 13f/30f,
+            DayLengthAverage = 18.5f,
+          },
+          new MonthlyClimateData() // June
+          {
+            TemperatureAverage = 13,
+            TemperatureHighAverage = 18, TemperatureLowAverage = 9,
+            TemperatureHighest = 30, TemperatureLowest = -1,
+            PrecipitationAverage = 40,
+            PrecipitationDaysRatio = 17f/30f,
+            AverageWindSpeed = 16,
+            FogDaysRatio = 14f/30f,
+            DayLengthAverage = 20.7f,
+          },
+          new MonthlyClimateData() // July
+          {
+            TemperatureAverage = 16,
+            TemperatureHighAverage = 21, TemperatureLowAverage = 11,
+            TemperatureHighest = 31, TemperatureLowest = 4,
+            PrecipitationAverage = 60,
+            PrecipitationDaysRatio = 15f/30f,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 18f/30f,
+            DayLengthAverage = 19.3f,
+          },
+          new MonthlyClimateData() // August
+          {
+            TemperatureAverage = 15,
+            TemperatureHighAverage = 18, TemperatureLowAverage = 10,
+            TemperatureHighest = 31, TemperatureLowest = 4,
+            PrecipitationAverage = 70,
+            PrecipitationDaysRatio = 17f/30f,
+            AverageWindSpeed = 16,
+            FogDaysRatio = 19f/30f,
+            DayLengthAverage = 16.4f,
+          },
+          new MonthlyClimateData() // September
+          {
+            TemperatureAverage = 10,
+            TemperatureHighAverage = 13, TemperatureLowAverage = 6,
+            TemperatureHighest = 25, TemperatureLowest = -7,
+            PrecipitationAverage = 60,
+            PrecipitationDaysRatio = 15f/30f,
+            AverageWindSpeed = 9,
+            FogDaysRatio = 17f/30f,
+            DayLengthAverage = 13.5f,
+          },
+          new MonthlyClimateData() // October
+          {
+            TemperatureAverage = 5,
+            TemperatureHighAverage = 7, TemperatureLowAverage = 2,
+            TemperatureHighest = 17, TemperatureLowest = -12,
+            PrecipitationAverage = 60,
+            PrecipitationDaysRatio = 20f/30f,
+            AverageWindSpeed = 9,
+            FogDaysRatio = 16f/30f,
+            DayLengthAverage = 10.8f,
+          },
+          new MonthlyClimateData() // November
+          {
+            TemperatureAverage = 0,
+            TemperatureHighAverage = 2, TemperatureLowAverage = -2,
+            TemperatureHighest = 10, TemperatureLowest = -20,
+            PrecipitationAverage = 60,
+            PrecipitationDaysRatio = 17f/30f,
+            AverageWindSpeed = 19,
+            FogDaysRatio = 15f/30f,
+            DayLengthAverage = 8.3f,
+          },
+          new MonthlyClimateData() // December
+          {
+            TemperatureAverage = -3,
+            TemperatureHighAverage = -1, TemperatureLowAverage = -6,
+            TemperatureHighest = 8, TemperatureLowest = -32,
+            PrecipitationAverage = 50,
+            PrecipitationDaysRatio = 16f/30f,
+            AverageWindSpeed = 20,
+            FogDaysRatio = 13f/30f,
+            DayLengthAverage = 6.9f,
+          },
+        }
+      }},
+      #endregion
+      #region Germany, Frankfurt
+      // http://www.weatherbase.com/weather/weatherall.php3?s=73601&cityname=Frankfurt%2C+Hesse%2C+Germany&units=
+      new ClimatePreset() { PresetName = "Germany, Frankfurt", PresetCode = "PRESET_GERMANY_FRANKFURT", ClimateProperties = new ClimateControlProperties()
+      {
+        SnowFallTemperature = 2, SnowMeltTemperature = 10, SolarDayLength = 24f,
+        ClimateData = new MonthlyClimateData[]
+        {
+          new MonthlyClimateData() // January
+          {
+            TemperatureAverage = 1,
+            TemperatureHighAverage = 3, TemperatureLowAverage = -1,
+            TemperatureHighest = 13, TemperatureLowest = -20,
+            PrecipitationAverage = 40,
+            PrecipitationDaysRatio = 5f/DaysInMonthJanuary,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 19f/DaysInMonthJanuary,
+            DayLengthAverage = 9.3f,
+          },
+          new MonthlyClimateData() // February
+          {
+            TemperatureAverage = 2,
+            TemperatureHighAverage = 5, TemperatureLowAverage = -1,
+            TemperatureHighest = 17, TemperatureLowest = -18,
+            PrecipitationAverage = 40,
+            PrecipitationDaysRatio = 4f/DaysInMonthFebruary,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 18f/DaysInMonthFebruary,
+            DayLengthAverage = 10.7f,
+          },
+          new MonthlyClimateData() // March
+          {
+            TemperatureAverage = 6,
+            TemperatureHighAverage = 10, TemperatureLowAverage = 2,
+            TemperatureHighest = 23, TemperatureLowest = -12,
+            PrecipitationAverage = 50,
+            PrecipitationDaysRatio = 2f/DaysInMonthMarch,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 16f/DaysInMonthMarch,
+            DayLengthAverage = 12.5f,
+          },
+          new MonthlyClimateData() // April
+          {
+            TemperatureAverage = 8,
+            TemperatureHighAverage = 13, TemperatureLowAverage = 3,
+            TemperatureHighest = 25, TemperatureLowest = -6,
+            PrecipitationAverage = 50,
+            PrecipitationDaysRatio = 5f/DaysInMonthApril,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 12f/DaysInMonthApril,
+            DayLengthAverage = 14.4f,
+          },
+          new MonthlyClimateData() // May
+          {
+            TemperatureAverage = 13,
+            TemperatureHighAverage = 18, TemperatureLowAverage = 8,
+            TemperatureHighest = 31, TemperatureLowest = -2,
+            PrecipitationAverage = 60,
+            PrecipitationDaysRatio = 5f/DaysInMonthMay,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 14f/DaysInMonthMay,
+            DayLengthAverage = 16.1f,
+          },
+          new MonthlyClimateData() // June
+          {
+            TemperatureAverage = 16,
+            TemperatureHighAverage = 21, TemperatureLowAverage = 11,
+            TemperatureHighest = 33, TemperatureLowest = 1,
+            PrecipitationAverage = 70,
+            PrecipitationDaysRatio = 5f/DaysInMonthJune,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 13f/DaysInMonthJune,
+            DayLengthAverage = 17f,
+          },
+          new MonthlyClimateData() // July
+          {
+            TemperatureAverage = 18,
+            TemperatureHighAverage = 23, TemperatureLowAverage = 13,
+            TemperatureHighest = 36, TemperatureLowest = 3,
+            PrecipitationAverage = 60,
+            PrecipitationDaysRatio = 9f/DaysInMonthJuly,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 12f/DaysInMonthJuly,
+            DayLengthAverage = 16.5f,
+          },
+          new MonthlyClimateData() // August
+          {
+            TemperatureAverage = 18,
+            TemperatureHighAverage = 23, TemperatureLowAverage = 13,
+            TemperatureHighest = 36, TemperatureLowest = 3,
+            PrecipitationAverage = 70,
+            PrecipitationDaysRatio = 5f/DaysInMonthAugust,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 15f/DaysInMonthAugust,
+            DayLengthAverage = 15f,
+          },
+          new MonthlyClimateData() // September
+          {
+            TemperatureAverage = 15,
+            TemperatureHighAverage = 20, TemperatureLowAverage = 10,
+            TemperatureHighest = 32, TemperatureLowest = 0,
+            PrecipitationAverage = 50,
+            PrecipitationDaysRatio = 5f/DaysInMonthSeptember,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 18f/DaysInMonthSeptember,
+            DayLengthAverage = 13.1f,
+          },
+          new MonthlyClimateData() // October
+          {
+            TemperatureAverage = 10,
+            TemperatureHighAverage = 13, TemperatureLowAverage = 6,
+            TemperatureHighest = 27, TemperatureLowest = -3,
+            PrecipitationAverage = 50,
+            PrecipitationDaysRatio = 4f/DaysInMonthOctober,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 21f/DaysInMonthOctober,
+            DayLengthAverage = 11.2f,
+          },
+          new MonthlyClimateData() // November
+          {
+            TemperatureAverage = 5,
+            TemperatureHighAverage = 7, TemperatureLowAverage = 2,
+            TemperatureHighest = 17, TemperatureLowest = -8,
+            PrecipitationAverage = 50,
+            PrecipitationDaysRatio = 3f/DaysInMonthNovember,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 19f/DaysInMonthNovember,
+            DayLengthAverage = 9.6f,
+          },
+          new MonthlyClimateData() // December
+          {
+            TemperatureAverage = 2,
+            TemperatureHighAverage = 4, TemperatureLowAverage = 0,
+            TemperatureHighest = 16, TemperatureLowest = -16,
+            PrecipitationAverage = 50,
+            PrecipitationDaysRatio = 6f/DaysInMonthDecember,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 20f/DaysInMonthDecember,
+            DayLengthAverage = 8.8f,
+          },
+        }
+      }},
+      #endregion
+      #region Germany, Hamburg
+      // http://www.weatherbase.com/weather/weatherall.php3?s=74101&cityname=Hamburg%2C+Hamburg%2C+Germany&units=
+      new ClimatePreset() { PresetName = "Germany, Hamburg", PresetCode = "PRESET_GERMANY_HAMBURG", ClimateProperties = new ClimateControlProperties()
+      {
+        SnowFallTemperature = 2, SnowMeltTemperature = 10, SolarDayLength = 24f,
+        ClimateData = new MonthlyClimateData[]
+        {
+          new MonthlyClimateData() // January
+          {
+            TemperatureAverage = 1,
+            TemperatureHighAverage = 3, TemperatureLowAverage = -1,
+            TemperatureHighest = 12, TemperatureLowest = -18,
+            PrecipitationAverage = 60,
+            PrecipitationDaysRatio = 12f/DaysInMonthJanuary,
+            AverageWindSpeed = 19,
+            FogDaysRatio = 22f/DaysInMonthJanuary,
+            DayLengthAverage = 8.8f,
+          },
+          new MonthlyClimateData() // February
+          {
+            TemperatureAverage = 1,
+            TemperatureHighAverage = 3, TemperatureLowAverage = -1,
+            TemperatureHighest = 16, TemperatureLowest = -18,
+            PrecipitationAverage = 40,
+            PrecipitationDaysRatio = 9f/DaysInMonthFebruary,
+            AverageWindSpeed = 16,
+            FogDaysRatio = 19f/DaysInMonthFebruary,
+            DayLengthAverage = 10.5f,
+          },
+          new MonthlyClimateData() // March
+          {
+            TemperatureAverage = 4,
+            TemperatureHighAverage = 7, TemperatureLowAverage = 1,
+            TemperatureHighest = 22, TemperatureLowest = -12,
+            PrecipitationAverage = 50,
+            PrecipitationDaysRatio = 11f/DaysInMonthMarch,
+            AverageWindSpeed = 17,
+            FogDaysRatio = 20f/DaysInMonthMarch,
+            DayLengthAverage = 12.5f,
+          },
+          new MonthlyClimateData() // April
+          {
+            TemperatureAverage = 7,
+            TemperatureHighAverage = 11, TemperatureLowAverage = 2,
+            TemperatureHighest = 25, TemperatureLowest = -6,
+            PrecipitationAverage = 40,
+            PrecipitationDaysRatio = 10f/DaysInMonthApril,
+            AverageWindSpeed = 16,
+            FogDaysRatio = 18f/DaysInMonthApril,
+            DayLengthAverage = 14.7f,
+          },
+          new MonthlyClimateData() // May
+          {
+            TemperatureAverage = 12,
+            TemperatureHighAverage = 16, TemperatureLowAverage = 7,
+            TemperatureHighest = 28, TemperatureLowest = -1,
+            PrecipitationAverage = 50,
+            PrecipitationDaysRatio = 10f/DaysInMonthMay,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 19f/DaysInMonthMay,
+            DayLengthAverage = 16.7f,
+          },
+          new MonthlyClimateData() // June
+          {
+            TemperatureAverage = 15,
+            TemperatureHighAverage = 19, TemperatureLowAverage = 10,
+            TemperatureHighest = 32, TemperatureLowest = 2,
+            PrecipitationAverage = 70,
+            PrecipitationDaysRatio = 11f/DaysInMonthJune,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 18f/DaysInMonthJune,
+            DayLengthAverage = 17.9f,
+          },
+          new MonthlyClimateData() // July
+          {
+            TemperatureAverage = 17,
+            TemperatureHighAverage = 21, TemperatureLowAverage = 12,
+            TemperatureHighest = 34, TemperatureLowest = 6,
+            PrecipitationAverage = 80,
+            PrecipitationDaysRatio = 12f/DaysInMonthJuly,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 19f/DaysInMonthJuly,
+            DayLengthAverage = 17.2f,
+          },
+          new MonthlyClimateData() // August
+          {
+            TemperatureAverage = 17,
+            TemperatureHighAverage = 21, TemperatureLowAverage = 12,
+            TemperatureHighest = 37, TemperatureLowest = 2,
+            PrecipitationAverage = 70,
+            PrecipitationDaysRatio = 11f/DaysInMonthAugust,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 21f/DaysInMonthAugust,
+            DayLengthAverage = 15.4f,
+          },
+          new MonthlyClimateData() // September
+          {
+            TemperatureAverage = 13,
+            TemperatureHighAverage = 17, TemperatureLowAverage = 9,
+            TemperatureHighest = 29, TemperatureLowest = 0,
+            PrecipitationAverage = 60,
+            PrecipitationDaysRatio = 11f/DaysInMonthSeptember,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 21f/DaysInMonthSeptember,
+            DayLengthAverage = 13.2f,
+          },
+          new MonthlyClimateData() // October
+          {
+            TemperatureAverage = 9,
+            TemperatureHighAverage = 12, TemperatureLowAverage = 6,
+            TemperatureHighest = 23, TemperatureLowest = -3,
+            PrecipitationAverage = 60,
+            PrecipitationDaysRatio = 10f/DaysInMonthOctober,
+            AverageWindSpeed = 17,
+            FogDaysRatio = 23f/DaysInMonthOctober,
+            DayLengthAverage = 11.1f,
+          },
+          new MonthlyClimateData() // November
+          {
+            TemperatureAverage = 5,
+            TemperatureHighAverage = 7, TemperatureLowAverage = 2,
+            TemperatureHighest = 15, TemperatureLowest = -11,
+            PrecipitationAverage = 60,
+            PrecipitationDaysRatio = 12f/DaysInMonthNovember,
+            AverageWindSpeed = 19,
+            FogDaysRatio = 20f/DaysInMonthNovember,
+            DayLengthAverage = 9.2f,
+          },
+          new MonthlyClimateData() // December
+          {
+            TemperatureAverage = 2,
+            TemperatureHighAverage = 4, TemperatureLowAverage = 0,
+            TemperatureHighest = 16, TemperatureLowest = 0,
+            PrecipitationAverage = 70,
+            PrecipitationDaysRatio = 12f/DaysInMonthDecember,
+            AverageWindSpeed = 17,
+            FogDaysRatio = 21f/DaysInMonthDecember,
+            DayLengthAverage = 8.3f,
+          },
+        }
+      }},
+      #endregion
+      #region Greenland, Kraulshavn
+      // http://www.weatherbase.com/weather/weatherall.php3?s=80240&cityname=Kraulshavn%2C+Qaasuitsup%2C+Greenland&units=
+      new ClimatePreset() { PresetName = "Greenland, Kraulshavn", PresetCode = "PRESET_GREENLAND_KRAULSHAVN", ClimateProperties = new ClimateControlProperties()
+      {
+        SnowFallTemperature = 1f, SnowMeltTemperature = 6f, SolarDayLength = 24.00f,
+        ClimateData = new MonthlyClimateData[]
+        {
+          new MonthlyClimateData() // January
+          {
+            TemperatureAverage = -21,
+            TemperatureHighAverage = -20, TemperatureLowAverage = -24,
+            TemperatureHighest = 1, TemperatureLowest = -38,
+            PrecipitationAverage = float.NaN,
+            PrecipitationDaysRatio = 0,
+            AverageWindSpeed = 19,
+            FogDaysRatio = float.NaN,
+            DayLengthAverage = 0,
+          },
+          new MonthlyClimateData() // February
+          {
+            TemperatureAverage = -23,
+            TemperatureHighAverage = -21, TemperatureLowAverage = -26,
+            TemperatureHighest = 0, TemperatureLowest = -39,
+            PrecipitationAverage = float.NaN,
+            PrecipitationDaysRatio = 0,
+            AverageWindSpeed = 19,
+            FogDaysRatio = float.NaN,
+            DayLengthAverage = 7.1f,
+          },
+          new MonthlyClimateData() // March
+          {
+            TemperatureAverage = -23,
+            TemperatureHighAverage = -22, TemperatureLowAverage = -26,
+            TemperatureHighest = -1, TemperatureLowest = -41,
+            PrecipitationAverage = float.NaN,
+            PrecipitationDaysRatio = 31f/31f,
+            AverageWindSpeed = 19,
+            FogDaysRatio = float.NaN,
+            DayLengthAverage = 13.1f,
+          },
+          new MonthlyClimateData() // April
+          {
+            TemperatureAverage = 0,
+            TemperatureHighAverage = -15, TemperatureLowAverage = -20,
+            TemperatureHighest = 2, TemperatureLowest = -35,
+            PrecipitationAverage = float.NaN,
+            PrecipitationDaysRatio = 0,
+            AverageWindSpeed = 20,
+            FogDaysRatio = float.NaN,
+            DayLengthAverage = 22,
+          },
+          new MonthlyClimateData() // May
+          {
+            TemperatureAverage = -7,
+            TemperatureHighAverage = -5, TemperatureLowAverage = -9,
+            TemperatureHighest = 7, TemperatureLowest = -28,
+            PrecipitationAverage = float.NaN,
+            PrecipitationDaysRatio = 0,
+            AverageWindSpeed = 22,
+            FogDaysRatio = float.NaN,
+            DayLengthAverage = 24,
+          },
+          new MonthlyClimateData() // June
+          {
+            TemperatureAverage = 0,
+            TemperatureHighAverage = 1, TemperatureLowAverage = -1,
+            TemperatureHighest = 13, TemperatureLowest = -8,
+            PrecipitationAverage = float.NaN,
+            PrecipitationDaysRatio = 0,
+            AverageWindSpeed = 19,
+            FogDaysRatio = float.NaN,
+            DayLengthAverage = 24,
+          },
+          new MonthlyClimateData() // July
+          {
+            TemperatureAverage = 3,
+            TemperatureHighAverage = 4, TemperatureLowAverage = 1,
+            TemperatureHighest = 13, TemperatureLowest = -8,
+            PrecipitationAverage = float.NaN,
+            PrecipitationDaysRatio = 0,
+            AverageWindSpeed = 19,
+            FogDaysRatio = float.NaN,
+            DayLengthAverage = 24,
+          },
+          new MonthlyClimateData() // August
+          {
+            TemperatureAverage = 3,
+            TemperatureHighAverage = 3, TemperatureLowAverage = 2,
+            TemperatureHighest = 11, TemperatureLowest = -1,
+            PrecipitationAverage = float.NaN,
+            PrecipitationDaysRatio = 16f/30f,
+            AverageWindSpeed = 20,
+            FogDaysRatio = float.NaN,
+            DayLengthAverage = 22.5f,
+          },
+          new MonthlyClimateData() // September
+          {
+            TemperatureAverage = 0,
+            TemperatureHighAverage = 1, TemperatureLowAverage = 0,
+            TemperatureHighest = 7, TemperatureLowest = -5,
+            PrecipitationAverage = float.NaN,
+            PrecipitationDaysRatio = 0,
+            AverageWindSpeed = 19,
+            FogDaysRatio = float.NaN,
+            DayLengthAverage = 15,
+          },
+          new MonthlyClimateData() // October
+          {
+            TemperatureAverage = -4,
+            TemperatureHighAverage = -3, TemperatureLowAverage = -5,
+            TemperatureHighest = 7, TemperatureLowest = -17,
+            PrecipitationAverage = float.NaN,
+            PrecipitationDaysRatio = 0,
+            AverageWindSpeed = 25,
+            FogDaysRatio = float.NaN,
+            DayLengthAverage = 9.2f,
+          },
+          new MonthlyClimateData() // November
+          {
+            TemperatureAverage = -11,
+            TemperatureHighAverage = -10, TemperatureLowAverage = -12,
+            TemperatureHighest = 2, TemperatureLowest = -30,
+            PrecipitationAverage = float.NaN,
+            PrecipitationDaysRatio = 30f/30f,
+            AverageWindSpeed = 22,
+            FogDaysRatio = float.NaN,
+            DayLengthAverage = 0,
+          },
+          new MonthlyClimateData() // December
+          {
+            TemperatureAverage = 0,
+            TemperatureHighAverage = -16, TemperatureLowAverage = -20,
+            TemperatureHighest = 2, TemperatureLowest = -37,
+            PrecipitationAverage = float.NaN,
+            PrecipitationDaysRatio = 0,
+            AverageWindSpeed = 19,
+            FogDaysRatio = float.NaN,
+            DayLengthAverage = 0,
+          },
+        }
+      }},
+      #endregion
+      #region India, Cherrapunj
+      // http://www.weatherbase.com/weather/weatherall.php3?s=425150&cityname=Cherrapunj%2C+Meghalaya%2C+India&units=
+      new ClimatePreset() { PresetName = "", PresetCode = "PRESET_INDIA_CHERRAPUNJ", ClimateProperties = new ClimateControlProperties()
+      {
+        SnowFallTemperature = 2, SnowMeltTemperature = 10, SolarDayLength = 24f,
+        ClimateData = new MonthlyClimateData[]
+        {
+          new MonthlyClimateData() // January
+          {
+            TemperatureAverage = 11.5f,
+            TemperatureHighAverage = 15.7f,
+            TemperatureLowAverage = 7.3f,
+            TemperatureHighest = float.NaN,
+            TemperatureLowest = float.NaN,
+            PrecipitationAverage = 19,
+            PrecipitationDaysRatio = float.NaN, //f/DaysInMonthJanuary,
+            AverageWindSpeed = float.NaN,
+            FogDaysRatio = float.NaN, //f/DaysInMonthJanuary,
+            DayLengthAverage = 11.2f,
+          },
+          new MonthlyClimateData() // February
+          {
+            TemperatureAverage = 13,
+            TemperatureHighAverage = 17.1f,
+            TemperatureLowAverage = 8.9f,
+            TemperatureHighest = float.NaN,
+            TemperatureLowest = float.NaN,
+            PrecipitationAverage = 45,
+            PrecipitationDaysRatio = float.NaN, //f/DaysInMonthFebruary,
+            AverageWindSpeed = float.NaN,
+            FogDaysRatio = float.NaN, //f/DaysInMonthFebruary,
+            DayLengthAverage = 11.7f,
+          },
+          new MonthlyClimateData() // March
+          {
+            TemperatureAverage = 16.5f,
+            TemperatureHighAverage = 20.4f,
+            TemperatureLowAverage = 12.5f,
+            TemperatureHighest = float.NaN,
+            TemperatureLowest = float.NaN,
+            PrecipitationAverage = 220,
+            PrecipitationDaysRatio = float.NaN, //f/DaysInMonthMarch,
+            AverageWindSpeed = float.NaN,
+            FogDaysRatio = float.NaN, //f/DaysInMonthMarch,
+            DayLengthAverage = 12.4f,
+          },
+          new MonthlyClimateData() // April
+          {
+            TemperatureAverage = 18.3f,
+            TemperatureHighAverage = 21.9f,
+            TemperatureLowAverage = 14.6f,
+            TemperatureHighest = float.NaN,
+            TemperatureLowest = float.NaN,
+            PrecipitationAverage = 725,
+            PrecipitationDaysRatio = float.NaN, //f/DaysInMonthApril,
+            AverageWindSpeed = float.NaN,
+            FogDaysRatio = float.NaN, //f/DaysInMonthApril,
+            DayLengthAverage = 13.2f,
+          },
+          new MonthlyClimateData() // May
+          {
+            TemperatureAverage = 19.3f,
+            TemperatureHighAverage = 22.4f,
+            TemperatureLowAverage = 16.1f,
+            TemperatureHighest = float.NaN,
+            TemperatureLowest = float.NaN,
+            PrecipitationAverage = 1290,
+            PrecipitationDaysRatio = float.NaN, //f/DaysInMonthMay,
+            AverageWindSpeed = float.NaN,
+            FogDaysRatio = float.NaN, //f/DaysInMonthMay,
+            DayLengthAverage = 13.8f,
+          },
+          new MonthlyClimateData() // June
+          {
+            TemperatureAverage = 20.1f,
+            TemperatureHighAverage = 22.4f,
+            TemperatureLowAverage = 17.7f,
+            TemperatureHighest = float.NaN,
+            TemperatureLowest = float.NaN,
+            PrecipitationAverage = 2597,
+            PrecipitationDaysRatio = float.NaN, //f/DaysInMonthJune,
+            AverageWindSpeed = float.NaN,
+            FogDaysRatio = float.NaN, //f/DaysInMonthJune,
+            DayLengthAverage = 14.1f,
+          },
+          new MonthlyClimateData() // July
+          {
+            TemperatureAverage = 20.3f,
+            TemperatureHighAverage = 22.4f,
+            TemperatureLowAverage = 18.2f,
+            TemperatureHighest = float.NaN,
+            TemperatureLowest = float.NaN,
+            PrecipitationAverage = 2553,
+            PrecipitationDaysRatio = float.NaN, //f/DaysInMonthJuly,
+            AverageWindSpeed = float.NaN,
+            FogDaysRatio = float.NaN, //f/DaysInMonthJuly,
+            DayLengthAverage = 14f,
+          },
+          new MonthlyClimateData() // August
+          {
+            TemperatureAverage = 20.5f,
+            TemperatureHighAverage = 22.7f,
+            TemperatureLowAverage = 18.2f,
+            TemperatureHighest = float.NaN,
+            TemperatureLowest = float.NaN,
+            PrecipitationAverage = 1803,
+            PrecipitationDaysRatio = float.NaN, //f/DaysInMonthAugust,
+            AverageWindSpeed = float.NaN,
+            FogDaysRatio = float.NaN, //f/DaysInMonthAugust,
+            DayLengthAverage = 13.4f,
+          },
+          new MonthlyClimateData() // September
+          {
+            TemperatureAverage = 20.4f,
+            TemperatureHighAverage = 23,
+            TemperatureLowAverage = 17.8f,
+            TemperatureHighest = float.NaN,
+            TemperatureLowest = float.NaN,
+            PrecipitationAverage = 1120,
+            PrecipitationDaysRatio = float.NaN, //f/DaysInMonthSeptember,
+            AverageWindSpeed = float.NaN,
+            FogDaysRatio = float.NaN, //f/DaysInMonthSeptember,
+            DayLengthAverage = 12.7f,
+          },
+          new MonthlyClimateData() // October
+          {
+            TemperatureAverage = 19.1f,
+            TemperatureHighAverage = 22.5f,
+            TemperatureLowAverage = 15.7f,
+            TemperatureHighest = float.NaN,
+            TemperatureLowest = float.NaN,
+            PrecipitationAverage = 432,
+            PrecipitationDaysRatio = float.NaN, //f/DaysInMonthOctober,
+            AverageWindSpeed = float.NaN,
+            FogDaysRatio = float.NaN, //f/DaysInMonthOctober,
+            DayLengthAverage = 11.9f,
+          },
+          new MonthlyClimateData() // November
+          {
+            TemperatureAverage = 16.1f,
+            TemperatureHighAverage = 20.1f,
+            TemperatureLowAverage = 12,
+            TemperatureHighest = float.NaN,
+            TemperatureLowest = float.NaN,
+            PrecipitationAverage = 50,
+            PrecipitationDaysRatio = float.NaN, //f/DaysInMonthNovember,
+            AverageWindSpeed = float.NaN,
+            FogDaysRatio = float.NaN, //f/DaysInMonthNovember,
+            DayLengthAverage = 11.3f,
+          },
+          new MonthlyClimateData() // December
+          {
+            TemperatureAverage = 12.9f,
+            TemperatureHighAverage = 17.1f,
+            TemperatureLowAverage = 8.6f,
+            TemperatureHighest = float.NaN,
+            TemperatureLowest = float.NaN,
+            PrecipitationAverage = 12,
+            PrecipitationDaysRatio = float.NaN, //f/DaysInMonthDecember,
+            AverageWindSpeed = float.NaN,
+            FogDaysRatio = float.NaN, //f/DaysInMonthDecember,
+            DayLengthAverage = 11f,
+          },
+        }
+      }},
+      #endregion
+      #region North Korea, Pyongyang
+      // http://www.weatherbase.com/weather/weatherall.php3?s=85074&cityname=Pyongyang%2C+Pyongyang%2C+North+Korea&units=
+      new ClimatePreset() { PresetName = "North Korea, Pyongyang", PresetCode = "PRESET_NORTH_KOREA_PYONGYANG", ClimateProperties = new ClimateControlProperties()
+      {
+        SnowFallTemperature = 2, SnowMeltTemperature = 10, SolarDayLength = 24.00f,
+        ClimateData = new MonthlyClimateData[]
+        {
+          new MonthlyClimateData() // January
+          {
+            TemperatureAverage = -6,
+            TemperatureHighAverage = -1, TemperatureLowAverage = -10,
+            TemperatureHighest = 11, TemperatureLowest = -25,
+            PrecipitationAverage = 10,
+            PrecipitationDaysRatio = 3f/30f,
+            AverageWindSpeed = 9,
+            FogDaysRatio = 25f/30f,
+            DayLengthAverage = 10.3f,
+          },
+          new MonthlyClimateData() // February
+          {
+            TemperatureAverage = -2,
+            TemperatureHighAverage = 1, TemperatureLowAverage = -7,
+            TemperatureHighest = 15, TemperatureLowest = -22,
+            PrecipitationAverage = 10,
+            PrecipitationDaysRatio = 3f/30f,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 21f/30f,
+            DayLengthAverage = 11.2f,
+          },
+          new MonthlyClimateData() // March
+          {
+            TemperatureAverage = 3,
+            TemperatureHighAverage = 8, TemperatureLowAverage = -1,
+            TemperatureHighest = 18, TemperatureLowest = -13,
+            PrecipitationAverage = 20,
+            PrecipitationDaysRatio = 5f/30f,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 24f/30f,
+            DayLengthAverage = 12.4f,
+          },
+          new MonthlyClimateData() // April
+          {
+            TemperatureAverage = 10,
+            TemperatureHighAverage = 16, TemperatureLowAverage = 5,
+            TemperatureHighest = 27, TemperatureLowest = -4,
+            PrecipitationAverage = 40,
+            PrecipitationDaysRatio = 8f/30f,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 21f/30f,
+            DayLengthAverage = 13.7f,
+          },
+          new MonthlyClimateData() // May
+          {
+            TemperatureAverage = 16,
+            TemperatureHighAverage = 21, TemperatureLowAverage = 11,
+            TemperatureHighest = 32, TemperatureLowest = 3,
+            PrecipitationAverage = 60,
+            PrecipitationDaysRatio = 10f/30f,
+            AverageWindSpeed = 9,
+            FogDaysRatio = 21f/30f,
+            DayLengthAverage = 14.8f,
+          },
+          new MonthlyClimateData() // June
+          {
+            TemperatureAverage = 21,
+            TemperatureHighAverage = 25, TemperatureLowAverage = 16,
+            TemperatureHighest = 33, TemperatureLowest = 7,
+            PrecipitationAverage = 70,
+            PrecipitationDaysRatio = 11f/30f,
+            AverageWindSpeed = 8,
+            FogDaysRatio = 22f/30f,
+            DayLengthAverage = 15.4f,
+          },
+          new MonthlyClimateData() // July
+          {
+            TemperatureAverage = 24,
+            TemperatureHighAverage = 27, TemperatureLowAverage = 20,
+            TemperatureHighest = 35, TemperatureLowest = 12,
+            PrecipitationAverage = 250,
+            PrecipitationDaysRatio = 16f/30f,
+            AverageWindSpeed = 6,
+            FogDaysRatio = 21f/30f,
+            DayLengthAverage = 15.1f,
+          },
+          new MonthlyClimateData() // August
+          {
+            TemperatureAverage = 24,
+            TemperatureHighAverage = 28, TemperatureLowAverage = 20,
+            TemperatureHighest = 35, TemperatureLowest = 12,
+            PrecipitationAverage = 230,
+            PrecipitationDaysRatio = 12f/30f,
+            AverageWindSpeed = 6,
+            FogDaysRatio = 21f/30f,
+            DayLengthAverage = 14.1f,
+          },
+          new MonthlyClimateData() // September
+          {
+            TemperatureAverage = 19,
+            TemperatureHighAverage = 23, TemperatureLowAverage = 14,
+            TemperatureHighest = 30, TemperatureLowest = 4,
+            PrecipitationAverage = 110,
+            PrecipitationDaysRatio = 8f/30f,
+            AverageWindSpeed = 8,
+            FogDaysRatio = 21f/30f,
+            DayLengthAverage = 12.9f,
+          },
+          new MonthlyClimateData() // October
+          {
+            TemperatureAverage = 12,
+            TemperatureHighAverage = 17, TemperatureLowAverage = 7,
+            TemperatureHighest = 27, TemperatureLowest = -3,
+            PrecipitationAverage = 40,
+            PrecipitationDaysRatio = 7f/30f,
+            AverageWindSpeed = 9,
+            FogDaysRatio = 23f/30f,
+            DayLengthAverage = 11.6f,
+          },
+          new MonthlyClimateData() // November
+          {
+            TemperatureAverage = 4,
+            TemperatureHighAverage = 8, TemperatureLowAverage = 0,
+            TemperatureHighest = 22, TemperatureLowest = -13,
+            PrecipitationAverage = 40,
+            PrecipitationDaysRatio = 8f/30f,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 22f/30f,
+            DayLengthAverage = 10.5f,
+          },
+          new MonthlyClimateData() // December
+          {
+            TemperatureAverage = -2,
+            TemperatureHighAverage = 1, TemperatureLowAverage = -6,
+            TemperatureHighest = 12, TemperatureLowest = -21,
+            PrecipitationAverage = 20,
+            PrecipitationDaysRatio = 4f/30f,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 25f/30f,
+            DayLengthAverage = 10,
+          },
+        }
+      }},
+      #endregion
+      #region Poland, Kraków
+      // http://www.weatherbase.com/weather/weatherall.php3?s=66521&cityname=Krakow%2C+Lesser+Poland+Voivodeship%2C+Poland&units=
+      new ClimatePreset() { PresetName = "Poland, Kraków", PresetCode = "PRESET_POLAND_KRAKÓW", ClimateProperties = new ClimateControlProperties()
+      {
+        SnowFallTemperature = 2, SnowMeltTemperature = 10, SolarDayLength = 24.00f,
+        ClimateData = new MonthlyClimateData[]
+        {
+          new MonthlyClimateData() // January
+          {
+            TemperatureAverage = -2,
+            TemperatureHighAverage = 0, TemperatureLowAverage = -5,
+            TemperatureHighest = 15, TemperatureLowest = -30,
+            PrecipitationAverage = 30,
+            PrecipitationDaysRatio = 18f/30f,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 24f/30f,
+            DayLengthAverage = 9.3f,
+          },
+          new MonthlyClimateData() // February
+          {
+            TemperatureAverage = -1,
+            TemperatureHighAverage = 1, TemperatureLowAverage = -4,
+            TemperatureHighest = 18, TemperatureLowest = -27,
+            PrecipitationAverage = 30,
+            PrecipitationDaysRatio = 17f/30f,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 22f/30f,
+            DayLengthAverage = 10.7f,
+          },
+          new MonthlyClimateData() // March
+          {
+            TemperatureAverage = 3,
+            TemperatureHighAverage = 7, TemperatureLowAverage = 0,
+            TemperatureHighest = 22, TemperatureLowest = -17,
+            PrecipitationAverage = 30,
+            PrecipitationDaysRatio = 15f/30f,
+            AverageWindSpeed = 16,
+            FogDaysRatio = 23f/30f,
+            DayLengthAverage = 12.5f,
+          },
+          new MonthlyClimateData() // April
+          {
+            TemperatureAverage = 7,
+            TemperatureHighAverage = 12, TemperatureLowAverage = 3,
+            TemperatureHighest = 28, TemperatureLowest = -7,
+            PrecipitationAverage = 40,
+            PrecipitationDaysRatio = 15f/30f,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 19f/30f,
+            DayLengthAverage = 14.4f,
+          },
+          new MonthlyClimateData() // May
+          {
+            TemperatureAverage = 12,
+            TemperatureHighAverage = 17, TemperatureLowAverage = 7,
+            TemperatureHighest = 30, TemperatureLowest = -2,
+            PrecipitationAverage = 60,
+            PrecipitationDaysRatio = 15f/30f,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 19f/30f,
+            DayLengthAverage = 16.1f,
+          },
+          new MonthlyClimateData() // June
+          {
+            TemperatureAverage = 16,
+            TemperatureHighAverage = 20, TemperatureLowAverage = 11,
+            TemperatureHighest = 31, TemperatureLowest = 1,
+            PrecipitationAverage = 80,
+            PrecipitationDaysRatio = 16f/30f,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 20f/30f,
+            DayLengthAverage = 17,
+          },
+          new MonthlyClimateData() // July
+          {
+            TemperatureAverage = 17,
+            TemperatureHighAverage = 21, TemperatureLowAverage = 12,
+            TemperatureHighest = 33, TemperatureLowest = 6,
+            PrecipitationAverage = 60,
+            PrecipitationDaysRatio = 14f/30f,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 22f/30f,
+            DayLengthAverage = 16.6f,
+          },
+          new MonthlyClimateData() // August
+          {
+            TemperatureAverage = 17,
+            TemperatureHighAverage = 21, TemperatureLowAverage = 12,
+            TemperatureHighest = 32, TemperatureLowest = 5,
+            PrecipitationAverage = 70,
+            PrecipitationDaysRatio = 13f/30f,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 24f/30f,
+            DayLengthAverage = 15,
+          },
+          new MonthlyClimateData() // September
+          {
+            TemperatureAverage = 13,
+            TemperatureHighAverage = 17, TemperatureLowAverage = 8,
+            TemperatureHighest = 28, TemperatureLowest = -2,
+            PrecipitationAverage = 50,
+            PrecipitationDaysRatio = 13f/30f,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 25f/30f,
+            DayLengthAverage = 13.1f,
+          },
+          new MonthlyClimateData() // October
+          {
+            TemperatureAverage = 8,
+            TemperatureHighAverage = 12, TemperatureLowAverage = 4,
+            TemperatureHighest = 26, TemperatureLowest = -7,
+            PrecipitationAverage = 40,
+            PrecipitationDaysRatio = 13f/30f,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 24f/30f,
+            DayLengthAverage = 11.2f,
+          },
+          new MonthlyClimateData() // November
+          {
+            TemperatureAverage = 2,
+            TemperatureHighAverage = 5, TemperatureLowAverage = 0,
+            TemperatureHighest = 18, TemperatureLowest = -17,
+            PrecipitationAverage = 40,
+            PrecipitationDaysRatio = 17f/30f,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 23f/30f,
+            DayLengthAverage = 9.6f,
+          },
+          new MonthlyClimateData() // December
+          {
+            TemperatureAverage = 0,
+            TemperatureHighAverage = 2, TemperatureLowAverage = -3,
+            TemperatureHighest = 17, TemperatureLowest = -22,
+            PrecipitationAverage = 40,
+            PrecipitationDaysRatio = 20f/30f,
+            AverageWindSpeed = 16,
+            FogDaysRatio = 23f/30f,
+            DayLengthAverage = 8.8f,
+          },
+        }
+      }},
+      #endregion
+      #region Russia, Moscow
+      // http://www.weatherbase.com/weather/weatherall.php3?s=551572&cityname=Moscow%2C+Moscow%2C+Russia&units=
+      new ClimatePreset() { PresetName = "Russia, Moscow", PresetCode = "PRESET_RUSSIA_MOSCOW", ClimateProperties = new ClimateControlProperties()
+      {
+        SnowFallTemperature = 2, SnowMeltTemperature = 10, SolarDayLength = 24.00f,
+        ClimateData = new MonthlyClimateData[]
+        {
+          new MonthlyClimateData() // January
+          {
+            TemperatureAverage = -8,
+            TemperatureHighAverage = -6, TemperatureLowAverage = -11,
+            TemperatureHighest = 7, TemperatureLowest = -36,
+            PrecipitationAverage = 30,
+            PrecipitationDaysRatio = 6f/30f,
+            AverageWindSpeed = 17,
+            FogDaysRatio = 20f/30f,
+            DayLengthAverage = 8.5f,
+          },
+          new MonthlyClimateData() // February
+          {
+            TemperatureAverage = -7,
+            TemperatureHighAverage = -4, TemperatureLowAverage = -11,
+            TemperatureHighest = 10, TemperatureLowest = -33,
+            PrecipitationAverage = 20,
+            PrecipitationDaysRatio = 5f/30f,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 19f/30f,
+            DayLengthAverage = 10.3f,
+          },
+          new MonthlyClimateData() // March
+          {
+            TemperatureAverage = -2,
+            TemperatureHighAverage = 1, TemperatureLowAverage = -5,
+            TemperatureHighest = 16, TemperatureLowest = -27,
+            PrecipitationAverage = 30,
+            PrecipitationDaysRatio = 7f/30f,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 23f/30f,
+            DayLengthAverage = 12.5f,
+          },
+          new MonthlyClimateData() // April
+          {
+            TemperatureAverage = 5,
+            TemperatureHighAverage = 9, TemperatureLowAverage = 1,
+            TemperatureHighest = 23, TemperatureLowest = -8,
+            PrecipitationAverage = 30,
+            PrecipitationDaysRatio = 10f/30f,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 20f/30f,
+            DayLengthAverage = 14.9f,
+          },
+          new MonthlyClimateData() // May
+          {
+            TemperatureAverage = 12,
+            TemperatureHighAverage = 17, TemperatureLowAverage = 6,
+            TemperatureHighest = 28, TemperatureLowest = -6,
+            PrecipitationAverage = 50,
+            PrecipitationDaysRatio = 12f/30f,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 20f/30f,
+            DayLengthAverage = 17.2f,
+          },
+          new MonthlyClimateData() // June
+          {
+            TemperatureAverage = 15,
+            TemperatureHighAverage = 20, TemperatureLowAverage = 10,
+            TemperatureHighest = 32, TemperatureLowest = 0,
+            PrecipitationAverage = 60,
+            PrecipitationDaysRatio = 12f/30f,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 21f/30f,
+            DayLengthAverage = 18.5f,
+          },
+          new MonthlyClimateData() // July
+          {
+            TemperatureAverage = 17,
+            TemperatureHighAverage = 21, TemperatureLowAverage = 12,
+            TemperatureHighest = 35, TemperatureLowest = 5,
+            PrecipitationAverage = 80,
+            PrecipitationDaysRatio = 11f/30f,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 21f/30f,
+            DayLengthAverage = 17.8f,
+          },
+          new MonthlyClimateData() // August
+          {
+            TemperatureAverage = 15,
+            TemperatureHighAverage = 20, TemperatureLowAverage = 11,
+            TemperatureHighest = 32, TemperatureLowest = 0,
+            PrecipitationAverage = 70,
+            PrecipitationDaysRatio = 11f/30f,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 24f/30f,
+            DayLengthAverage = 15.7f,
+          },
+          new MonthlyClimateData() // September
+          {
+            TemperatureAverage = 10,
+            TemperatureHighAverage = 13, TemperatureLowAverage = 6,
+            TemperatureHighest = 28, TemperatureLowest = -6,
+            PrecipitationAverage = 50,
+            PrecipitationDaysRatio = 11f/30f,
+            AverageWindSpeed = 16,
+            FogDaysRatio = 22f/30f,
+            DayLengthAverage = 13.3f,
+          },
+          new MonthlyClimateData() // October
+          {
+            TemperatureAverage = 3,
+            TemperatureHighAverage = 7, TemperatureLowAverage = 0,
+            TemperatureHighest = 22, TemperatureLowest = -13,
+            PrecipitationAverage = 50,
+            PrecipitationDaysRatio = 15f/30f,
+            AverageWindSpeed = 16,
+            FogDaysRatio = 21f/30f,
+            DayLengthAverage = 11,
+          },
+          new MonthlyClimateData() // November
+          {
+            TemperatureAverage = -2,
+            TemperatureHighAverage = 0, TemperatureLowAverage = -4,
+            TemperatureHighest = 10, TemperatureLowest = -25,
+            PrecipitationAverage = 40,
+            PrecipitationDaysRatio = 9f/30f,
+            AverageWindSpeed = 16,
+            FogDaysRatio = 20f/30f,
+            DayLengthAverage = 8.9f,
+          },
+          new MonthlyClimateData() // December
+          {
+            TemperatureAverage = -6,
+            TemperatureHighAverage = -3, TemperatureLowAverage = -8,
+            TemperatureHighest = 10, TemperatureLowest = -42,
+            PrecipitationAverage = 40,
+            PrecipitationDaysRatio = 6f/30f,
+            AverageWindSpeed = 17,
+            FogDaysRatio = 19f/30f,
+            DayLengthAverage = 7.9f,
+          },
+        }
+      }},
+      #endregion
+      #region Spain, Seville
+      // http://www.weatherbase.com/weather/weatherall.php3?s=19380&cityname=Seville%2C+Andalusia%2C+Spain&units=
+      new ClimatePreset() { PresetName = "Spain, Seville", PresetCode = "PRESET_SPAIN_SEVILLE", ClimateProperties = new ClimateControlProperties()
+      {
+        SnowFallTemperature = 2, SnowMeltTemperature = 10, SolarDayLength = 24.00f,
+        ClimateData = new MonthlyClimateData[]
+        {
+          new MonthlyClimateData() // January
+          {
+            TemperatureAverage = 10.6f,
+            TemperatureHighAverage = 15.9f, TemperatureLowAverage = 5.2f,
+            TemperatureHighest = 23, TemperatureLowest = -3,
+            PrecipitationAverage = 65,
+            PrecipitationDaysRatio = 6f/30f,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 4f/30f,
+            DayLengthAverage = 10.4f,
+          },
+          new MonthlyClimateData() // February
+          {
+            TemperatureAverage = 12.2f,
+            TemperatureHighAverage = 17.9f, TemperatureLowAverage = 6.7f,
+            TemperatureHighest = 26, TemperatureLowest = -2,
+            PrecipitationAverage = 54,
+            PrecipitationDaysRatio = 6f/30f,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 3f/30f,
+            DayLengthAverage = 11.3f,
+          },
+          new MonthlyClimateData() // March
+          {
+            TemperatureAverage = 14.7f,
+            TemperatureHighAverage = 21.2f, TemperatureLowAverage = 8.2f,
+            TemperatureHighest = 31, TemperatureLowest = 0,
+            PrecipitationAverage = 38,
+            PrecipitationDaysRatio = 5f/30f,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 3f/30f,
+            DayLengthAverage = 12.4f,
+          },
+          new MonthlyClimateData() // April
+          {
+            TemperatureAverage = 16.4f,
+            TemperatureHighAverage = 22.7f, TemperatureLowAverage = 10.1f,
+            TemperatureHighest = 33, TemperatureLowest = 1,
+            PrecipitationAverage = 57,
+            PrecipitationDaysRatio = 7f/30f,
+            AverageWindSpeed = 16,
+            FogDaysRatio = 2f/30f,
+            DayLengthAverage = 13.7f,
+          },
+          new MonthlyClimateData() // May
+          {
+            TemperatureAverage = 19.7f,
+            TemperatureHighAverage = 26.4f, TemperatureLowAverage = 13.1f,
+            TemperatureHighest = 38, TemperatureLowest = 6,
+            PrecipitationAverage = 34,
+            PrecipitationDaysRatio = 4f/30f,
+            AverageWindSpeed = 16,
+            FogDaysRatio = 1f/30f,
+            DayLengthAverage = 14.7f,
+          },
+          new MonthlyClimateData() // June
+          {
+            TemperatureAverage = 23.9f,
+            TemperatureHighAverage = 31, TemperatureLowAverage = 16.7f,
+            TemperatureHighest = 43, TemperatureLowest = 7,
+            PrecipitationAverage = 13,
+            PrecipitationDaysRatio = 2f/30f,
+            AverageWindSpeed = 16,
+            FogDaysRatio = 1f/30f,
+            DayLengthAverage = 15.2f,
+          },
+          new MonthlyClimateData() // July
+          {
+            TemperatureAverage = 27.4f,
+            TemperatureHighAverage = 35.3f, TemperatureLowAverage = 19.4f,
+            TemperatureHighest = 43, TemperatureLowest = 13,
+            PrecipitationAverage = 2,
+            PrecipitationDaysRatio = 0,
+            AverageWindSpeed = 16,
+            FogDaysRatio = 0,
+            DayLengthAverage = 14.9f,
+          },
+          new MonthlyClimateData() // August
+          {
+            TemperatureAverage = 27.2f,
+            TemperatureHighAverage = 35, TemperatureLowAverage = 19.5f,
+            TemperatureHighest = 45, TemperatureLowest = 12,
+            PrecipitationAverage = 6,
+            PrecipitationDaysRatio = 0,
+            AverageWindSpeed = 16,
+            FogDaysRatio = 0,
+            DayLengthAverage = 14,
+          },
+          new MonthlyClimateData() // September
+          {
+            TemperatureAverage = 24.5f,
+            TemperatureHighAverage = 31.6f, TemperatureLowAverage = 17.5f,
+            TemperatureHighest = 43, TemperatureLowest = 8,
+            PrecipitationAverage = 23,
+            PrecipitationDaysRatio = 2f/30f,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 1f/30f,
+            DayLengthAverage = 12.8f,
+          },
+          new MonthlyClimateData() // October
+          {
+            TemperatureAverage = 19.6f,
+            TemperatureHighAverage = 25.6f, TemperatureLowAverage = 13.5f,
+            TemperatureHighest = 36, TemperatureLowest = 3,
+            PrecipitationAverage = 62,
+            PrecipitationDaysRatio = 6f/30f,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 2f/30f,
+            DayLengthAverage = 11.6f,
+          },
+          new MonthlyClimateData() // November
+          {
+            TemperatureAverage = 14.8f,
+            TemperatureHighAverage = 20.1f, TemperatureLowAverage = 9.3f,
+            TemperatureHighest = 31, TemperatureLowest = -1,
+            PrecipitationAverage = 84,
+            PrecipitationDaysRatio = 6f/30f,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 2f/30f,
+            DayLengthAverage = 10.6f,
+          },
+          new MonthlyClimateData() // December
+          {
+            TemperatureAverage = 11.8f,
+            TemperatureHighAverage = 16.6f, TemperatureLowAverage = 6.9f,
+            TemperatureHighest = 23, TemperatureLowest = -5,
+            PrecipitationAverage = 95,
+            PrecipitationDaysRatio = 8f/30f,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 3f/30f,
+            DayLengthAverage = 10.1f,
+          },
+        }
+      }},
+      #endregion
+      #region Sweden, Stockholm
+      // http://www.weatherbase.com/weather/weatherall.php3?s=6420&cityname=Stockholm%2C+Stockholm%2C+Sweden&units=
+      new ClimatePreset() { PresetName = "Sweden, Stockholm", PresetCode = "PRESET_SWEDEN_STOCKHOLM", ClimateProperties = new ClimateControlProperties()
+      {
+        SnowFallTemperature = 2, SnowMeltTemperature = 10, SolarDayLength = 24.00f,
+        ClimateData = new MonthlyClimateData[]
+        {
+          new MonthlyClimateData() // January
+          {
+            TemperatureAverage = -2,
+            TemperatureHighAverage = 0, TemperatureLowAverage = -5,
+            TemperatureHighest = 10, TemperatureLowest = -27,
+            PrecipitationAverage = 39,
+            PrecipitationDaysRatio = 25f/30f,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 16f/30f,
+            DayLengthAverage = 7.8f,
+          },
+          new MonthlyClimateData() // February
+          {
+            TemperatureAverage = -3,
+            TemperatureHighAverage = 0, TemperatureLowAverage = -6,
+            TemperatureHighest = 12, TemperatureLowest = -27,
+            PrecipitationAverage = 27,
+            PrecipitationDaysRatio = 20f/30f,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 15f/30f,
+            DayLengthAverage = 10,
+          },
+          new MonthlyClimateData() // March
+          {
+            TemperatureAverage = 0,
+            TemperatureHighAverage = 2, TemperatureLowAverage = -3,
+            TemperatureHighest = 16, TemperatureLowest = -20,
+            PrecipitationAverage = 26,
+            PrecipitationDaysRatio = 21f/30f,
+            AverageWindSpeed = 16,
+            FogDaysRatio = 18f/30f,
+            DayLengthAverage = 12.6f,
+          },
+          new MonthlyClimateData() // April
+          {
+            TemperatureAverage = 3,
+            TemperatureHighAverage = 8, TemperatureLowAverage = 0,
+            TemperatureHighest = 26, TemperatureLowest = -10,
+            PrecipitationAverage = 30,
+            PrecipitationDaysRatio = 20f/30f,
+            AverageWindSpeed = 16,
+            FogDaysRatio = 13f/30f,
+            DayLengthAverage = 15.4f,
+          },
+          new MonthlyClimateData() // May
+          {
+            TemperatureAverage = 10,
+            TemperatureHighAverage = 15, TemperatureLowAverage = 5,
+            TemperatureHighest = 27, TemperatureLowest = -5,
+            PrecipitationAverage = 30,
+            PrecipitationDaysRatio = 17f/30f,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 10f/30f,
+            DayLengthAverage = 18.2f,
+          },
+          new MonthlyClimateData() // June
+          {
+            TemperatureAverage = 14,
+            TemperatureHighAverage = 19, TemperatureLowAverage = 9,
+            TemperatureHighest = 30, TemperatureLowest = 1,
+            PrecipitationAverage = 45,
+            PrecipitationDaysRatio = 18f/30f,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 13f/30f,
+            DayLengthAverage = 20.1f,
+          },
+          new MonthlyClimateData() // July
+          {
+            TemperatureAverage = 17,
+            TemperatureHighAverage = 21, TemperatureLowAverage = 12,
+            TemperatureHighest = 32, TemperatureLowest = 5,
+            PrecipitationAverage = 72,
+            PrecipitationDaysRatio = 20f/30f,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 14f/30f,
+            DayLengthAverage = 19,
+          },
+          new MonthlyClimateData() // August
+          {
+            TemperatureAverage = 16,
+            TemperatureHighAverage = 20, TemperatureLowAverage = 11,
+            TemperatureHighest = 35, TemperatureLowest = -1,
+            PrecipitationAverage = 66,
+            PrecipitationDaysRatio = 19f/30f,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 17f/30f,
+            DayLengthAverage = 16.3f,
+          },
+          new MonthlyClimateData() // September
+          {
+            TemperatureAverage = 11,
+            TemperatureHighAverage = 14, TemperatureLowAverage = 7,
+            TemperatureHighest = 26, TemperatureLowest = -5,
+            PrecipitationAverage = 55,
+            PrecipitationDaysRatio = 20f/30f,
+            AverageWindSpeed = 14,
+            FogDaysRatio = 15f/30f,
+            DayLengthAverage = 13.5f,
+          },
+          new MonthlyClimateData() // October
+          {
+            TemperatureAverage = 6,
+            TemperatureHighAverage = 8, TemperatureLowAverage = 3,
+            TemperatureHighest = 20, TemperatureLowest = -11,
+            PrecipitationAverage = 50,
+            PrecipitationDaysRatio = 20f/30f,
+            AverageWindSpeed = 9,
+            FogDaysRatio = 17f/30f,
+            DayLengthAverage = 10.8f,
+          },
+          new MonthlyClimateData() // November
+          {
+            TemperatureAverage = 1,
+            TemperatureHighAverage = 3, TemperatureLowAverage = 0,
+            TemperatureHighest = 12, TemperatureLowest = -15,
+            PrecipitationAverage = 53,
+            PrecipitationDaysRatio = 23f/30f,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 14f/30f,
+            DayLengthAverage = 8.4f,
+          },
+          new MonthlyClimateData() // December
+          {
+            TemperatureAverage = -2,
+            TemperatureHighAverage = 0, TemperatureLowAverage = -5,
+            TemperatureHighest = 10, TemperatureLowest = -26,
+            PrecipitationAverage = 46,
+            PrecipitationDaysRatio = 25f/30f,
+            AverageWindSpeed = 12,
+            FogDaysRatio = 15f/30f,
+            DayLengthAverage = 7.1f,
+          },
+        }
+      }},
+      #endregion
       #region USA, Anchorage
       // http://www.weatherbase.com/weather/weatherall.php3?s=37207&cityname=Anchorage%2C+Alaska%2C+United+States+of+America&units=
       new ClimatePreset() { PresetName = "USA, Anchorage", PresetCode = "PRESET_USA_ANCHORAGE", ClimateProperties = new ClimateControlProperties()
@@ -3009,149 +3319,7 @@ namespace Runaurufu.ClimateControl
         }
       }},
       #endregion
-      #region Greenland, Kraulshavn
-      // http://www.weatherbase.com/weather/weatherall.php3?s=80240&cityname=Kraulshavn%2C+Qaasuitsup%2C+Greenland&units=
-      new ClimatePreset() { PresetName = "Greenland, Kraulshavn", PresetCode = "PRESET_GREENLAND_KRAULSHAVN", ClimateProperties = new ClimateControlProperties()
-      {
-        SnowFallTemperature = 1f, SnowMeltTemperature = 6f, SolarDayLength = 24.00f,
-        ClimateData = new MonthlyClimateData[]
-        {
-          new MonthlyClimateData() // January
-          {
-            TemperatureAverage = -21,
-            TemperatureHighAverage = -20, TemperatureLowAverage = -24,
-            TemperatureHighest = 1, TemperatureLowest = -38,
-            PrecipitationAverage = float.NaN,
-            PrecipitationDaysRatio = 0,
-            AverageWindSpeed = 19,
-            FogDaysRatio = float.NaN,
-            DayLengthAverage = 0,
-          },
-          new MonthlyClimateData() // February
-          {
-            TemperatureAverage = -23,
-            TemperatureHighAverage = -21, TemperatureLowAverage = -26,
-            TemperatureHighest = 0, TemperatureLowest = -39,
-            PrecipitationAverage = float.NaN,
-            PrecipitationDaysRatio = 0,
-            AverageWindSpeed = 19,
-            FogDaysRatio = float.NaN,
-            DayLengthAverage = 7.1f,
-          },
-          new MonthlyClimateData() // March
-          {
-            TemperatureAverage = -23,
-            TemperatureHighAverage = -22, TemperatureLowAverage = -26,
-            TemperatureHighest = -1, TemperatureLowest = -41,
-            PrecipitationAverage = float.NaN,
-            PrecipitationDaysRatio = 31f/31f,
-            AverageWindSpeed = 19,
-            FogDaysRatio = float.NaN,
-            DayLengthAverage = 13.1f,
-          },
-          new MonthlyClimateData() // April
-          {
-            TemperatureAverage = 0,
-            TemperatureHighAverage = -15, TemperatureLowAverage = -20,
-            TemperatureHighest = 2, TemperatureLowest = -35,
-            PrecipitationAverage = float.NaN,
-            PrecipitationDaysRatio = 0,
-            AverageWindSpeed = 20,
-            FogDaysRatio = float.NaN,
-            DayLengthAverage = 22,
-          },
-          new MonthlyClimateData() // May
-          {
-            TemperatureAverage = -7,
-            TemperatureHighAverage = -5, TemperatureLowAverage = -9,
-            TemperatureHighest = 7, TemperatureLowest = -28,
-            PrecipitationAverage = float.NaN,
-            PrecipitationDaysRatio = 0,
-            AverageWindSpeed = 22,
-            FogDaysRatio = float.NaN,
-            DayLengthAverage = 24,
-          },
-          new MonthlyClimateData() // June
-          {
-            TemperatureAverage = 0,
-            TemperatureHighAverage = 1, TemperatureLowAverage = -1,
-            TemperatureHighest = 13, TemperatureLowest = -8,
-            PrecipitationAverage = float.NaN,
-            PrecipitationDaysRatio = 0,
-            AverageWindSpeed = 19,
-            FogDaysRatio = float.NaN,
-            DayLengthAverage = 24,
-          },
-          new MonthlyClimateData() // July
-          {
-            TemperatureAverage = 3,
-            TemperatureHighAverage = 4, TemperatureLowAverage = 1,
-            TemperatureHighest = 13, TemperatureLowest = -8,
-            PrecipitationAverage = float.NaN,
-            PrecipitationDaysRatio = 0,
-            AverageWindSpeed = 19,
-            FogDaysRatio = float.NaN,
-            DayLengthAverage = 24,
-          },
-          new MonthlyClimateData() // August
-          {
-            TemperatureAverage = 3,
-            TemperatureHighAverage = 3, TemperatureLowAverage = 2,
-            TemperatureHighest = 11, TemperatureLowest = -1,
-            PrecipitationAverage = float.NaN,
-            PrecipitationDaysRatio = 16f/30f,
-            AverageWindSpeed = 20,
-            FogDaysRatio = float.NaN,
-            DayLengthAverage = 22.5f,
-          },
-          new MonthlyClimateData() // September
-          {
-            TemperatureAverage = 0,
-            TemperatureHighAverage = 1, TemperatureLowAverage = 0,
-            TemperatureHighest = 7, TemperatureLowest = -5,
-            PrecipitationAverage = float.NaN,
-            PrecipitationDaysRatio = 0,
-            AverageWindSpeed = 19,
-            FogDaysRatio = float.NaN,
-            DayLengthAverage = 15,
-          },
-          new MonthlyClimateData() // October
-          {
-            TemperatureAverage = -4,
-            TemperatureHighAverage = -3, TemperatureLowAverage = -5,
-            TemperatureHighest = 7, TemperatureLowest = -17,
-            PrecipitationAverage = float.NaN,
-            PrecipitationDaysRatio = 0,
-            AverageWindSpeed = 25,
-            FogDaysRatio = float.NaN,
-            DayLengthAverage = 9.2f,
-          },
-          new MonthlyClimateData() // November
-          {
-            TemperatureAverage = -11,
-            TemperatureHighAverage = -10, TemperatureLowAverage = -12,
-            TemperatureHighest = 2, TemperatureLowest = -30,
-            PrecipitationAverage = float.NaN,
-            PrecipitationDaysRatio = 30f/30f,
-            AverageWindSpeed = 22,
-            FogDaysRatio = float.NaN,
-            DayLengthAverage = 0,
-          },
-          new MonthlyClimateData() // December
-          {
-            TemperatureAverage = 0,
-            TemperatureHighAverage = -16, TemperatureLowAverage = -20,
-            TemperatureHighest = 2, TemperatureLowest = -37,
-            PrecipitationAverage = float.NaN,
-            PrecipitationDaysRatio = 0,
-            AverageWindSpeed = 19,
-            FogDaysRatio = float.NaN,
-            DayLengthAverage = 0,
-          },
-        }
-      }},
-      #endregion
-
+      
       #region Empty Pattern to use
       //// 
       //new ClimatePreset() { PresetName = "", PresetCode = "PRESET_", ClimateProperties = new ClimateControlProperties()
