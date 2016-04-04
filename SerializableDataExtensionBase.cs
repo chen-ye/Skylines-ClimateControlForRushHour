@@ -11,6 +11,7 @@ namespace Runaurufu.ClimateControl
   public class ClimateControlSerializableData : SerializableDataExtensionBase
   {
     private const string KEY_HISTORY_DATA = "CLIMATE_CONTROL_HISTORICAL_DATA";
+    private const string KEY_DEFAULT_WATER_SOURCES = "CLIMATE_CONTROL_DEFAULT_WATER_SOURCES";
     private ISerializableData serializableData;
 
     public override void OnCreated(ISerializableData serializableData)
@@ -24,10 +25,22 @@ namespace Runaurufu.ClimateControl
     {
       //base.OnLoadData();
 
-      byte[] historyData = serializableData.LoadData(ClimateControlSerializableData.KEY_HISTORY_DATA);
-      if(historyData != null && historyData.Length > 0)
+      byte[] data;
+
+      data = serializableData.LoadData(ClimateControlSerializableData.KEY_DEFAULT_WATER_SOURCES);
+      if (data != null && data.Length > 0)
       {
-        HistoryData history = Deserialize<HistoryData>(historyData);
+        DefaultWaterSourceData[] arr = Deserialize<DefaultWaterSourceData[]>(data);
+        if(arr != null)
+        {
+          ClimateControlEngine.Instance.DefaultMapWaterSources = arr;
+        }
+      }
+
+      data = serializableData.LoadData(ClimateControlSerializableData.KEY_HISTORY_DATA);
+      if(data != null && data.Length > 0)
+      {
+        HistoryData history = Deserialize<HistoryData>(data);
         if(history != null)
         {
           ClimateControlEngine.Instance.HistoricalData = history;
@@ -58,6 +71,15 @@ namespace Runaurufu.ClimateControl
     public override void OnSaveData()
     {
       //base.OnSaveData();
+
+      if(ClimateControlEngine.Instance.DefaultMapWaterSources != null)
+      {
+        byte[] data = Serialize(ClimateControlEngine.Instance.DefaultMapWaterSources);
+        if (data != null)
+        {
+          serializableData.SaveData(ClimateControlSerializableData.KEY_DEFAULT_WATER_SOURCES, data);
+        }
+      }
 
       if (ClimateControlEngine.Instance.HistoricalData != null)
       {

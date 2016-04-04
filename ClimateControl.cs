@@ -113,6 +113,7 @@ namespace Runaurufu.ClimateControl
       this.weatherManager.InitializeProperties(weatherProperties);
 
       this.ResetInternalValues();
+      this.CreateDefaultMapWaterSources();
 
       this.IsInitialized = true;
 
@@ -134,6 +135,7 @@ namespace Runaurufu.ClimateControl
       this.ClimateControlProperties = climateProperties;
 
       this.ResetInternalValues();
+      this.CreateDefaultMapWaterSources();
 
       this.IsInitialized = true;
 
@@ -213,6 +215,19 @@ namespace Runaurufu.ClimateControl
 
       this.ResetInternalValues();
 
+      // reset sources target values to default values!
+      if (this.DefaultMapWaterSources != null)
+      {
+        FastList<WaterSource> sources = this.terrainManager.WaterSimulation.m_waterSources;
+        foreach (DefaultWaterSourceData source in this.DefaultMapWaterSources)
+        {
+          sources.m_buffer[source.Index].m_target = source.Target;
+          sources.m_buffer[source.Index].m_inputRate = source.InputRate;
+          sources.m_buffer[source.Index].m_outputRate = source.OutputRate;
+        }
+      }
+      this.DefaultMapWaterSources = null;
+
       this.HistoricalData = null;
       this.IsInitialized = false;
     }
@@ -221,18 +236,6 @@ namespace Runaurufu.ClimateControl
     {
       this.lastSimulationTimeUpdate = DateTime.MinValue;
 
-      // reset sources target values to default values!
-      if (this.mapSources != null)
-      {
-        FastList<WaterSource> sources = this.terrainManager.WaterSimulation.m_waterSources;
-        foreach (MapWaterSource waterSource in this.mapSources)
-        {
-          sources.m_buffer[waterSource.Index].m_target = waterSource.Target;
-          sources.m_buffer[waterSource.Index].m_inputRate = waterSource.InputRate;
-          sources.m_buffer[waterSource.Index].m_outputRate = waterSource.OutputRate;
-        }
-      }
-      this.mapSources = null;
       this.waterSourceChangeCompound = 0;
 
       foreach (ushort item in this.waterSources)
@@ -535,7 +538,8 @@ namespace Runaurufu.ClimateControl
         this.HistoricalData = new HistoryData();
 
       ushort weekIndex = (ushort)Mathf.FloorToInt((climateTime.DayOfYear - 1) * OneOverSeven);
-      float weekProgress = (climateTime.DayOfYear - 1) * OneOverSeven - weekIndex;
+      float weekProgress = (climateTime.DayOfYear - 1 + (float)(climateTime.TimeOfDay.TotalHours / 24f)) * OneOverSeven - weekIndex;
+      float weekHours = weekProgress * 10080f;
       if (this.currentWeekStatisticData == null || this.currentWeekStatisticData.WeekIndex != weekIndex)
       {
         YearlyStatisticData yearlyData = this.HistoricalData.GetYearData(climateTime, true);
@@ -548,8 +552,6 @@ namespace Runaurufu.ClimateControl
 
         this.currentWeekStatisticData = weeklyData;
         this.previousYearsStatisticData = this.HistoricalData.GetCombinedWeeklyData(weekIndex, (ushort)climateTime.Year);
-
-        DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Message, "history update! " + climateTime.Year + " / " + yearlyData.Year + " / " + weeklyData.WeekIndex);
       }
 
       // DayNightProperties - related to lightning
@@ -807,8 +809,10 @@ namespace Runaurufu.ClimateControl
       // Handle historical data
       this.currentWeekStatisticData.TemperatureMin = Mathf.Min(this.currentWeekStatisticData.TemperatureMin, this.weatherManager.m_currentTemperature);
       this.currentWeekStatisticData.TemperatureMax = Mathf.Max(this.currentWeekStatisticData.TemperatureMax, this.weatherManager.m_currentTemperature);
-      this.currentWeekStatisticData.TemperatureAverage = (float)((this.currentWeekStatisticData.TemperatureAverage * (weekProgress * 10080 - MIN_TIME_DELTA)) + this.weatherManager.m_currentTemperature * MIN_TIME_DELTA) / 10080f;
-        //10080 = that many minutes you get in week
+
+      
+      float timeUsedForStatisticData = Mathf.Clamp((float)(weekHours - MIN_TIME_DELTA), 0f, 10080f); //10080 = that many minutes you get in week
+      this.currentWeekStatisticData.TemperatureAverage = (float)((this.currentWeekStatisticData.TemperatureAverage * timeUsedForStatisticData) + this.weatherManager.m_currentTemperature * MIN_TIME_DELTA) / weekHours;
 
       if (this.weatherManager.m_currentRain > 0)
       {
@@ -981,6 +985,33 @@ namespace Runaurufu.ClimateControl
     private const int maxWaterSources = 30;
     private List<ushort> waterSources = new List<ushort>();
 
+    public DefaultWaterSourceData[] DefaultMapWaterSources { get; set; }
+
+    private void CreateDefaultMapWaterSources()
+    {
+      if (this.DefaultMapWaterSources == null)
+      {
+        FastList<WaterSource> waterSources = Singleton<TerrainManager>.instance.WaterSimulation.m_waterSources;
+        List<DefaultWaterSourceData> mapSourcesList = new List<DefaultWaterSourceData>();
+
+        for (int i = 0; i < waterSources.m_size; i++)
+        {
+          if (waterSources.m_buffer[i].m_type == WaterSource.TYPE_NATURAL && waterSources.m_buffer[i].m_target > 0)
+          {
+            mapSourcesList.Add(new DefaultWaterSourceData()
+            {
+              Index = i,
+              Target = waterSources.m_buffer[i].m_target,
+              InputRate = waterSources.m_buffer[i].m_inputRate,
+              OutputRate = waterSources.m_buffer[i].m_outputRate,
+            });
+          }
+        }
+
+        this.DefaultMapWaterSources = mapSourcesList.ToArray();
+      }
+    }
+
     private void HandlePrecipitationAlterWaterSources(TimeSpan timeDelta)
     {
       FastList<WaterSource> waterSources = Singleton<TerrainManager>.instance.WaterSimulation.m_waterSources;
@@ -990,16 +1021,13 @@ namespace Runaurufu.ClimateControl
 
         for (int i = 0; i < waterSources.m_size; i++)
         {
-          if (waterSources.m_buffer[i].m_target > 0)
+          if (waterSources.m_buffer[i].m_type == WaterSource.TYPE_NATURAL && waterSources.m_buffer[i].m_target > 0)
           {
             mapSourcesList.Add(new MapWaterSource()
             {
               Index = i,
-              Target = waterSources.m_buffer[i].m_target,
               MinTarget = (ushort)Mathf.Clamp(0.5f * waterSources.m_buffer[i].m_target, 63.99f * waterSources.m_buffer[i].m_outputPosition.y + 10, ushort.MaxValue),
               MaxTarget = (ushort)Mathf.Min(waterSources.m_buffer[i].m_target + (waterSources.m_buffer[i].m_target - 63.99f * waterSources.m_buffer[i].m_outputPosition.y) * 1.75f, ushort.MaxValue),
-              InputRate = waterSources.m_buffer[i].m_inputRate,
-              OutputRate = waterSources.m_buffer[i].m_outputRate,
               MinOutputRate = waterSources.m_buffer[i].m_outputRate = (uint)Mathf.Clamp(0.5f * waterSources.m_buffer[i].m_outputRate, 100, ushort.MaxValue),
               MaxOutputRate = waterSources.m_buffer[i].m_outputRate = (uint)Mathf.Clamp(10.00f * waterSources.m_buffer[i].m_outputRate, 100, ushort.MaxValue),
             });
@@ -1065,176 +1093,20 @@ namespace Runaurufu.ClimateControl
     private struct MapWaterSource
     {
       public int Index;
-      public ushort Target;
       public ushort MinTarget;
       public ushort MaxTarget;
-      public uint InputRate;
-      public uint OutputRate;
       public uint MinOutputRate;
       public uint MaxOutputRate;
     }
   }
 
-  /// <summary>
-  /// What kind of precipitation do you experience?
-  /// </summary>
-  public enum PrecipitationType : byte
-  {
-    /// <summary>
-    /// Just ordinary rainfall.
-    /// </summary>
-    Rain = 0,
-    /// <summary>
-    /// Just ordinary snowfall.
-    /// </summary>
-    Snow = 1,
-  }
-
   [Serializable]
-  public class HistoryData
+  public class DefaultWaterSourceData
   {
-    public HistoryData()
-    {
-      this.YearlyData = new List<YearlyStatisticData>();
-    }
-
-    public List<YearlyStatisticData> YearlyData { get; set; }
-
-    public YearlyStatisticData GetYearData(DateTime dateTime, bool makeIfNotExist)
-    {
-      return this.GetYearData((ushort)dateTime.Year, makeIfNotExist);
-    }
-
-    public YearlyStatisticData GetYearData(ushort year, bool makeIfNotExist)
-    {
-      if (this.YearlyData == null)
-        this.YearlyData = new List<YearlyStatisticData>();
-
-      for (int i = 0; i < this.YearlyData.Count; i++)
-      {
-        if (this.YearlyData[i] == null)
-        {
-          this.YearlyData.RemoveAt(i);
-          i--;
-          continue;
-        }
-
-        if (this.YearlyData[i].Year == year)
-          return this.YearlyData[i];
-      }
-
-      if(makeIfNotExist)
-      {
-        YearlyStatisticData data = new YearlyStatisticData(year);
-        this.YearlyData.Add(data);
-        return data;
-      }
-      return null;
-    }
-
-    public WeeklyStatisticData GetCombinedWeeklyData(ushort weekIndex, ushort ommitYear)
-    {
-      if (this.YearlyData == null)
-        this.YearlyData = new List<YearlyStatisticData>();
-
-      List<WeeklyStatisticData> weeklyData = new List<WeeklyStatisticData>();
-      foreach (YearlyStatisticData yearItem in this.YearlyData)
-      {
-        if (yearItem.Year == ommitYear)
-          continue;
-
-        WeeklyStatisticData weekData = yearItem.GetWeekData(weekIndex, false);
-        if(weekData != null)
-          weeklyData.Add(weekData);
-      }
-
-      if (weeklyData.Count == 0)
-        return null;
-
-      WeeklyStatisticData combinedData = new WeeklyStatisticData() { WeekIndex = weekIndex };
-      combinedData.TemperatureMin = float.MaxValue;
-      combinedData.TemperatureMax = float.MinValue;
-
-      double tempAverage = 0;
-      double precipitationAmount = 0;
-      double precipitationDuration = 0;
-      double fogDuration = 0;
-      foreach (WeeklyStatisticData weekItem in weeklyData)
-      {
-        combinedData.TemperatureMin = Math.Min(combinedData.TemperatureMin, weekItem.TemperatureMin);
-        combinedData.TemperatureMax = Math.Max(combinedData.TemperatureMax, weekItem.TemperatureMax);
-        tempAverage += weekItem.TemperatureAverage;
-
-        precipitationAmount += weekItem.PrecipitationAmount;
-        precipitationDuration += weekItem.PrecipitationDuration;
-
-        fogDuration += weekItem.FogDuration;
-      }
-
-      combinedData.TemperatureAverage = (float)(tempAverage / weeklyData.Count);
-      combinedData.PrecipitationAmount = (float)(precipitationAmount / weeklyData.Count);
-      combinedData.PrecipitationDuration = (float)(precipitationDuration / weeklyData.Count);
-      combinedData.FogDuration = (float)(fogDuration / weeklyData.Count);
-
-      return combinedData;
-    }
-  }
-
-  [Serializable]
-  public class YearlyStatisticData
-  {
-    public ushort Year { get; set; }
-
-    public WeeklyStatisticData[] WeeklyData { get; set; }
-
-    public YearlyStatisticData()
-    {
-    }
-
-    public YearlyStatisticData(ushort year)
-    {
-      this.Year = year;
-      this.WeeklyData = new WeeklyStatisticData[53];
-    }
-
-    public WeeklyStatisticData GetWeekData(DateTime dateTime, bool makeIfNotExist)
-    {
-      int weekIndex = Mathf.FloorToInt(dateTime.DayOfYear / 7f);
-      return this.GetWeekData((ushort)weekIndex, makeIfNotExist);
-    }
-
-    public WeeklyStatisticData GetWeekData(ushort weekIndex, bool makeIfNotExist)
-    {
-      if (this.WeeklyData == null)
-        this.WeeklyData = new WeeklyStatisticData[53];
-
-      if (WeeklyData.Length <= weekIndex || weekIndex < 0)
-      {
-        if (makeIfNotExist)
-          throw new ArgumentOutOfRangeException("weekIndex");
-        return null;
-      }
-
-      if (this.WeeklyData[weekIndex] == null && makeIfNotExist)
-        this.WeeklyData[weekIndex] = new WeeklyStatisticData() { WeekIndex = weekIndex };
-
-      return this.WeeklyData[weekIndex];
-    }
-  }
-
-  [Serializable]
-  public class WeeklyStatisticData
-  {
-    public ushort WeekIndex { get; set; }
-
-    public float TemperatureMin { get; set; }
-    public float TemperatureMax { get; set; }
-    public float TemperatureAverage { get; set; }
-
-    public float PrecipitationAmount { get; set; }
-    public float PrecipitationDuration { get; set; }
-
-    public float FogDuration { get; set; }
+    public int Index;
+    public ushort Target;
+    public uint InputRate;
+    public uint OutputRate;
   }
 
   public class DefaultSettings
@@ -1337,14 +1209,5 @@ namespace Runaurufu.ClimateControl
     //public float NightStartHour { get; set; }
   }
 
-  public enum Frequency : int
-  {
-    AlmostNever = 0,
-    Rarely = 1,
-    BelowAverage = 2,
-    OnAverage = 3,
-    AboveAverage = 4,
-    Often = 5,
-    AlmostConstantly = 6,
-  }
+  
 }

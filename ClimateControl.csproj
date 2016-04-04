@@ -51,6 +51,8 @@
   <ItemGroup>
     <Compile Include="ClimateControl.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="HistoryData.cs" />
     <Compile Include="SerializableDataExtensionBase.cs" />
     <Compile Include="Utility\ExtensionHelper.cs" />
     <Compile Include="LoadingExtensionBase.cs" />
