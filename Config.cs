@@ -67,6 +67,7 @@ namespace Runaurufu.ClimateControl
       this.RainfallMakesWater = false;
       this.PrecipitationAlterWaterSources = false;
       this.ThundersFrequency = Frequency.OnAverage;
+      this.ClimateSmoothness = Level.None;
     //  this.WeatherAlterFires = false;
     }
 
@@ -116,6 +117,11 @@ namespace Runaurufu.ClimateControl
     /// How often thunders shall strike?
     /// </summary>
     public Frequency ThundersFrequency { get; set; }
+
+    /// <summary>
+    /// How drastic climate changes between frames should be?
+    /// </summary>
+    public Level ClimateSmoothness { get; set; }
 
     ///// <summary>
     ///// Should weather change how fires go?

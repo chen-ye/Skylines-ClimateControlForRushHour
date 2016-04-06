@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ICities;
+using Runaurufu.Utility;
+using UnityEngine;
 
 namespace Runaurufu.ClimateControl
 {
@@ -46,15 +48,43 @@ namespace Runaurufu.ClimateControl
 
       //  helperBase.AddCheckbox("Weather alter building fires", GlobalConfig.GetInstance().WeatherAlterFires, ModSettings.WeatherAlterFiresOnCheckChanged);
 
-      helper.AddGroup("Climate Presets").AddDropdown("Climate presets",
+      helperBase = helper.AddGroup("Climate Presets");
+      helperBase.AddDropdown("Climate presets",
         ModSettings.AllPresets.Select(p => p.PresetName).ToArray(),
         ModSettings.CurrentClimatePresetIndex,
         ModSettings.ClimatePresetIndexChanged);
+
+      helperBase.AddDropdown("Climate transition smoothness",
+        new string[]
+        { "None", "Minimal", "Low", "Below Average", "Average", "Above Average", "High", "Huge", "Full" },
+        ModSettings.ClimateSmoothnessIndex,
+        ModSettings.ClimateSmoothnessIndexChanged);
+
+      helperBase = helper.AddGroup("Maintenance");
+      helperBase.AddButton("Clear savegame history data", ModSettings.ClearHistoryData);
+
+      //helperBase.AddButton("SAVE ENV!", Click);
+      //helperBase.AddButton("LOAD ENV!", Click2);
     }
+
+    //private static void Click()
+    //{
+    //  ClimateControlEngine.Instance.SaveTextures();
+    //}
+
+    //private static void Click2()
+    //{
+    //  ClimateControlEngine.Instance.LoadTextures();
+    //}
   }
 
   internal static partial class ModSettings
   {
+    public static void ClearHistoryData()
+    {
+      ClimateControlEngine.Instance.HistoricalData = new HistoryData();
+    }
+
     //public static int CurrentSimulationTimeIndex
     //{
     //  get
@@ -237,6 +267,25 @@ namespace Runaurufu.ClimateControl
       {
         ClimateControlEngine.Instance.Initialize(selectedPreset.ClimateProperties);
       }
+    }
+
+    public static int ClimateSmoothnessIndex
+    {
+      get
+      {
+        return (int)GlobalConfig.GetInstance().ClimateSmoothness;
+      }
+    }
+
+    public static void ClimateSmoothnessIndexChanged(int newIndex)
+    {
+      if (newIndex < 0)
+        return;
+
+      GlobalConfig.GetInstance().ClimateSmoothness = (Level)newIndex;
+      GlobalConfig.SaveConfig();
+
+      ClimateControlEngine.Instance.InitializeClimateFrames();
     }
 
     public const string DEFAULT_PRESET_CODE = "__DEFAULT__";

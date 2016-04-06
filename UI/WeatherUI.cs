@@ -98,7 +98,7 @@ namespace Runaurufu.ClimateControl.UI
       this.windDirectionLabel = this.AddUIComponent<UILabel>();
       this.windDirectionSlider = UIFactory.CreateSlider((UIPanel)this, -180.0f, 180.0f);
       this.windDirectionSlider.stepSize = 0.1f;
-      this.windDirectionSlider.eventValueChanged += WindDirectionSlider_eventValueChanged; ;
+      this.windDirectionSlider.eventValueChanged += WindDirectionSlider_eventValueChanged;
 
       this.position = new Vector3(20f, 300f, 0.0f);
      // this.relativePosition = new Vector3(0.0f,  800f);

@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClimateControl.cs" />
+    <Compile Include="ClimateFrameData.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="HistoryData.cs" />

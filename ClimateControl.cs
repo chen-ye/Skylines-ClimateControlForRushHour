@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ColossalFramework;
+using System.Linq;
 using ICities;
 using Runaurufu.Utility;
 using UnityEngine;
@@ -58,7 +59,6 @@ namespace Runaurufu.ClimateControl
     public ClimateControlProperties ClimateProperties { get; set; }
   }
 
-
   public class ClimateControlEngine
   {
     private static ClimateControlEngine instance = null;
@@ -93,6 +93,10 @@ namespace Runaurufu.ClimateControl
 
     public WeatherProperties CurrentWeatherProperties { get; private set; }
     public ClimateControlProperties ClimateControlProperties { get; private set; }
+
+    public ClimateFrameData[] ClimateFrames { get; private set; }
+    public ClimateGlobalValues ClimateGlobals { get; private set; }
+
     public DefaultSettings DefaultSettings { get; private set; }
 
     private System.Random random = null;
@@ -114,6 +118,7 @@ namespace Runaurufu.ClimateControl
 
       this.ResetInternalValues();
       this.CreateDefaultMapWaterSources();
+      this.InitializeClimateFrames();
 
       this.IsInitialized = true;
 
@@ -136,6 +141,7 @@ namespace Runaurufu.ClimateControl
 
       this.ResetInternalValues();
       this.CreateDefaultMapWaterSources();
+      this.InitializeClimateFrames();
 
       this.IsInitialized = true;
 
@@ -203,6 +209,82 @@ namespace Runaurufu.ClimateControl
       return true;
     }
 
+    public void InitializeClimateFrames()
+    {
+      if (this.ClimateControlProperties == null || this.ClimateControlProperties.ClimateData == null || this.ClimateControlProperties.ClimateData.Length == 0)
+      {
+        this.ClimateFrames = null;
+        this.ClimateGlobals = null;
+        return;
+      }
+
+      float daysPerClimateStage = 366f / this.ClimateControlProperties.ClimateData.Length;
+
+      float smoothingDays = 0;
+
+      if (daysPerClimateStage > 3 && this.ClimateControlProperties.ClimateData.Length > 2 && GlobalConfig.GetInstance().ClimateSmoothness != Level.None) // to keep smoothing in reasonable boundaries
+      {
+        smoothingDays = daysPerClimateStage * (int)GlobalConfig.GetInstance().ClimateSmoothness
+          / (2f /* This should provide half of smooth length per frame*/
+          * 2f /* Smooth should not be longer then normal frame*/
+          * 8f /* Level gives 0-8 range */);
+      }
+
+      float climateFrameDayLength = daysPerClimateStage - 2 * smoothingDays;
+      float normalFrameProgress = climateFrameDayLength / 366f;
+
+      if (smoothingDays != 0)
+      {
+        // generate with smoothing!
+        float smoothFrameProgress = smoothingDays / 366f;
+
+        this.ClimateFrames = new ClimateFrameData[this.ClimateControlProperties.ClimateData.Length * 3];
+
+        ClimateFrameData aux1, aux2;
+
+        ClimateFrameData.CreateSmoothingFrames(this.ClimateControlProperties.ClimateData[this.ClimateControlProperties.ClimateData.Length - 1], this.ClimateControlProperties.ClimateData[0], this.ClimateControlProperties.SolarDayLength, out aux1, out aux2);
+
+        aux1.YearProgressEnd = 1;
+        aux1.YearProgressStart = 1 - smoothFrameProgress;
+        aux2.YearProgressStart = 0;
+        aux2.YearProgressEnd = smoothFrameProgress;
+
+        this.ClimateFrames[0] = aux2;
+        this.ClimateFrames[this.ClimateFrames.Length - 2] = new ClimateFrameData(this.ClimateControlProperties.ClimateData[this.ClimateControlProperties.ClimateData.Length - 1], aux1.YearProgressStart - normalFrameProgress, aux1.YearProgressStart, this.ClimateControlProperties.SolarDayLength);
+        this.ClimateFrames[this.ClimateFrames.Length - 1] = aux1;
+
+        for (int i = 0; i < this.ClimateControlProperties.ClimateData.Length - 1; i++)
+        {
+          ClimateFrameData.CreateSmoothingFrames(this.ClimateControlProperties.ClimateData[i], this.ClimateControlProperties.ClimateData[i + 1], this.ClimateControlProperties.SolarDayLength, out aux1, out aux2);
+
+          float start = this.ClimateFrames[i * 3].YearProgressEnd;
+
+          ClimateFrameData frame = new ClimateFrameData(this.ClimateControlProperties.ClimateData[i], start, start + normalFrameProgress, this.ClimateControlProperties.SolarDayLength);
+          this.ClimateFrames[i * 3 + 1] = frame;
+          aux1.YearProgressStart = frame.YearProgressEnd;
+          aux1.YearProgressEnd = aux1.YearProgressStart + smoothFrameProgress;
+          this.ClimateFrames[i * 3 + 2] = aux1;
+          aux2.YearProgressStart = aux1.YearProgressEnd;
+          aux2.YearProgressEnd = aux2.YearProgressStart + smoothFrameProgress;
+          this.ClimateFrames[i * 3 + 3] = aux2;
+        }
+      }
+      else
+      {
+        this.ClimateFrames = new ClimateFrameData[this.ClimateControlProperties.ClimateData.Length];
+
+        for (int i = 0; i < this.ClimateControlProperties.ClimateData.Length; i++)
+        {
+          MonthlyClimateData data = this.ClimateControlProperties.ClimateData[i];
+
+          ClimateFrameData frame = new ClimateFrameData(data, i * normalFrameProgress, (i + 1) * normalFrameProgress, this.ClimateControlProperties.SolarDayLength);
+          this.ClimateFrames[i] = frame;
+        }
+      }
+
+      this.ClimateGlobals = ClimateGlobalValues.Create(this.ClimateFrames);
+    }
+
     public void Uninitialize()
     {
       //MapThemeMetaData mapThemeMetaData = this.simulationManager.m_metaData.m_MapThemeMetaData;
@@ -236,13 +318,15 @@ namespace Runaurufu.ClimateControl
     {
       this.lastSimulationTimeUpdate = DateTime.MinValue;
 
-      this.waterSourceChangeCompound = 0;
-
       foreach (ushort item in this.waterSources)
       {
         this.terrainManager.WaterSimulation.ReleaseWaterSource(item);
       }
       this.waterSources.Clear();
+      this.mapSources = null;
+
+      this.ClimateFrames = null;
+      this.ClimateGlobals = null;
     }
 
     public static WeatherProperties GetDefaultWeatherProperites()
@@ -506,7 +590,8 @@ namespace Runaurufu.ClimateControl
       return dt.Hour < SimulationManager.SUNRISE_HOUR || dt.Hour > SimulationManager.SUNSET_HOUR;
     }
 
-    private MonthlyClimateData currentClimateFrameData = null;
+    private ClimateFrameData currentClimateFrameData = null;
+    //private MonthlyClimateData currentClimateFrameData = null;
 
     private DateTime lastSimulationTimeUpdate;
 
@@ -515,7 +600,7 @@ namespace Runaurufu.ClimateControl
 
     private TempClimateData currentTempClimateData = null;
 
-    private const float OneOverSeven = 1f/7f;
+    private const float OneOverSeven = 1f / 7f;
     private const double MIN_TIME_DELTA = 15;
 
     public void UpdateClimate()
@@ -532,26 +617,34 @@ namespace Runaurufu.ClimateControl
       if (simulationTimeUpdateDelta.TotalMinutes < MIN_TIME_DELTA)
         return;
 
+      bool isFirstUpdateThisYear = this.lastSimulationTimeUpdate.Year != simulationTime.Year;
+      bool isFirstUpdateThisWeek = false;
+
       bool needToReinitializeWeatherProperties = false;
 
       if (this.HistoricalData == null)
         this.HistoricalData = new HistoryData();
 
-      ushort weekIndex = (ushort)Mathf.FloorToInt((climateTime.DayOfYear - 1) * OneOverSeven);
-      float weekProgress = (climateTime.DayOfYear - 1 + (float)(climateTime.TimeOfDay.TotalHours / 24f)) * OneOverSeven - weekIndex;
+      float dayProgress = (float)(simulationTime.TimeOfDay.TotalHours / 24f);
+      ushort weekIndex = (ushort)Mathf.FloorToInt((simulationTime.DayOfYear - 1) * OneOverSeven);
+      float weekProgress = (simulationTime.DayOfYear - 1 + dayProgress) * OneOverSeven - weekIndex;
       float weekHours = weekProgress * 10080f;
+      float yearProgress = (simulationTime.DayOfYear - 1 + dayProgress) / 366f;
+
       if (this.currentWeekStatisticData == null || this.currentWeekStatisticData.WeekIndex != weekIndex)
       {
-        YearlyStatisticData yearlyData = this.HistoricalData.GetYearData(climateTime, true);
-        WeeklyStatisticData weeklyData = yearlyData.GetWeekData(climateTime, false);
+        isFirstUpdateThisWeek = true;
+
+        YearlyStatisticData yearlyData = this.HistoricalData.GetYearData(simulationTime, true);
+        WeeklyStatisticData weeklyData = yearlyData.GetWeekData(simulationTime, false);
         if (weeklyData == null)
         {
-          weeklyData = yearlyData.GetWeekData(climateTime, true);
+          weeklyData = yearlyData.GetWeekData(simulationTime, true);
           weeklyData.TemperatureMin = weeklyData.TemperatureMax = weeklyData.TemperatureAverage = this.weatherManager.m_currentTemperature;
         }
 
         this.currentWeekStatisticData = weeklyData;
-        this.previousYearsStatisticData = this.HistoricalData.GetCombinedWeeklyData(weekIndex, (ushort)climateTime.Year);
+        this.previousYearsStatisticData = this.HistoricalData.GetCombinedWeeklyData(weekIndex, (ushort)simulationTime.Year);
       }
 
       // DayNightProperties - related to lightning
@@ -562,76 +655,57 @@ namespace Runaurufu.ClimateControl
       float currentTemperature = this.weatherManager.m_currentTemperature;
       float newTemperature = currentTemperature;
 
-      if (this.ClimateControlProperties.ClimateData != null && this.ClimateControlProperties.ClimateData.Length > 0)
+      if (this.ClimateFrames != null && this.ClimateFrames.Length > 0)
       {
-        float daysPerClimateStage = 366f / this.ClimateControlProperties.ClimateData.Length;
-        int dataIndex = (int)((climateTime.DayOfYear - 1) / daysPerClimateStage);
+      //  if(this.currentClimateFrameData != null)
+      //    DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Message, "yp: " + yearProgress + " s/e " + this.currentClimateFrameData.YearProgressStart + "/ " + this.currentClimateFrameData.YearProgressEnd);
 
-        // just to be sure...
-        dataIndex = Math.Min(dataIndex, this.ClimateControlProperties.ClimateData.Length - 1);
-
-        float currentClimateFrameProgress = Mathf.Clamp01((climateTime.DayOfYear - dataIndex * daysPerClimateStage) / daysPerClimateStage);
-
-        MonthlyClimateData monthlyData = this.ClimateControlProperties.ClimateData[dataIndex];
-
-        // set climate date for current climate frame
-        if (currentClimateFrameData == null || object.ReferenceEquals(currentClimateFrameData, monthlyData) == false)
+        if (this.currentClimateFrameData == null || this.currentClimateFrameData.YearProgressStart > yearProgress || this.currentClimateFrameData.YearProgressEnd < yearProgress)
         {
-          float dayLengthRatio = monthlyData.DayLengthAverage / this.ClimateControlProperties.SolarDayLength;
+          ClimateFrameData newFrame = this.ClimateFrames[0];
+          for (int i = 0; i < this.ClimateFrames.Length; i++)
+          {
+            ClimateFrameData frame = this.ClimateFrames[i];
+            if (frame.YearProgressStart <= yearProgress && frame.YearProgressEnd >= yearProgress)
+            {
+              newFrame = frame;
+              break;
+            }
+          }
 
           // Temperatures
-          float average = float.IsNaN(monthlyData.TemperatureAverage) ? monthlyData.TemperatureHighAverage * dayLengthRatio + monthlyData.TemperatureLowAverage * (1 - dayLengthRatio) : monthlyData.TemperatureAverage;
-
-          float averageToHigh = monthlyData.TemperatureHighAverage - average;
-          float averageToLow = average - monthlyData.TemperatureLowAverage;
+          float averageToHigh = newFrame.TemperatureHighAverage - newFrame.TemperatureAverage;
+          float averageToLow = newFrame.TemperatureAverage - newFrame.TemperatureLowAverage;
 
           // double averages for greater temp variety!
           averageToHigh *= 2;
           averageToLow *= 2;
 
-          float dayLow = monthlyData.TemperatureHighAverage - averageToHigh * (float)this.random.NextDouble();
-          float dayHigh = monthlyData.TemperatureHighAverage + averageToHigh * (float)this.random.NextDouble();
-          float nightLow = monthlyData.TemperatureLowAverage - averageToLow * (float)this.random.NextDouble();
-          float nightHigh = monthlyData.TemperatureLowAverage + averageToLow * (float)this.random.NextDouble();
+          float dayLow = newFrame.TemperatureHighAverage - averageToHigh * (float)this.random.NextDouble();
+          float dayHigh = newFrame.TemperatureHighAverage + averageToHigh * (float)this.random.NextDouble();
+          float nightLow = newFrame.TemperatureLowAverage - averageToLow * (float)this.random.NextDouble();
+          float nightHigh = newFrame.TemperatureLowAverage + averageToLow * (float)this.random.NextDouble();
 
           // set values to weather properties!
-          this.CurrentWeatherProperties.m_minTemperatureDay = Mathf.Max(monthlyData.TemperatureLowest, dayLow);
-          this.CurrentWeatherProperties.m_maxTemperatureDay = Mathf.Min(monthlyData.TemperatureHighest, dayHigh);
-          this.CurrentWeatherProperties.m_minTemperatureNight = Mathf.Max(monthlyData.TemperatureLowest, nightLow);
-          this.CurrentWeatherProperties.m_maxTemperatureNight = Mathf.Min(monthlyData.TemperatureHighest, nightHigh);
+          this.CurrentWeatherProperties.m_minTemperatureDay = Mathf.Max(newFrame.TemperatureLowest, dayLow);
+          this.CurrentWeatherProperties.m_maxTemperatureDay = Mathf.Min(newFrame.TemperatureHighest, dayHigh);
+          this.CurrentWeatherProperties.m_minTemperatureNight = Mathf.Max(newFrame.TemperatureLowest, nightLow);
+          this.CurrentWeatherProperties.m_maxTemperatureNight = Mathf.Min(newFrame.TemperatureHighest, nightHigh);
 
           // Rainfall
-
           this.CurrentWeatherProperties.m_minTemperatureRain = Mathf.Min(this.CurrentWeatherProperties.m_minTemperatureDay, this.CurrentWeatherProperties.m_minTemperatureNight);
           this.CurrentWeatherProperties.m_maxTemperatureRain = Mathf.Max(this.CurrentWeatherProperties.m_maxTemperatureDay, this.CurrentWeatherProperties.m_maxTemperatureNight);
 
-          // monthlyData.PrecipitationAverage
-          if (float.IsNaN(monthlyData.PrecipitationDaysRatio))
-          {
-            this.CurrentWeatherProperties.m_rainProbabilityDay = 40;
-            this.CurrentWeatherProperties.m_rainProbabilityNight = 60;
-          }
-          else
-          {
-            this.CurrentWeatherProperties.m_rainProbabilityDay = (int)(monthlyData.PrecipitationDaysRatio * 40);
-            this.CurrentWeatherProperties.m_rainProbabilityNight = (int)(monthlyData.PrecipitationDaysRatio * 60);
-          }
+          // newFrame.PrecipitationAverage
+          this.CurrentWeatherProperties.m_rainProbabilityDay = (int)(newFrame.PrecipitationDaysRatio * 40);
+          this.CurrentWeatherProperties.m_rainProbabilityNight = (int)(newFrame.PrecipitationDaysRatio * 60);
 
           // Fog
-
           this.CurrentWeatherProperties.m_minTemperatureFog = this.CurrentWeatherProperties.m_minTemperatureRain;
           this.CurrentWeatherProperties.m_maxTemperatureFog = this.CurrentWeatherProperties.m_maxTemperatureRain;
 
-          if (float.IsNaN(monthlyData.FogDaysRatio))
-          {
-            this.CurrentWeatherProperties.m_fogProbabilityDay = 60;
-            this.CurrentWeatherProperties.m_fogProbabilityNight = 40;
-          }
-          else
-          {
-            this.CurrentWeatherProperties.m_fogProbabilityDay = (int)(monthlyData.FogDaysRatio * 60);
-            this.CurrentWeatherProperties.m_fogProbabilityNight = (int)(monthlyData.FogDaysRatio * 40);
-          }
+          this.CurrentWeatherProperties.m_fogProbabilityDay = (int)(newFrame.FogDaysRatio * 60);
+          this.CurrentWeatherProperties.m_fogProbabilityNight = (int)(newFrame.FogDaysRatio * 40);
 
           // wind speed range 0f - 2f
           // sampled wind speed range 0f - 1f
@@ -643,7 +717,7 @@ namespace Runaurufu.ClimateControl
           if (GlobalConfig.GetInstance().ChirpForecast)
           {
             ChirpBox.SendMessage("Weather Forecast", string.Format("Forecast for next {0:0} days:" + Environment.NewLine + "Day {1} - {2}" + Environment.NewLine + "Night {3} - {4}",
-              daysPerClimateStage,
+              newFrame.YearProgressDayLength,
               this.GetLocalizedTemperature(this.CurrentWeatherProperties.m_minTemperatureDay),
               this.GetLocalizedTemperature(this.CurrentWeatherProperties.m_maxTemperatureDay),
               this.GetLocalizedTemperature(this.CurrentWeatherProperties.m_minTemperatureNight),
@@ -651,122 +725,80 @@ namespace Runaurufu.ClimateControl
               ));
           }
 
-          this.currentClimateFrameData = monthlyData;
+          this.currentClimateFrameData = newFrame;
           needToReinitializeWeatherProperties = true;
+        }
 
+        if(isFirstUpdateThisWeek)
+        {
           this.currentTempClimateData = new TempClimateData();
-          this.currentTempClimateData.PrecipitationHoursExpected = this.currentClimateFrameData.PrecipitationDaysRatio * daysPerClimateStage * this.ClimateControlProperties.SolarDayLength * 0.2f;
+          this.currentTempClimateData.PrecipitationHoursExpected = this.currentClimateFrameData.PrecipitationDaysRatio * 7 * this.ClimateControlProperties.SolarDayLength * 0.4f;
 
-          if (float.IsNaN(this.currentClimateFrameData.PrecipitationAverage))
-            this.currentTempClimateData.PrecipitationAverage = 500f * (float)this.random.NextDouble() * this.currentClimateFrameData.PrecipitationDaysRatio;
+          this.currentTempClimateData.PrecipitationAverage = this.currentClimateFrameData.PrecipitationAverage * this.random.Next(5, 15) * 0.1f;
+          this.currentTempClimateData.PrecipitationExpected = this.currentTempClimateData.PrecipitationAverage * 7;
+
+          this.currentTempClimateData.FogHoursExpected = this.currentClimateFrameData.FogDaysRatio * 7 * this.ClimateControlProperties.SolarDayLength * 0.4f;
+        }
+
+        float currentFrameProgress = (yearProgress - this.currentClimateFrameData.YearProgressStart) / this.currentClimateFrameData.YearProgressLength;
+
+        if (this.currentTempClimateData.PrecipitationExpected < this.currentWeekStatisticData.PrecipitationAmount)
+        {
+          // we should allow precipitation to reach its target
+          if (this.TargetRain - this.CurrentRain < 0.1f)
+          { // more precipitation then expected! Halt rain!
+            this.TargetRain = 0.0f;
+          }
+        }
+        else if (this.weatherManager.m_targetRain < 0.01f && (isNight ? this.CurrentWeatherProperties.m_rainProbabilityNight : this.CurrentWeatherProperties.m_rainProbabilityDay) > this.random.Next(0, 100))
+        {
+          // less precipitation then expected!
+          float precipitationToFill = (this.currentTempClimateData.PrecipitationExpected - this.currentWeekStatisticData.PrecipitationAmount);
+
+          float daysToNextWeek = (1f - weekProgress) * 7f;
+
+          precipitationToFill = (precipitationToFill / (daysToNextWeek * this.ClimateControlProperties.SolarDayLength));
+
+          if (this.currentTempClimateData.PrecipitationHoursExpected > this.currentWeekStatisticData.PrecipitationDuration)
+            precipitationToFill *= (float)this.random.Next(0, 600) * 0.01f;
           else
-            this.currentTempClimateData.PrecipitationAverage = this.currentClimateFrameData.PrecipitationAverage * this.random.Next(8, 12) * 0.1f;
+            precipitationToFill *= (float)this.random.Next(0, 200) * 0.01f;
 
-          this.currentTempClimateData.FogHoursExpected = this.currentClimateFrameData.FogDaysRatio * daysPerClimateStage * this.ClimateControlProperties.SolarDayLength * 0.2f;
+          // 1 to 4!
+          precipitationToFill *= 0.25f;
+          if (precipitationToFill > (float)this.random.Next(15, 75) * 0.01f)
+          {
+            this.weatherManager.m_targetRain = Mathf.Clamp01(precipitationToFill);
+          }
+        }
 
+        if (this.currentWeekStatisticData.FogDuration < this.currentTempClimateData.FogHoursExpected)
+        {
+          // more foggy time needed!
+          if (this.weatherManager.m_targetFog < 0.01f)
+          {
+            if ((isNight ? this.CurrentWeatherProperties.m_fogProbabilityNight : this.CurrentWeatherProperties.m_fogProbabilityDay) > this.random.Next(0, 100))
+            {
+              this.weatherManager.m_targetFog = this.random.Next(25, 100) * 0.01f;
+            }
+          }
         }
         else
         {
-          if (this.currentTempClimateData.PrecipitationAverage < this.currentWeekStatisticData.PrecipitationAmount)
-          {
-            // more precipitation then expected! Halt rain!
-            this.weatherManager.m_targetRain = 0.0f;
-          }
-          else if (this.weatherManager.m_targetRain < 0.01f && (isNight ? this.CurrentWeatherProperties.m_rainProbabilityNight : this.CurrentWeatherProperties.m_rainProbabilityDay) > this.random.Next(0, 100))
-          {
-            // less precipitation then expected!
-            float precipitationToFill = (this.currentTempClimateData.PrecipitationAverage - this.currentWeekStatisticData.PrecipitationAmount);
-
-            float daysToNextFrame = daysPerClimateStage * (1 - currentClimateFrameProgress);
-
-            precipitationToFill = (precipitationToFill / (daysToNextFrame * this.ClimateControlProperties.SolarDayLength));
-
-            if (this.currentTempClimateData.PrecipitationHoursExpected > this.currentWeekStatisticData.PrecipitationDuration)
-              precipitationToFill *= (float)this.random.Next(0, 600) * 0.01f;
-            else
-              precipitationToFill *= (float)this.random.Next(0, 200) * 0.01f;
-
-            if (precipitationToFill > 0.15f)
-            {
-              this.weatherManager.m_targetRain = Mathf.Clamp01(precipitationToFill);
-            }
-          }
-
-          if (this.currentWeekStatisticData.FogDuration < this.currentTempClimateData.FogHoursExpected)
-          {
-            // more foggy time needed!
-            if (this.weatherManager.m_targetFog < 0.01f)
-            {
-              if ((isNight ? this.CurrentWeatherProperties.m_fogProbabilityNight : this.CurrentWeatherProperties.m_fogProbabilityDay) > this.random.Next(0, 100))
-              {
-                this.weatherManager.m_targetFog = this.random.Next(25, 100) * 0.01f;
-              }
-            }
-          }
-          else
-          {
-            // too much foggy time!
-            this.weatherManager.m_targetFog = 0f;
-          }
+          // too much foggy time!
+          this.weatherManager.m_targetFog = 0f;
         }
       }
 
       // rain/snow sets - keep it at the end!
       bool rainIsSnow = this.weatherManager.m_currentTemperature < this.ClimateControlProperties.SnowFallTemperature;
       if (rainIsSnow != this.CurrentWeatherProperties.m_rainIsSnow)
-
       {
         this.CurrentWeatherProperties.m_rainIsSnow = rainIsSnow;
         needToReinitializeWeatherProperties = true;
 
         // Reset rain particles behaviour
-        if (DayNightProperties.instance != null)
-        {
-          RainParticleProperties rainParticleProperties = DayNightProperties.instance.GetComponent<RainParticleProperties>();
-          if (rainParticleProperties != null)
-          {
-            rainParticleProperties.SetFieldValue("m_IsWinter", rainIsSnow);
-
-            if (rainIsSnow)
-            {
-              rainParticleProperties.m_RainMaterialX.EnableKeyword("SNOWPARTICLE");
-              rainParticleProperties.m_RainMaterialX.DisableKeyword("RAINPARTICLE");
-              rainParticleProperties.m_RainMaterialY.EnableKeyword("SNOWPARTICLE");
-              rainParticleProperties.m_RainMaterialY.DisableKeyword("RAINPARTICLE");
-              rainParticleProperties.m_RainMaterialZ.EnableKeyword("SNOWPARTICLE");
-              rainParticleProperties.m_RainMaterialZ.DisableKeyword("RAINPARTICLE");
-
-              if (rainParticleProperties.m_RainMaterialX.GetTexture("_RainNoise").name == "linearrainnoise")
-              {
-                try
-                {
-                  // this still produce exception log :/
-                  rainParticleProperties.InvokeMethod("CreateNoiseSum");
-                }
-                catch { }
-              }
-            }
-            else
-            {
-              rainParticleProperties.m_RainMaterialX.EnableKeyword("RAINPARTICLE");
-              rainParticleProperties.m_RainMaterialX.DisableKeyword("SNOWPARTICLE");
-              rainParticleProperties.m_RainMaterialY.EnableKeyword("RAINPARTICLE");
-              rainParticleProperties.m_RainMaterialY.DisableKeyword("SNOWPARTICLE");
-              rainParticleProperties.m_RainMaterialZ.EnableKeyword("RAINPARTICLE");
-              rainParticleProperties.m_RainMaterialZ.DisableKeyword("SNOWPARTICLE");
-
-
-              Texture2D sumNoise = rainParticleProperties.GetFieldValue("m_SumNoiseTexture") as Texture2D;
-              if (sumNoise != null)
-              {
-                rainParticleProperties.SetFieldValue("m_SumNoiseTexture", null);
-                UnityEngine.Object.DestroyImmediate(sumNoise);
-              }
-            }
-            //rainParticleProperties.InvokeMethod("OnDisable");
-            //rainParticleProperties.InvokeMethod("OnEnable");
-          }
-        }
+        this.HandlePrecipitationParticles();
       }
 
       // does snow melt?
@@ -793,7 +825,7 @@ namespace Runaurufu.ClimateControl
 
       if (GlobalConfig.GetInstance().PrecipitationAlterWaterSources)
       {
-        this.HandlePrecipitationAlterWaterSources(simulationTimeUpdateDelta);
+        this.HandlePrecipitationAlterWaterSources(yearProgress, isFirstUpdateThisYear, simulationTimeUpdateDelta);
       }
 
       if (GlobalConfig.GetInstance().RainfallMakesWater)
@@ -810,7 +842,6 @@ namespace Runaurufu.ClimateControl
       this.currentWeekStatisticData.TemperatureMin = Mathf.Min(this.currentWeekStatisticData.TemperatureMin, this.weatherManager.m_currentTemperature);
       this.currentWeekStatisticData.TemperatureMax = Mathf.Max(this.currentWeekStatisticData.TemperatureMax, this.weatherManager.m_currentTemperature);
 
-      
       float timeUsedForStatisticData = Mathf.Clamp((float)(weekHours - MIN_TIME_DELTA), 0f, 10080f); //10080 = that many minutes you get in week
       this.currentWeekStatisticData.TemperatureAverage = (float)((this.currentWeekStatisticData.TemperatureAverage * timeUsedForStatisticData) + this.weatherManager.m_currentTemperature * MIN_TIME_DELTA) / weekHours;
 
@@ -826,6 +857,57 @@ namespace Runaurufu.ClimateControl
       }
 
       this.lastSimulationTimeUpdate = simulationTime;
+    }
+
+    private void HandlePrecipitationParticles()
+    {
+      if (DayNightProperties.instance != null)
+      {
+        RainParticleProperties rainParticleProperties = DayNightProperties.instance.GetComponent<RainParticleProperties>();
+        if (rainParticleProperties != null)
+        {
+          rainParticleProperties.SetFieldValue("m_IsWinter", this.CurrentWeatherProperties.m_rainIsSnow);
+
+          if (this.CurrentWeatherProperties.m_rainIsSnow)
+          {
+            rainParticleProperties.m_RainMaterialX.EnableKeyword("SNOWPARTICLE");
+            rainParticleProperties.m_RainMaterialX.DisableKeyword("RAINPARTICLE");
+            rainParticleProperties.m_RainMaterialY.EnableKeyword("SNOWPARTICLE");
+            rainParticleProperties.m_RainMaterialY.DisableKeyword("RAINPARTICLE");
+            rainParticleProperties.m_RainMaterialZ.EnableKeyword("SNOWPARTICLE");
+            rainParticleProperties.m_RainMaterialZ.DisableKeyword("RAINPARTICLE");
+
+            if (rainParticleProperties.m_RainMaterialX.GetTexture("_RainNoise").name == "linearrainnoise")
+            {
+              try
+              {
+                // this still produce exception log :/
+                rainParticleProperties.InvokeMethod("CreateNoiseSum");
+              }
+              catch { }
+            }
+          }
+          else
+          {
+            rainParticleProperties.m_RainMaterialX.EnableKeyword("RAINPARTICLE");
+            rainParticleProperties.m_RainMaterialX.DisableKeyword("SNOWPARTICLE");
+            rainParticleProperties.m_RainMaterialY.EnableKeyword("RAINPARTICLE");
+            rainParticleProperties.m_RainMaterialY.DisableKeyword("SNOWPARTICLE");
+            rainParticleProperties.m_RainMaterialZ.EnableKeyword("RAINPARTICLE");
+            rainParticleProperties.m_RainMaterialZ.DisableKeyword("SNOWPARTICLE");
+
+
+            Texture2D sumNoise = rainParticleProperties.GetFieldValue("m_SumNoiseTexture") as Texture2D;
+            if (sumNoise != null)
+            {
+              rainParticleProperties.SetFieldValue("m_SumNoiseTexture", null);
+              UnityEngine.Object.DestroyImmediate(sumNoise);
+            }
+          }
+          //rainParticleProperties.InvokeMethod("OnDisable");
+          //rainParticleProperties.InvokeMethod("OnEnable");
+        }
+      }
     }
 
     private void HandleSnowDumps(TimeSpan timeDelta)
@@ -1012,83 +1094,109 @@ namespace Runaurufu.ClimateControl
       }
     }
 
-    private void HandlePrecipitationAlterWaterSources(TimeSpan timeDelta)
+    private void HandlePrecipitationAlterWaterSources(float yearProgress, bool firstUpdateThisYear, TimeSpan timeDelta)
     {
+      if (this.ClimateGlobals == null)
+        return;
+
+      this.CreateDefaultMapWaterSources();
+
       FastList<WaterSource> waterSources = Singleton<TerrainManager>.instance.WaterSimulation.m_waterSources;
       if (mapSources == null)
       {
-        List<MapWaterSource> mapSourcesList = new List<MapWaterSource>();
+        mapSources = new MapWaterSource[this.DefaultMapWaterSources.Length];
 
-        for (int i = 0; i < waterSources.m_size; i++)
-        {
-          if (waterSources.m_buffer[i].m_type == WaterSource.TYPE_NATURAL && waterSources.m_buffer[i].m_target > 0)
-          {
-            mapSourcesList.Add(new MapWaterSource()
-            {
-              Index = i,
-              MinTarget = (ushort)Mathf.Clamp(0.5f * waterSources.m_buffer[i].m_target, 63.99f * waterSources.m_buffer[i].m_outputPosition.y + 10, ushort.MaxValue),
-              MaxTarget = (ushort)Mathf.Min(waterSources.m_buffer[i].m_target + (waterSources.m_buffer[i].m_target - 63.99f * waterSources.m_buffer[i].m_outputPosition.y) * 1.75f, ushort.MaxValue),
-              MinOutputRate = waterSources.m_buffer[i].m_outputRate = (uint)Mathf.Clamp(0.5f * waterSources.m_buffer[i].m_outputRate, 100, ushort.MaxValue),
-              MaxOutputRate = waterSources.m_buffer[i].m_outputRate = (uint)Mathf.Clamp(10.00f * waterSources.m_buffer[i].m_outputRate, 100, ushort.MaxValue),
-            });
-
-            // input must be reduced to reduce rivers "sucking" water upstream. 
-            waterSources.m_buffer[i].m_inputRate = (uint)(waterSources.m_buffer[i].m_inputRate * 0.01f);
-          }
-        }
-
-        mapSources = mapSourcesList.ToArray();
-      }
-
-      if (this.GroundWetness == 0.0f && this.CurrentRain == 0.0f && this.currentWeekStatisticData.PrecipitationAmount < 30f)
-      {
-        waterSourceChangeCompound -= 4;
-      }
-
-      if (this.GroundWetness > 0.30f)
-      {
-        waterSourceChangeCompound += 1;
-      }
-      else if(this.GroundWetness < 0.15f)
-      {
-        waterSourceChangeCompound -= 1;
-
-        if (this.GroundWetness < 0.05f)
-          waterSourceChangeCompound -= 2;
-      }
-
-      if (this.CurrentRain > 0.05f)
-      {
-        waterSourceChangeCompound += 1;
-
-        if (this.CurrentRain > 0.25f)
-        {
-          waterSourceChangeCompound += 2;
-
-          if (this.CurrentRain > 0.75f)
-          {
-            waterSourceChangeCompound += 3;
-          }
-        }
-      }
-
-      if (waterSourceChangeCompound > 50 || waterSourceChangeCompound < -50)
-      {
-        float targetMod = (waterSourceChangeCompound > 0 ? 1.003f : 0.995f);
         for (int i = 0; i < mapSources.Length; i++)
         {
-          float newTarget = waterSources.m_buffer[mapSources[i].Index].m_target * targetMod;
-          waterSources.m_buffer[mapSources[i].Index].m_target = (ushort)Mathf.Clamp(newTarget, mapSources[i].MinTarget, mapSources[i].MaxTarget);
+          MapWaterSource source = new MapWaterSource();
+          source.Index = this.DefaultMapWaterSources[i].Index;
+          source.MinTarget = (ushort)Mathf.Clamp(0.5f * this.DefaultMapWaterSources[i].Target, 63.99f * waterSources.m_buffer[source.Index].m_outputPosition.y + 8, ushort.MaxValue);
+          source.MaxTarget = (ushort)Mathf.Min(this.DefaultMapWaterSources[i].Target + (this.DefaultMapWaterSources[i].Target - 63.99f * waterSources.m_buffer[source.Index].m_outputPosition.y) * 1.25f, ushort.MaxValue);
+          source.MinOutputRate = waterSources.m_buffer[source.Index].m_outputRate = (uint)Mathf.Clamp(0.10f * this.DefaultMapWaterSources[i].OutputRate, 100, ushort.MaxValue);
+          source.MaxOutputRate = waterSources.m_buffer[source.Index].m_outputRate = (uint)Mathf.Clamp(10.00f * this.DefaultMapWaterSources[i].OutputRate, 100, ushort.MaxValue);
 
-          float newOutputRate = waterSources.m_buffer[mapSources[i].Index].m_outputRate * targetMod;
-          waterSources.m_buffer[mapSources[i].Index].m_outputRate = (uint)Mathf.Clamp(newOutputRate, mapSources[i].MinOutputRate, mapSources[i].MaxOutputRate);
+          source.YearlyExpectedFlow = 366 * 24 * this.DefaultMapWaterSources[i].OutputRate;
+          source.CurrentYearFlow = (ulong)(source.YearlyExpectedFlow * yearProgress);
+
+          // input must be reduced to reduce rivers "sucking" water upstream. 
+          waterSources.m_buffer[source.Index].m_inputRate = (uint)(this.DefaultMapWaterSources[i].InputRate * 0.0001f);
+
+          mapSources[i] = source;
         }
-        waterSourceChangeCompound = 0;
+
+        firstUpdateThisYear = false;
+      }
+
+      for (int i = 0; i < mapSources.Length; i++)
+      {
+        MapWaterSource source = mapSources[i];
+
+        // update current flow!
+        if (firstUpdateThisYear)
+          source.CurrentYearFlow = 0;
+        source.CurrentYearFlow += (ulong)(waterSources.m_buffer[source.Index].m_flow * timeDelta.TotalHours);
+
+        if(this.ClimateGlobals.PrecipitationHourlyAverage == 0)
+        {
+          waterSources.m_buffer[source.Index].m_target = this.DefaultMapWaterSources[i].Target;
+          waterSources.m_buffer[source.Index].m_outputRate = this.DefaultMapWaterSources[i].OutputRate;
+        }
+        else
+        {
+          bool tooMuchFlow = source.CurrentYearFlow > source.YearlyExpectedFlow * 1.5f;
+
+          float hourlyFall = (this.CurrentRain * 4.00f /*+ this.GroundWetness * 0.05f*/) / (float)timeDelta.TotalHours;
+          float ratio = hourlyFall / this.ClimateGlobals.PrecipitationHourlyAverage;
+
+          float goalTarget;
+          float goalOutputRate;
+
+          float progress;
+
+          if (ratio > 1.2f)
+          {
+            goalTarget = source.MaxTarget;
+            goalOutputRate = source.MaxOutputRate;
+
+            progress = 0.0003f;
+
+            if (waterSources.m_buffer[source.Index].m_target < this.DefaultMapWaterSources[i].Target)
+              progress *= 3;
+
+            if (tooMuchFlow)
+              progress *= 0.1f;
+          }
+          else if(ratio > 0.8f)
+          {
+            goalTarget = this.DefaultMapWaterSources[i].Target;
+            goalOutputRate = this.DefaultMapWaterSources[i].OutputRate;
+
+            progress = 0.0050f;
+
+            if (waterSources.m_buffer[source.Index].m_target > this.DefaultMapWaterSources[i].Target && tooMuchFlow)
+              progress *= 5f;
+          }
+          else
+          {
+            goalTarget = source.MinTarget;
+            goalOutputRate = source.MinOutputRate;
+
+            progress = 0.0003f;
+
+            if (waterSources.m_buffer[source.Index].m_target > this.DefaultMapWaterSources[i].Target)
+              progress *= 3;
+
+            if (tooMuchFlow)
+              progress *= 2f;
+          }
+          waterSources.m_buffer[source.Index].m_target = (ushort)Mathf.Lerp(waterSources.m_buffer[source.Index].m_target, goalTarget, progress);
+          waterSources.m_buffer[source.Index].m_outputRate = (uint)Mathf.Lerp(waterSources.m_buffer[source.Index].m_outputRate, goalOutputRate, progress);
+
+        }
       }
     }
 
     private MapWaterSource[] mapSources = null;
-    private short waterSourceChangeCompound = 0;
 
     private struct MapWaterSource
     {
@@ -1097,6 +1205,8 @@ namespace Runaurufu.ClimateControl
       public ushort MaxTarget;
       public uint MinOutputRate;
       public uint MaxOutputRate;
+      public ulong CurrentYearFlow;
+      public ulong YearlyExpectedFlow;
     }
   }
 
@@ -1116,6 +1226,32 @@ namespace Runaurufu.ClimateControl
     public Vector3 TerrainManager_GrassFieldColorOffset { get; set; }
     public Vector3 TerrainManager_GrassForestColorOffset { get; set; }
     public Vector3 TerrainManager_GrassPollutionColorOffset { get; set; }
+  }
+
+  public class ClimateGlobalValues
+  {
+    public float PrecipitationYearlyAverage { get; private set; }
+    public float PrecipitationWeeklyAverage { get; private set; }
+    public float PrecipitationDailyAverage { get; private set; }
+    public float PrecipitationHourlyAverage { get; private set; }
+
+    public static ClimateGlobalValues Create(ClimateFrameData[] climateFrames)
+    {
+      ClimateGlobalValues ret = new ClimateGlobalValues();
+
+      float precipitationTotal = 0;
+      foreach (ClimateFrameData item in climateFrames)
+      {
+        precipitationTotal += item.PrecipitationAverage * item.YearProgressLength;
+      }
+
+      ret.PrecipitationYearlyAverage = precipitationTotal;
+      ret.PrecipitationDailyAverage = precipitationTotal / 366f;
+      ret.PrecipitationWeeklyAverage = ret.PrecipitationDailyAverage * 7f;
+      ret.PrecipitationHourlyAverage = ret.PrecipitationDailyAverage / 24f;
+
+      return ret;
+    }
   }
 
   public class ClimateControlProperties
@@ -1158,7 +1294,9 @@ namespace Runaurufu.ClimateControl
     public float PrecipitationHoursExpected { get; set; }
 
     public float PrecipitationAverage { get; set; }
+    public float PrecipitationExpected { get; set; }
   }
+
 
   public class MonthlyClimateData
   {
@@ -1176,7 +1314,7 @@ namespace Runaurufu.ClimateControl
     // Precipitation: Rainfall & Snowfall
 
     /// <summary>
-    /// [mm]
+    /// [mm / day]
     /// </summary>
     public float PrecipitationAverage { get; set; }
     /// <summary>
@@ -1209,5 +1347,5 @@ namespace Runaurufu.ClimateControl
     //public float NightStartHour { get; set; }
   }
 
-  
+
 }
