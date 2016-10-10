@@ -33,7 +33,7 @@ namespace Runaurufu.ClimateControl
         else
           this.weatherUI.Show();
 
-       // bool flag = !this.weatherUI.gameObject.active;
+        // bool flag = !this.weatherUI.gameObject.active;
         toggle.normalBgSprite = this.weatherUI.isVisible ? "OptionBasePressed" : "OptionBase";
         //this.weatherUI.gameObject.SetActive(flag);
       });
@@ -41,17 +41,17 @@ namespace Runaurufu.ClimateControl
 
     public void CreateControlPanels()
     {
-     // this.weatherUI = new GameObject("WeatherUI").AddComponent<WeatherUI>();
+      // this.weatherUI = new GameObject("WeatherUI").AddComponent<WeatherUI>();
       this.weatherUI = UIView.GetAView().AddUIComponent(typeof(WeatherUI)) as WeatherUI;
-    //  this.weatherUI.anchor = UIAnchorStyle.Left;
+      //  this.weatherUI.anchor = UIAnchorStyle.Left;
 
-    //  UIView.GetAView().AttachUIComponent(this.weatherUI.gameObject);
+      //  UIView.GetAView().AttachUIComponent(this.weatherUI.gameObject);
       this.weatherUI.isVisible = false;
       //this.weatherUI.gameObject.SetActive(false);
     }
 
     public override void OnLevelLoaded(LoadMode mode)
-    {      
+    {
       base.OnLevelLoaded(mode);
 
       if (mode != LoadMode.LoadGame && mode != LoadMode.NewGame)
@@ -90,7 +90,8 @@ namespace Runaurufu.ClimateControl
     {
       base.OnLevelUnloading();
 
-      ClimateControlEngine.Instance.Uninitialize();
+      if (ClimateControlEngine.Instance.IsInitialized)
+        ClimateControlEngine.Instance.Uninitialize();
     }
   }
 }

@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Xml;
-using System.Xml.Schema;
 using System.Xml.Serialization;
-using UnityEngine;
 
 namespace Runaurufu.ClimateControl
 {
@@ -48,6 +43,7 @@ namespace Runaurufu.ClimateControl
     private static readonly string ConfigFileName = ConfigName + ".config";
 
     private static GlobalConfig instance;
+
     public static GlobalConfig GetInstance()
     {
       if (instance == null)
@@ -68,7 +64,7 @@ namespace Runaurufu.ClimateControl
       this.PrecipitationAlterWaterSources = false;
       this.ThundersFrequency = Frequency.OnAverage;
       this.ClimateSmoothness = Level.None;
-    //  this.WeatherAlterFires = false;
+      //  this.WeatherAlterFires = false;
     }
 
     public string SelectedClimatePresetCode { get; set; }

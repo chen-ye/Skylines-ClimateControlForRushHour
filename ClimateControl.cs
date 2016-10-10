@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using ColossalFramework;
-using System.Linq;
 using ICities;
 using Runaurufu.Utility;
 using UnityEngine;
@@ -48,14 +47,15 @@ namespace Runaurufu.ClimateControl
     }
   }
 
-
   internal class ClimatePreset
   {
     public String PresetName { get; set; }
+
     /// <summary>
     /// It must be unique climate code!
     /// </summary>
     public String PresetCode { get; set; }
+
     public ClimateControlProperties ClimateProperties { get; set; }
   }
 
@@ -185,21 +185,27 @@ namespace Runaurufu.ClimateControl
         case Frequency.AlmostNever:
           this.LightningMinMaxIntervals = new Vector2(5000f, 50000f);
           break;
+
         case Frequency.Rarely:
           this.LightningMinMaxIntervals = new Vector2(50f, 1000f);
           break;
+
         case Frequency.BelowAverage:
           this.LightningMinMaxIntervals = new Vector2(20f, 500f);
           break;
+
         case Frequency.AboveAverage:
           this.LightningMinMaxIntervals = new Vector2(10f, 150f);
           break;
+
         case Frequency.Often:
           this.LightningMinMaxIntervals = new Vector2(5f, 70f);
           break;
+
         case Frequency.AlmostConstantly:
           this.LightningMinMaxIntervals = new Vector2(1f, 5f);
           break;
+
         case Frequency.OnAverage:
         default:
           this.LightningMinMaxIntervals = new Vector2(10f, 300f);
@@ -563,7 +569,6 @@ namespace Runaurufu.ClimateControl
 
     private DateTime GetDateTime()
     {
-
       int realHour = (int)this.ThreadingManager.simulationDayTimeHour;
       int realMinute = (int)((this.ThreadingManager.simulationDayTimeHour - realHour) * 60);
       return new DateTime(this.ThreadingManager.simulationTime.Year, this.ThreadingManager.simulationTime.Month, this.ThreadingManager.simulationTime.Day, realHour, realMinute, 0);
@@ -657,8 +662,8 @@ namespace Runaurufu.ClimateControl
 
       if (this.ClimateFrames != null && this.ClimateFrames.Length > 0)
       {
-      //  if(this.currentClimateFrameData != null)
-      //    DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Message, "yp: " + yearProgress + " s/e " + this.currentClimateFrameData.YearProgressStart + "/ " + this.currentClimateFrameData.YearProgressEnd);
+        //  if(this.currentClimateFrameData != null)
+        //    DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Message, "yp: " + yearProgress + " s/e " + this.currentClimateFrameData.YearProgressStart + "/ " + this.currentClimateFrameData.YearProgressEnd);
 
         if (this.currentClimateFrameData == null || this.currentClimateFrameData.YearProgressStart > yearProgress || this.currentClimateFrameData.YearProgressEnd < yearProgress)
         {
@@ -729,7 +734,7 @@ namespace Runaurufu.ClimateControl
           needToReinitializeWeatherProperties = true;
         }
 
-        if(isFirstUpdateThisWeek)
+        if (isFirstUpdateThisWeek)
         {
           this.currentTempClimateData = new TempClimateData();
           this.currentTempClimateData.PrecipitationHoursExpected = this.currentClimateFrameData.PrecipitationDaysRatio * 7 * this.ClimateControlProperties.SolarDayLength * 0.4f;
@@ -895,7 +900,6 @@ namespace Runaurufu.ClimateControl
             rainParticleProperties.m_RainMaterialY.DisableKeyword("SNOWPARTICLE");
             rainParticleProperties.m_RainMaterialZ.EnableKeyword("RAINPARTICLE");
             rainParticleProperties.m_RainMaterialZ.DisableKeyword("SNOWPARTICLE");
-
 
             Texture2D sumNoise = rainParticleProperties.GetFieldValue("m_SumNoiseTexture") as Texture2D;
             if (sumNoise != null)
@@ -1118,7 +1122,7 @@ namespace Runaurufu.ClimateControl
           source.YearlyExpectedFlow = 366 * 24 * this.DefaultMapWaterSources[i].OutputRate;
           source.CurrentYearFlow = (ulong)(source.YearlyExpectedFlow * yearProgress);
 
-          // input must be reduced to reduce rivers "sucking" water upstream. 
+          // input must be reduced to reduce rivers "sucking" water upstream.
           waterSources.m_buffer[source.Index].m_inputRate = (uint)(this.DefaultMapWaterSources[i].InputRate * 0.0001f);
 
           mapSources[i] = source;
@@ -1136,7 +1140,7 @@ namespace Runaurufu.ClimateControl
           source.CurrentYearFlow = 0;
         source.CurrentYearFlow += (ulong)(waterSources.m_buffer[source.Index].m_flow * timeDelta.TotalHours);
 
-        if(this.ClimateGlobals.PrecipitationHourlyAverage == 0)
+        if (this.ClimateGlobals.PrecipitationHourlyAverage == 0)
         {
           waterSources.m_buffer[source.Index].m_target = this.DefaultMapWaterSources[i].Target;
           waterSources.m_buffer[source.Index].m_outputRate = this.DefaultMapWaterSources[i].OutputRate;
@@ -1166,7 +1170,7 @@ namespace Runaurufu.ClimateControl
             if (tooMuchFlow)
               progress *= 0.1f;
           }
-          else if(ratio > 0.8f)
+          else if (ratio > 0.8f)
           {
             goalTarget = this.DefaultMapWaterSources[i].Target;
             goalOutputRate = this.DefaultMapWaterSources[i].OutputRate;
@@ -1191,7 +1195,6 @@ namespace Runaurufu.ClimateControl
           }
           waterSources.m_buffer[source.Index].m_target = (ushort)Mathf.Lerp(waterSources.m_buffer[source.Index].m_target, goalTarget, progress);
           waterSources.m_buffer[source.Index].m_outputRate = (uint)Mathf.Lerp(waterSources.m_buffer[source.Index].m_outputRate, goalOutputRate, progress);
-
         }
       }
     }
@@ -1221,7 +1224,6 @@ namespace Runaurufu.ClimateControl
 
   public class DefaultSettings
   {
-
     public Vector3 TerrainManager_GrassFertilityColorOffset { get; set; }
     public Vector3 TerrainManager_GrassFieldColorOffset { get; set; }
     public Vector3 TerrainManager_GrassForestColorOffset { get; set; }
@@ -1297,7 +1299,6 @@ namespace Runaurufu.ClimateControl
     public float PrecipitationExpected { get; set; }
   }
 
-
   public class MonthlyClimateData
   {
     // Temperature
@@ -1306,6 +1307,7 @@ namespace Runaurufu.ClimateControl
     /// [C]
     /// </summary>
     public float TemperatureHighest { get; set; }
+
     public float TemperatureHighAverage { get; set; }
     public float TemperatureAverage { get; set; }
     public float TemperatureLowAverage { get; set; }
@@ -1317,6 +1319,7 @@ namespace Runaurufu.ClimateControl
     /// [mm / day]
     /// </summary>
     public float PrecipitationAverage { get; set; }
+
     /// <summary>
     /// 0 - no rain/snow, 1 - rain/snow all time
     /// </summary>
@@ -1346,6 +1349,4 @@ namespace Runaurufu.ClimateControl
     //public float DayStartHour { get; set; }
     //public float NightStartHour { get; set; }
   }
-
-
 }

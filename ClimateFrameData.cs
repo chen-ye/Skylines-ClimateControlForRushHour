@@ -1,21 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Runaurufu.ClimateControl
 {
   public class ClimateFrameData
   {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public float YearProgressStart { get; set; }
+
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public float YearProgressEnd { get; set; }
+
     /// <summary>
     /// How many days in year this frame occupies
     /// </summary>
@@ -35,6 +33,7 @@ namespace Runaurufu.ClimateControl
     /// [C]
     /// </summary>
     public float TemperatureHighest { get; set; }
+
     public float TemperatureHighAverage { get; set; }
     public float TemperatureAverage { get; set; }
     public float TemperatureLowAverage { get; set; }
@@ -46,6 +45,7 @@ namespace Runaurufu.ClimateControl
     /// [mm / day]
     /// </summary>
     public float PrecipitationAverage { get; set; }
+
     /// <summary>
     /// 0 - no rain/snow, 1 - rain/snow all time
     /// </summary>
@@ -72,7 +72,9 @@ namespace Runaurufu.ClimateControl
     /// </summary>
     public float DayLengthAverage { get; set; }
 
-    public ClimateFrameData() { }
+    public ClimateFrameData()
+    {
+    }
 
     public ClimateFrameData(MonthlyClimateData data, float start, float end, float solarDayLength)
     {
@@ -185,13 +187,13 @@ namespace Runaurufu.ClimateControl
           {
             if (isNanTHA && isNanTLA)
               this.TemperatureHighest = this.TemperatureAverage + (this.TemperatureAverage - this.TemperatureLowest);
-            else if(isNanTHA == false && isNanTLA == false)
+            else if (isNanTHA == false && isNanTLA == false)
             {
               float f1 = this.TemperatureAverage - this.TemperatureLowAverage;
               float f2 = this.TemperatureLowAverage - this.TemperatureLowest;
               float f3 = this.TemperatureHighAverage - this.TemperatureAverage;
 
-              if(f3 > f1)
+              if (f3 > f1)
               {
                 if (f3 > f2)
                   this.TemperatureHighest = this.TemperatureHighAverage + 2 * f3;
@@ -203,7 +205,7 @@ namespace Runaurufu.ClimateControl
                 this.TemperatureHighest = this.TemperatureHighAverage + f2;
               }
             }
-            else if(isNanTHA)
+            else if (isNanTHA)
             {
               this.TemperatureHighest = this.TemperatureAverage + (this.TemperatureAverage - this.TemperatureLowest);
             }
@@ -212,7 +214,7 @@ namespace Runaurufu.ClimateControl
               float f1 = this.TemperatureAverage - this.TemperatureLowest;
               float f2 = this.TemperatureHighAverage - this.TemperatureAverage;
 
-              if(f2 < f1)
+              if (f2 < f1)
                 this.TemperatureHighest = this.TemperatureHighAverage + f1;
               else
                 this.TemperatureHighest = this.TemperatureHighAverage + 2 * f2;
@@ -227,21 +229,21 @@ namespace Runaurufu.ClimateControl
             this.TemperatureLowest = this.TemperatureAverage - (this.TemperatureHighest - this.TemperatureAverage);
           else
           {
-            if(isNanTHA)
+            if (isNanTHA)
               this.TemperatureLowest = this.TemperatureLowAverage - (this.TemperatureHighest - this.TemperatureAverage) * 0.5f;
             else
               this.TemperatureLowest = this.TemperatureLowAverage - (this.TemperatureHighest - this.TemperatureHighAverage);
           }
           isNanTL = false;
         }
-       
-        if(isNanTHA)
+
+        if (isNanTHA)
         {
           this.TemperatureHighAverage = this.TemperatureHighest * 0.33f + this.TemperatureAverage * 0.66f;
           isNanTHA = false;
         }
 
-        if(isNanTLA)
+        if (isNanTLA)
         {
           this.TemperatureLowAverage = this.TemperatureLowest * 0.33f + this.TemperatureAverage * 0.66f;
           isNanTLA = false;
@@ -253,16 +255,16 @@ namespace Runaurufu.ClimateControl
       bool isNanPA = float.IsNaN(this.PrecipitationAverage);
       bool isNanPDR = float.IsNaN(this.PrecipitationDaysRatio);
 
-      if(isNanPA && isNanPDR)
+      if (isNanPA && isNanPDR)
       {
         this.PrecipitationAverage = 3.5f;
         this.PrecipitationDaysRatio = 0.15f;
       }
-      else if(isNanPA)
+      else if (isNanPA)
       {
         this.PrecipitationAverage = solarDayLength * 4f * this.PrecipitationDaysRatio;
       }
-      else if(isNanPDR)
+      else if (isNanPDR)
       {
         this.PrecipitationDaysRatio = Mathf.Clamp01(this.PrecipitationAverage / 120f);
       }

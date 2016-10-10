@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Runaurufu.ClimateControl
+﻿namespace Runaurufu.ClimateControl
 {
   partial class ModSettings
   {
@@ -25,7 +20,9 @@ namespace Runaurufu.ClimateControl
       new ClimatePreset() { PresetName = "Default climate settings", PresetCode = DEFAULT_PRESET_CODE, ClimateProperties = null },
       //new ClimatePreset() { PresetName = "Custom climate settings", PresetCode = CUSTOM_PRESET_CODE, ClimateProperties = null },
       new ClimatePreset() { PresetName = "Companion mod climate settings", PresetCode = COMPANION_PRESET_CODE, ClimateProperties = null },
+
       #region North Pole
+
       // http://www.weatherbase.com/weather/weatherall.php3?s=110340&cityname=Closest+Data+for+North+Pole+-+440+mi%2F709+km%2C+Greenland&units=
       new ClimatePreset() { PresetName = "North Pole", PresetCode = "PRESET_NORTH_POLE", ClimateProperties = new ClimateControlProperties()
       {
@@ -166,8 +163,11 @@ namespace Runaurufu.ClimateControl
           },
         }
       }},
-      #endregion
+
+      #endregion North Pole
+
       #region South Pole
+
       // http://www.weatherbase.com/weather/weatherall.php3?s=90098&cityname=South+Pole%2C+Antarctica&units=
       new ClimatePreset() { PresetName = "South Pole", PresetCode = "PRESET_SOUTH_POLE", ClimateProperties = new ClimateControlProperties()
       {
@@ -308,9 +308,11 @@ namespace Runaurufu.ClimateControl
           },
         }
       }},
-      #endregion
+
+      #endregion South Pole
 
       #region Planet Mars
+
       // https://en.wikipedia.org/wiki/Climate_of_Mars
       // http://quest.nasa.gov/aero/planetary/mars.html
       // http://www.alpo-astronomy.org/jbeish/General_Info_Mars.htm
@@ -453,9 +455,11 @@ namespace Runaurufu.ClimateControl
           },
         }
       }},
-      #endregion
+
+      #endregion Planet Mars
 
       #region Brazil, São Paulo
+
       // http://www.weatherbase.com/weather/weatherall.php3?s=8738&cityname=S%E3o+Paulo%2C+Sao+Paulo%2C+Brazil&units=
       new ClimatePreset() { PresetName = "Brazil, São Paulo", PresetCode = "PRESET_BRAZIL_SÃO_PAULO", ClimateProperties = new ClimateControlProperties()
       {
@@ -596,8 +600,11 @@ namespace Runaurufu.ClimateControl
           },
         }
       }},
-      #endregion
+
+      #endregion Brazil, São Paulo
+
       #region Canada, Baker Lake
+
       // http://www.weatherbase.com/weather/weatherall.php3?s=719260&cityname=Baker+Lake%2C+Nunavut%2C+Canada&units=
       new ClimatePreset() { PresetName = "Canada, Baker Lake", PresetCode = "PRESET_CANADA_BAKER_LAKE", ClimateProperties = new ClimateControlProperties()
       {
@@ -738,8 +745,11 @@ namespace Runaurufu.ClimateControl
           },
         }
       }},
-      #endregion
+
+      #endregion Canada, Baker Lake
+
       #region Canada, Toronto
+
       // http://www.weatherbase.com/weather/weatherall.php3?s=42617&cityname=Toronto%2C+Ontario%2C+Canada&units=
       new ClimatePreset() { PresetName = "Canada, Toronto", PresetCode = "PRESET_CANADA_TORONTO", ClimateProperties = new ClimateControlProperties()
       {
@@ -880,8 +890,11 @@ namespace Runaurufu.ClimateControl
           },
         }
       }},
-      #endregion
+
+      #endregion Canada, Toronto
+
       #region Canada, Vancouver
+
       // http://www.weatherbase.com/weather/weatherall.php3?s=29817&cityname=Vancouver%2C+British+Columbia%2C+Canada&units=
       new ClimatePreset() { PresetName = "Canada, Vancouver", PresetCode = "PRESET_CANADA_VANCOUVER", ClimateProperties = new ClimateControlProperties()
       {
@@ -1022,8 +1035,11 @@ namespace Runaurufu.ClimateControl
           },
         }
       }},
-      #endregion
+
+      #endregion Canada, Vancouver
+
       #region China, Beijing
+
       // http://www.weatherbase.com/weather/weatherall.php3?s=11545&cityname=Beijing%2C+Beijing%2C+China&units=
       new ClimatePreset() { PresetName = "China, Beijing", PresetCode = "PRESET_CHINA_BEIJING", ClimateProperties = new ClimateControlProperties()
       {
@@ -1164,8 +1180,11 @@ namespace Runaurufu.ClimateControl
           },
         }
       }},
-      #endregion
+
+      #endregion China, Beijing
+
       #region Egypt, Cairo
+
       // http://www.weatherbase.com/weather/weatherall.php3?s=66326&cityname=Cairo%2C+Muhafazat+al+Qahirah%2C+Egypt&units=
       new ClimatePreset() { PresetName = "Egypt, Cairo", PresetCode = "PRESET_EGYPT_CAIRO", ClimateProperties = new ClimateControlProperties()
       {
@@ -1306,8 +1325,11 @@ namespace Runaurufu.ClimateControl
           },
         }
       }},
-      #endregion
+
+      #endregion Egypt, Cairo
+
       #region England, London
+
       // http://www.weatherbase.com/weather/weatherall.php3?s=67730&cityname=London%2C+England%2C+United+Kingdom&units=
       new ClimatePreset() { PresetName = "England, London", PresetCode = "PRESET_ENGLAND_LONDON", ClimateProperties = new ClimateControlProperties()
       {
@@ -1448,8 +1470,11 @@ namespace Runaurufu.ClimateControl
           },
         }
       }},
-      #endregion
+
+      #endregion England, London
+
       #region Finland, Helsinki
+
       // http://www.weatherbase.com/weather/weatherall.php3?s=47920&cityname=Helsinki%2C+Uusimaa%2C+Finland&units=
       new ClimatePreset() { PresetName = "Finland, Helsinki", PresetCode = "PRESET_FINLAND_HELSINKI", ClimateProperties = new ClimateControlProperties()
       {
@@ -1590,8 +1615,11 @@ namespace Runaurufu.ClimateControl
           },
         }
       }},
-      #endregion
+
+      #endregion Finland, Helsinki
+
       #region Germany, Frankfurt
+
       // http://www.weatherbase.com/weather/weatherall.php3?s=73601&cityname=Frankfurt%2C+Hesse%2C+Germany&units=
       new ClimatePreset() { PresetName = "Germany, Frankfurt", PresetCode = "PRESET_GERMANY_FRANKFURT", ClimateProperties = new ClimateControlProperties()
       {
@@ -1732,8 +1760,11 @@ namespace Runaurufu.ClimateControl
           },
         }
       }},
-      #endregion
+
+      #endregion Germany, Frankfurt
+
       #region Germany, Hamburg
+
       // http://www.weatherbase.com/weather/weatherall.php3?s=74101&cityname=Hamburg%2C+Hamburg%2C+Germany&units=
       new ClimatePreset() { PresetName = "Germany, Hamburg", PresetCode = "PRESET_GERMANY_HAMBURG", ClimateProperties = new ClimateControlProperties()
       {
@@ -1874,8 +1905,11 @@ namespace Runaurufu.ClimateControl
           },
         }
       }},
-      #endregion
+
+      #endregion Germany, Hamburg
+
       #region Greenland, Kraulshavn
+
       // http://www.weatherbase.com/weather/weatherall.php3?s=80240&cityname=Kraulshavn%2C+Qaasuitsup%2C+Greenland&units=
       new ClimatePreset() { PresetName = "Greenland, Kraulshavn", PresetCode = "PRESET_GREENLAND_KRAULSHAVN", ClimateProperties = new ClimateControlProperties()
       {
@@ -2016,8 +2050,11 @@ namespace Runaurufu.ClimateControl
           },
         }
       }},
-      #endregion
+
+      #endregion Greenland, Kraulshavn
+
       #region India, Cherrapunj
+
       // http://www.weatherbase.com/weather/weatherall.php3?s=425150&cityname=Cherrapunj%2C+Meghalaya%2C+India&units=
       new ClimatePreset() { PresetName = "India, Cherrapunj", PresetCode = "PRESET_INDIA_CHERRAPUNJ", ClimateProperties = new ClimateControlProperties()
       {
@@ -2182,8 +2219,11 @@ namespace Runaurufu.ClimateControl
           },
         }
       }},
-      #endregion
+
+      #endregion India, Cherrapunj
+
       #region North Korea, Pyongyang
+
       // http://www.weatherbase.com/weather/weatherall.php3?s=85074&cityname=Pyongyang%2C+Pyongyang%2C+North+Korea&units=
       new ClimatePreset() { PresetName = "North Korea, Pyongyang", PresetCode = "PRESET_NORTH_KOREA_PYONGYANG", ClimateProperties = new ClimateControlProperties()
       {
@@ -2324,8 +2364,11 @@ namespace Runaurufu.ClimateControl
           },
         }
       }},
-      #endregion
+
+      #endregion North Korea, Pyongyang
+
       #region Poland, Kraków
+
       // http://www.weatherbase.com/weather/weatherall.php3?s=66521&cityname=Krakow%2C+Lesser+Poland+Voivodeship%2C+Poland&units=
       new ClimatePreset() { PresetName = "Poland, Kraków", PresetCode = "PRESET_POLAND_KRAKÓW", ClimateProperties = new ClimateControlProperties()
       {
@@ -2466,8 +2509,11 @@ namespace Runaurufu.ClimateControl
           },
         }
       }},
-      #endregion
+
+      #endregion Poland, Kraków
+
       #region Russia, Moscow
+
       // http://www.weatherbase.com/weather/weatherall.php3?s=551572&cityname=Moscow%2C+Moscow%2C+Russia&units=
       new ClimatePreset() { PresetName = "Russia, Moscow", PresetCode = "PRESET_RUSSIA_MOSCOW", ClimateProperties = new ClimateControlProperties()
       {
@@ -2608,8 +2654,11 @@ namespace Runaurufu.ClimateControl
           },
         }
       }},
-      #endregion
+
+      #endregion Russia, Moscow
+
       #region Spain, Seville
+
       // http://www.weatherbase.com/weather/weatherall.php3?s=19380&cityname=Seville%2C+Andalusia%2C+Spain&units=
       new ClimatePreset() { PresetName = "Spain, Seville", PresetCode = "PRESET_SPAIN_SEVILLE", ClimateProperties = new ClimateControlProperties()
       {
@@ -2750,8 +2799,11 @@ namespace Runaurufu.ClimateControl
           },
         }
       }},
-      #endregion
+
+      #endregion Spain, Seville
+
       #region Sweden, Stockholm
+
       // http://www.weatherbase.com/weather/weatherall.php3?s=6420&cityname=Stockholm%2C+Stockholm%2C+Sweden&units=
       new ClimatePreset() { PresetName = "Sweden, Stockholm", PresetCode = "PRESET_SWEDEN_STOCKHOLM", ClimateProperties = new ClimateControlProperties()
       {
@@ -2892,8 +2944,11 @@ namespace Runaurufu.ClimateControl
           },
         }
       }},
-      #endregion
+
+      #endregion Sweden, Stockholm
+
       #region USA, Anchorage
+
       // http://www.weatherbase.com/weather/weatherall.php3?s=37207&cityname=Anchorage%2C+Alaska%2C+United+States+of+America&units=
       new ClimatePreset() { PresetName = "USA, Anchorage", PresetCode = "PRESET_USA_ANCHORAGE", ClimateProperties = new ClimateControlProperties()
       {
@@ -3034,8 +3089,11 @@ namespace Runaurufu.ClimateControl
           },
         }
       }},
-      #endregion
+
+      #endregion USA, Anchorage
+
       #region USA, Denver
+
       // http://www.weatherbase.com/weather/weatherall.php3?s=96427&cityname=Denver%2C+Colorado%2C+United+States+of+America&units=
       new ClimatePreset() { PresetName = "USA, Denver", PresetCode = "PRESET_USA_DENVER", ClimateProperties = new ClimateControlProperties()
       {
@@ -3176,8 +3234,11 @@ namespace Runaurufu.ClimateControl
           },
         }
       }},
-      #endregion
+
+      #endregion USA, Denver
+
       #region USA, New York
+
       // http://www.weatherbase.com/weather/weatherall.php3?s=330527&cityname=New+York%2C+New+York%2C+United+States+of+America&units=
       new ClimatePreset() { PresetName = "USA, New York", PresetCode = "PRESET_USA_NEW_YORK", ClimateProperties = new ClimateControlProperties()
       {
@@ -3318,10 +3379,12 @@ namespace Runaurufu.ClimateControl
           },
         }
       }},
-      #endregion
-      
+
+      #endregion USA, New York
+
       #region Empty Pattern to use
-      //// 
+
+      ////
       //new ClimatePreset() { PresetName = "", PresetCode = "PRESET_", ClimateProperties = new ClimateControlProperties()
       //{
       //  SnowFallTemperature = , SnowMeltTemperature = , SolarDayLength = ,
@@ -3485,7 +3548,8 @@ namespace Runaurufu.ClimateControl
       //    },
       //  }
       //}},
-      #endregion
+
+      #endregion Empty Pattern to use
     };
   }
 }

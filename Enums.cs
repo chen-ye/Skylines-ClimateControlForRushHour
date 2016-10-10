@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Runaurufu.ClimateControl
+﻿namespace Runaurufu.ClimateControl
 {
   /// <summary>
   /// What kind of precipitation do you experience?
@@ -14,6 +9,7 @@ namespace Runaurufu.ClimateControl
     /// Just ordinary rainfall.
     /// </summary>
     Rain = 0,
+
     /// <summary>
     /// Just ordinary snowfall.
     /// </summary>

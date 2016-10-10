@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
 using ICities;
 
 namespace Runaurufu.ClimateControl
@@ -25,30 +22,83 @@ namespace Runaurufu.ClimateControl
     {
       //base.OnLoadData();
 
-      byte[] data;
-
-      data = serializableData.LoadData(ClimateControlSerializableData.KEY_DEFAULT_WATER_SOURCES);
-      if (data != null && data.Length > 0)
+      try
       {
-        DefaultWaterSourceData[] arr = Deserialize<DefaultWaterSourceData[]>(data);
-        if(arr != null)
+        byte[] data;
+
+        data = serializableData.LoadData(ClimateControlSerializableData.KEY_DEFAULT_WATER_SOURCES);
+        if (data != null && data.Length > 0)
         {
-          ClimateControlEngine.Instance.DefaultMapWaterSources = arr;
+          DefaultWaterSourceData[] arr = Deserialize<DefaultWaterSourceData[]>(data);
+          if (arr != null)
+          {
+            ClimateControlEngine.Instance.DefaultMapWaterSources = arr;
+          }
+        }
+
+        data = serializableData.LoadData(ClimateControlSerializableData.KEY_HISTORY_DATA);
+        if (data != null && data.Length > 0)
+        {
+          HistoryData history = Deserialize<HistoryData>(data);
+          if (history != null)
+          {
+            ClimateControlEngine.Instance.HistoricalData = history;
+
+            //if (history.YearlyData != null)
+            //{
+            //  DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Message, history.YearlyData.Count.ToString());
+            //  foreach (YearlyStatisticData yitem in history.YearlyData)
+            //  {
+            //    DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Message, "YEAR " + yitem.Year.ToString());
+            //    if (yitem.WeeklyData != null)
+            //    {
+            //      foreach (WeeklyStatisticData witem in yitem.WeeklyData)
+            //      {
+            //        if (witem == null)
+            //          continue;
+            //        DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Message, "WEEK " + witem.WeekIndex.ToString());
+            //        DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Message, "Tav " + witem.TemperatureAverage.ToString());
+            //        DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Message, "P " + witem.PrecipitationAmount.ToString());
+            //      }
+            //    }
+            //  }
+            //}
+          }
         }
       }
-
-      data = serializableData.LoadData(ClimateControlSerializableData.KEY_HISTORY_DATA);
-      if(data != null && data.Length > 0)
+      catch (Exception ex)
       {
-        HistoryData history = Deserialize<HistoryData>(data);
-        if(history != null)
-        {
-          ClimateControlEngine.Instance.HistoricalData = history;
+        Logger.Log("SerializableDataExtensionBase.OnLoadData() exception!" + Environment.NewLine + ex.ToString());
+      }
+    }
 
-          //if (history.YearlyData != null)
+    public override void OnSaveData()
+    {
+      //base.OnSaveData();
+
+      try
+      {
+        if (ClimateControlEngine.Instance.DefaultMapWaterSources != null)
+        {
+          byte[] data = Serialize(ClimateControlEngine.Instance.DefaultMapWaterSources);
+          if (data != null)
+          {
+            serializableData.SaveData(ClimateControlSerializableData.KEY_DEFAULT_WATER_SOURCES, data);
+          }
+        }
+
+        if (ClimateControlEngine.Instance.HistoricalData != null)
+        {
+          byte[] data = Serialize(ClimateControlEngine.Instance.HistoricalData);
+          if (data != null)
+          {
+            serializableData.SaveData(ClimateControlSerializableData.KEY_HISTORY_DATA, data);
+          }
+
+          //if (ClimateControlEngine.Instance.HistoricalData.YearlyData != null)
           //{
-          //  DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Message, history.YearlyData.Count.ToString());
-          //  foreach (YearlyStatisticData yitem in history.YearlyData)
+          //  DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Message, ClimateControlEngine.Instance.HistoricalData.YearlyData.Count.ToString());
+          //  foreach (YearlyStatisticData yitem in ClimateControlEngine.Instance.HistoricalData.YearlyData)
           //  {
           //    DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Message, "YEAR " + yitem.Year.ToString());
           //    if (yitem.WeeklyData != null)
@@ -66,48 +116,9 @@ namespace Runaurufu.ClimateControl
           //}
         }
       }
-    }
-
-    public override void OnSaveData()
-    {
-      //base.OnSaveData();
-
-      if(ClimateControlEngine.Instance.DefaultMapWaterSources != null)
+      catch (Exception ex)
       {
-        byte[] data = Serialize(ClimateControlEngine.Instance.DefaultMapWaterSources);
-        if (data != null)
-        {
-          serializableData.SaveData(ClimateControlSerializableData.KEY_DEFAULT_WATER_SOURCES, data);
-        }
-      }
-
-      if (ClimateControlEngine.Instance.HistoricalData != null)
-      {
-        byte[] data = Serialize(ClimateControlEngine.Instance.HistoricalData);
-        if (data != null)
-        {
-          serializableData.SaveData(ClimateControlSerializableData.KEY_HISTORY_DATA, data);
-        }
-
-        //if (ClimateControlEngine.Instance.HistoricalData.YearlyData != null)
-        //{
-        //  DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Message, ClimateControlEngine.Instance.HistoricalData.YearlyData.Count.ToString());
-        //  foreach (YearlyStatisticData yitem in ClimateControlEngine.Instance.HistoricalData.YearlyData)
-        //  {
-        //    DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Message, "YEAR " + yitem.Year.ToString());
-        //    if (yitem.WeeklyData != null)
-        //    {
-        //      foreach (WeeklyStatisticData witem in yitem.WeeklyData)
-        //      {
-        //        if (witem == null)
-        //          continue;
-        //        DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Message, "WEEK " + witem.WeekIndex.ToString());
-        //        DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Message, "Tav " + witem.TemperatureAverage.ToString());
-        //        DebugOutputPanel.AddMessage(ColossalFramework.Plugins.PluginManager.MessageType.Message, "P " + witem.PrecipitationAmount.ToString());
-        //      }
-        //    }
-        //  }
-        //}
+        Logger.Log("SerializableDataExtensionBase.OnLoadData() exception!" + Environment.NewLine + ex.ToString());
       }
     }
 
@@ -122,9 +133,8 @@ namespace Runaurufu.ClimateControl
           memoryStream.Position = 0L;
           return memoryStream.ToArray();
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-
         }
         return null;
       }
@@ -143,7 +153,6 @@ namespace Runaurufu.ClimateControl
         }
         catch (Exception ex)
         {
-
         }
         return null;
       }
