@@ -571,7 +571,8 @@ namespace Runaurufu.ClimateControl
     {
       int realHour = (int)this.ThreadingManager.simulationDayTimeHour;
       int realMinute = (int)((this.ThreadingManager.simulationDayTimeHour - realHour) * 60);
-      return new DateTime(this.ThreadingManager.simulationTime.Year, this.ThreadingManager.simulationTime.Month, this.ThreadingManager.simulationTime.Day, realHour, realMinute, 0);
+      DateTime dateTime = this.simulationManager.FrameToTime(this.ThreadingManager.simulationFrame);
+      return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, realHour, realMinute, 0);
 
       //switch (GlobalConfig.GetInstance().TimeToUse)
       //{
@@ -616,7 +617,7 @@ namespace Runaurufu.ClimateControl
       DateTime climateTime = this.GetDateTime();
       bool isNight = this.IsNight(climateTime);
 
-      DateTime simulationTime = this.ThreadingManager.simulationTime;
+      DateTime simulationTime = this.simulationManager.FrameToTime(this.ThreadingManager.simulationFrame);// this.ThreadingManager.simulationTime;
 
       TimeSpan simulationTimeUpdateDelta = simulationTime - this.lastSimulationTimeUpdate;
       if (simulationTimeUpdateDelta.TotalMinutes < MIN_TIME_DELTA)
